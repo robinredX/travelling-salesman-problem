@@ -10,9 +10,5 @@ Python 3
 
 ```python
 import bruteforce from bruteforce
-bruteforce("filename here") # Returns optimal tour, its cost and time taken
-```
-
-## Note
-
-I have not tested it on other datasets. TSPLIB datasets were too big to test it with.
+file = bruteforce.brute("data.txt") # Returns optimal tour, its cost and time taken; Replace data.txt with the filename
+file.algo()
