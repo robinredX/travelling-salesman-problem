@@ -11,11 +11,9 @@ Python 3
 ```python3
 import antcolonyapproach
 file = antcolonyapproach.antcolonyapproach("data.txt") # Replace data.txt with filename
-file.algo()
+file.algo() # run file
 ```
 ### Note
 
-The algorithm selects any random nodes as first since that is what required for Ant Colony Approach. 
-I shall look into modifying this code to always start from node 1 soon.
-
-Please remember that this code is not final yet. I need to lookinto Value Error problem. For now, I passed that error and it works fine, but it may not find very good solution because of it. I shall update it soon.
+The algorithm selects any random node as first node of Optimal Tour since that is what required for Ant Colony Approach to find optimal solution. But I shall look into modifying this soon.
+Please remember that this code is not final yet. I need to look into the Value Error and ZeroDivisonError problem. For now, I passed these errors and the programme fine. However, it may not find very good solution because of this adjustment. I shall update it soon.
