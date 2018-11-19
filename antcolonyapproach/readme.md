@@ -1,6 +1,6 @@
 # antcolonyapproach.py
 
-The function antcolonyapproach accepts filename (e.g. "data.txt") as input
+The function antapproach accepts filename (e.g. "data.txt") as input
 
 ## Installation Requirements
 
@@ -10,7 +10,7 @@ Python 3
 
 ```python3
 import antcolonyapproach
-file = antcolonyapproach.antcolonyapproach("data.txt") # Replace data.txt with filename
+file = antcolonyapproach.antapproach("data.txt") # Replace data.txt with filename
 file.algo() # run file
 ```
 ### Note
