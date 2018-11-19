@@ -99,7 +99,7 @@ class _selection(object):
         select = 0
         randomvalue = 0.6 # Select a random value between 0 and 1
         for i, d in enumerate(p):
-            randomvalue = randdomvalue - d
+            randomvalue = randomvalue - d
             if randomvalue <= 0:
                 select = i
                 break
