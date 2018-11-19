@@ -1,4 +1,4 @@
-from __future__ import division 
+from __future__ import division # For floor division
 from os import path
 import time
 import math
@@ -10,7 +10,7 @@ class antapproach(object):
     
     def algo(self):
         start_time = time.time() # Start clock
-        f = open(self.name, "r")
+        f = open(self.name, "r") # I didn't use numpy for this algorithm since I was getting errors in divisions as numpy 2d array was giving 0 for int/int.
         dataset = [[int(num) for num in line.split(' ')] for line in f ]
         for i in range(len(dataset)):
             for j in range(len(dataset)):
