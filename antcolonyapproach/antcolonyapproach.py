@@ -40,11 +40,11 @@ class antcolony(object):
         self.q = 10 # it's a constant
         self.s = 2 # Update strategy
     
-    def pheromoneupdate(self, nodes, ants):
+    def pheromoneupdate(self, nodes, run):
         for i, row in enumerate(nodes.pheromone):
             for j, col in enumerate(row):
                 nodes.pheromone[i][j] = nodes.pheromone[i][j]*self.r
-                for ant in ants:
+                for ant in run:
                     nodes.pheromone[i][j] = nodes.pheromone[i][j] + ant.updateself[i][j]
 
     
@@ -54,8 +54,8 @@ class antcolony(object):
         # Create an empty list for optimal tour
         OptimalTour = []
         for iteration in range(self.iteration):
-            ants = [_selection(self, nodes) for i in range(self.n)]
-            for ant in ants:
+            run = [selection(self, nodes) for i in range(self.n)]
+            for ant in run:
                 for i in range(nodes.l-1):
                     ant.nextvisit()
                 ant.distance = ant.distance + nodes.dataset[ant.tour[-1]][ant.tour[0]]
@@ -63,10 +63,10 @@ class antcolony(object):
                     mindist = ant.distance
                     OptimalTour = [] + ant.tour
                 ant.updateit() # Local update of pheromone
-            self.pheromoneupdate(nodes, ants)
+            self.pheromoneupdate(nodes, run)
         return mindist, OptimalTour
                                
-class _selection(object):
+class selection(object):
     def __init__(self, parameters, nodes):
         self.colony = parameters
         self.nodes = nodes
@@ -123,5 +123,4 @@ class _selection(object):
             elif self.colony.s == 2:
                 self.updateself[i][j] = self.colony.q / self.nodes.dataset[i][j]
             else:  # ant-cycle system
-                self.updateself[i][j] = self.colony.q / self.distance  
-       
+                self.updateself[i][j] = self.colony.q / self.distance
