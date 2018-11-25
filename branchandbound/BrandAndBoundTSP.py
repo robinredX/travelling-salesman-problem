@@ -120,9 +120,10 @@ class BranchAndBound:
             working_path = parent_node.path_so_far
             working_bound = parent_node.cost
             working_node = parent_node
-            #if workind bound is greater than shortest path so far, prune it
+            #if working bound is greater than shortest path so far, prune it
             if working_bound >= self.upper_bound:
                 working_node.status = "pruned"
+                working_node.number_of_children = 0
                 break
             working_vertex_id, parent_node, tree_nodes = self.find_lowest_cost_next_vertex(parent_node, tree_nodes)
         return working_path, working_bound, working_node
