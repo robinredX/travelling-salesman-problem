@@ -14,6 +14,18 @@ class TSP(QDialog):
         self.cboAlgo.clear()
         self.cboAlgo.addItems(algos)
         self.btnRun.clicked.connect(self.on_run_clicked)
+        self.optGenerate.toggled.connect(self.optGenerate_clicked)
+        self.optExisting.toggled.connect(self.optExisting_clicked)
+
+    def optGenerate_clicked(self):
+        self.frmGenerate.setEnabled(self.optGenerate.isChecked())
+        self.frmGenerate.setHidden(False)
+        self.frmUpload.setHidden(True)
+
+    def optExisting_clicked(self):
+        self.frmGenerate.setEnabled(self.optGenerate.isChecked())
+        self.frmGenerate.setHidden(True)
+        self.frmUpload.setHidden(False)
 
     @pyqtSlot()
     def on_run_clicked(self):

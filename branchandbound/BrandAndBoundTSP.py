@@ -162,7 +162,7 @@ class BranchAndBound:
                 print("Upper bound: " , self.upper_bound)
                 print("Best path found:", self.best_path)
             else:
-                print("No Tour")
+                print("No Tour ", working_node.status)
                 status = "pruned"
 
             while working_node.number_of_children < 2:

@@ -85,7 +85,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Cancel</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QLabel" name="lblDistance">
@@ -148,7 +148,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QRadioButton" name="optExisiting">
+   <widget class="QRadioButton" name="optExisting">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -330,6 +330,22 @@
       <width>211</width>
       <height>20</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frmUpload">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>421</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
    </widget>
   </widget>
