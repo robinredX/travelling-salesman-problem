@@ -64,7 +64,16 @@ class TSP(QDialog):
             #Open and process the selected file
             if self.cboFormat.currentText() == "Generator":
                 matrix = generator.read_from_file(self.txtFileName.text())
+            else:
+                # Open the problem file (Either .tsp or .atsp)
+                file = open(self.txtFileName.text(), 'r')
+                # Create a new TSP library parser and parse the file
+                parser = Parser()
+                matrix = parser.parse_file(file)
 
+        #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
+
+        #Now we have the data, process the selected algorithm
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             time = 0 # add timer here
