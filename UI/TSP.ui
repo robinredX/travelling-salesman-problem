@@ -46,7 +46,7 @@
     <string>Choose Algorithm:</string>
    </property>
   </widget>
-  <widget class="QFrame" name="frame">
+  <widget class="QFrame" name="frmAlgo">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -75,7 +75,7 @@
     <string>Run</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnCancel">
+  <widget class="QPushButton" name="btnClose">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -332,32 +332,124 @@
      </rect>
     </property>
    </widget>
-   <widget class="QFrame" name="frmUpload">
+   <widget class="QPushButton" name="btnBrowse_Save">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>421</width>
-      <height>101</height>
+      <x>310</x>
+      <y>69</y>
+      <width>75</width>
+      <height>23</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="text">
+     <string>Browse</string>
     </property>
    </widget>
   </widget>
-  <zorder>frame</zorder>
+  <widget class="QFrame" name="frmUpload">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>400</y>
+     <width>421</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <widget class="QLabel" name="lbl_FileName_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>15</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File Name:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="txtFileName">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>15</y>
+      <width>261</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnBrowse_Open">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>14</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Browse</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>File Format:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cboFormat">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>50</y>
+      <width>261</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="lblExec">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>350</y>
+     <width>241</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Execution time:</string>
+   </property>
+  </widget>
+  <zorder>frmAlgo</zorder>
   <zorder>cboAlgo</zorder>
   <zorder>label</zorder>
   <zorder>btnRun</zorder>
-  <zorder>btnCancel</zorder>
+  <zorder>btnClose</zorder>
   <zorder>lblDistance</zorder>
   <zorder>lblPath</zorder>
   <zorder>grpData</zorder>
   <zorder>frmGenerate</zorder>
+  <zorder>frmUpload</zorder>
+  <zorder>lblExec</zorder>
  </widget>
  <resources/>
  <connections/>
