@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog
 from PyQt5.uic import loadUi
-from branchandbound.BrandAndBoundTSP import BranchAndBound
+from branchandbound.BranchAndBoundTSP import BranchAndBound
 from Generator import Generator
 from Parser import Parser
 
