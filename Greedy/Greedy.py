@@ -1,11 +1,13 @@
 import math
+import time
 
-class Greedy:
 
+class GreedyTsp( object ):
     def __init__(self, matrix):
         self.matrix = matrix
 
     def greedy_tsp(self):
+        start_time = time.time()
         tour = [0]
         total_cost = 0
 
@@ -27,35 +29,49 @@ class Greedy:
             total_cost += visit[1]
 
             row = self.matrix[visit[0]]
-
-        return tour, total_cost
-
-
-# Run Example
-
-# import Parser
-# import time
-#
-# f = open('test_files/asymmetric/ft53.atsp', 'r')
-# parser = Parser.Parser()
-# matrix = parser.parse_file(f)
+            end_time = time.time()
+        return total_cost, tour, (end_time-start_time)
 
 
-# inf = math.inf
-# matrix = [
-#     [inf,   0,  10, 19,  123],
-#     [12,  inf,  4,  123, 23],
-#     [10,  3,  inf,  6,   20],
-#     [2,   20, 6,  inf,   4],
-#     [789, 2,  20, 4,   inf]
-# ]
+    def run_time_limit_iteration(self, time_limit, start_node):
+        elapse_time = 0
+        start_time=time.time()
+        min_cost = float("inf")
+        opt_path=[]
+        while (time.time()-start_time)<time_limit:
+            cost, path, time_elapse = self.greedy_tsp()
+            if cost<min_cost:
+                min_cost = cost
+                opt_path = path
+
+        end_time = time.time()
+        return min_cost, opt_path, (end_time-start_time)
 
 
-# g = Greedy(matrix)
-# start_time = time.time()
-# tour, cost = g.greedy_tsp()
-#
-# print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
-#
-# print(tour)
-# print(cost)
+if __name__ == '__main__':
+    # Run Example
+
+    import Parser
+
+    # f = open('test_files/asymmetric/ft53.atsp', 'r')
+    # parser = Parser.Parser()
+    # matrix = parser.parse_file(f)
+
+
+    inf = math.inf
+    matrix = [
+         [inf,   0,  10, 19,  123],
+         [12,  inf,  4,  123, 23],
+         [10,  3,  inf,  6,   20],
+         [2,   20, 6,  inf,   4],
+         [789, 2,  20, 4,   inf]
+     ]
+
+
+    g = Greedy(matrix)
+    start_time = time.time()
+    cost, tour, runtime = g.greedy_tsp()
+
+    print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
+    print(tour)
+    print(cost)
