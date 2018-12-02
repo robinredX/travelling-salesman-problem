@@ -8,6 +8,7 @@ from branchandbound.BranchAndBoundTSP import BranchAndBound
 from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
+from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
 
@@ -83,7 +84,6 @@ class TSP(QDialog):
 
         #Now we have the data, process the selected algorithm
 
-
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             time = 0 # add timer here
@@ -91,6 +91,13 @@ class TSP(QDialog):
             self.lblDistance.setText("Best Distance: " + str(upper_bound))
             self.lblPath.setText("Best Path: " + str(best_path))
             self.lblExec.setText("Execution Time: " + str(time))
+
+        elif self.cboAlgo.currentText() == "Minimum Spanning Tree":
+            algo = MST(matrix)
+            upper_bound, best_path, run_time = algo.mst()
+            self.lblDistance.setText("Best Distance: " + str(upper_bound))
+            self.lblPath.setText("Best Path: " + str(best_path))
+            self.lblExec.setText("Execution Time: " + str(run_time))
 
         elif self.cboAlgo.currentText() == "Greedy":
             algo = GreedyTsp(matrix)
