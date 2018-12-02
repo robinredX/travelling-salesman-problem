@@ -1,10 +1,18 @@
 import sys
+from PyQt5 import QtCore
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog
 from PyQt5.uic import loadUi
 from branchandbound.BranchAndBoundTSP import BranchAndBound
+from dynamic.tspdp import TspDp
+from randomTSP.tsprandom import TspRandom
+from Greedy.Greedy import GreedyTsp
 from Generator import Generator
 from Parser import Parser
+
+#uncomment for high resolution screen
+#QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
 class TSP(QDialog):
     def __init__(self):
@@ -74,6 +82,8 @@ class TSP(QDialog):
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
 
         #Now we have the data, process the selected algorithm
+
+
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             time = 0 # add timer here
@@ -82,7 +92,33 @@ class TSP(QDialog):
             self.lblPath.setText("Best Path: " + str(best_path))
             self.lblExec.setText("Execution Time: " + str(time))
 
-app=QApplication(sys.argv)
-window = TSP()
-window.show()
-sys.exit(app.exec_())
+        elif self.cboAlgo.currentText() == "Greedy":
+            algo = GreedyTsp(matrix)
+            upper_bound, best_path, runtime = algo.greedy_tsp()
+            self.lblDistance.setText("Best Distance: " + str(upper_bound))
+            self.lblPath.setText("Best Path: " + str(best_path))
+            self.lblExec.setText("Execution Time: " + str(runtime))
+
+        elif self.cboAlgo.currentText() == "Dynamic":
+            algo = TspDp(matrix)
+            upper_bound, best_path, runtime = algo.run()
+            self.lblDistance.setText("Best Distance: " + str(upper_bound))
+            self.lblPath.setText("Best Path: " + str(best_path))
+            self.lblExec.setText("Execution Time: " + str(runtime))
+
+        elif self.cboAlgo.currentText() == "Random":
+            algo = TspRandom(matrix)
+            upper_bound, best_path, runtime = algo.run()
+            self.lblDistance.setText("Best Distance: " + str(upper_bound))
+            self.lblPath.setText("Best Path: " + str(best_path))
+            self.lblExec.setText("Execution Time: " + str(runtime))
+
+
+
+
+
+if __name__ == '__main__':
+    app=QApplication(sys.argv)
+    window = TSP()
+    window.show()
+    sys.exit(app.exec_())
