@@ -37,12 +37,20 @@ class TspDp( object ):
       self._all_set = (1<<self._nb_node) - 1
       self._indent=""
       self.iter=0
-      
+      self.convert_no_link()
       #print("Nb node:",self._nb_node)
       #print("Nb subset:",self._nb_subset)
-      self.compute_sub_problems(0)
 
-      
+   def run(self):
+      return self.compute_sub_problems(self._start_node)
+
+   def convert_no_link(self):
+      for i in range(self._nb_node):
+         for j in range(self._nb_node):
+            if self._input[i][j] == -1:
+               self._input[i][j] = float("inf")
+
+
    def print_node_subset(self, subset):
       node_list=[]
       k=0
@@ -166,7 +174,8 @@ class TspDp( object ):
 
       end_time = time.time()
       
-      print("Optimal Tour:", path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))      
+      #print("Optimal Tour:", path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
+      return min_cost, path, (end_time-start_time)
 
    def clear_dictionnary_list(self,listOfDict): 
       """" Delete all dictionnary keys in the list of dictionnary
