@@ -28,11 +28,12 @@ class TSP(QDialog):
         self.cboFormat.addItems(formats)
         self.frmUpload.move(10, 140)
         self.frmUpload.setHidden(True)
+        self.frmResults.setHidden(True)
 
         self.btnRun.clicked.connect(self.on_run_clicked)
         self.btnBrowse_Open.clicked.connect(self.on_browse_open_clicked)
         self.btnBrowse_Save.clicked.connect(self.on_browse_save_clicked)
-        self.btnClose.clicked.connect(self.close)
+        self.btnClear.clicked.connect(self.on_btnClear_clicked)
         self.optGenerate.toggled.connect(self.optGenerate_clicked)
         self.optExisting.toggled.connect(self.optExisting_clicked)
         self.onlyInt = QIntValidator()
@@ -51,6 +52,9 @@ class TSP(QDialog):
         self.frmGenerate.setHidden(True)
         self.frmUpload.setHidden(False)
 
+    def on_btnClear_clicked(self):
+        self.frmResults.setHidden(True)
+
     def on_browse_open_clicked(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '\data')
         self.txtFileName.setText(fname[0])
@@ -59,24 +63,53 @@ class TSP(QDialog):
         fname = QFileDialog.getSaveFileName(self, 'Open file', '\data')
         self.txtSaveAs.setText(fname[0])
 
+    def validate_generator_entries(self):
+        error_message = ""
+        if len(self.txtVertices.text()) == 0:
+            error_message += "Please enter a number for vertices. \n"
+        if len(self.txtConnect.text()) == 0:
+            error_message += "Please enter a number for connectivity. \n"
+        if len(self.txtMin.text()) == 0:
+            error_message += "Please enter a number for min edge weight. \n"
+        if len(self.txtMax.text()) == 0:
+            error_message += "Please enter a number for max edge weight. \n"
+        return error_message
+
+    def hide_frame(self, frame):
+        frame.hide()
+
+    def show_frame(self, frame):
+        frame.show()
+
     @pyqtSlot()
     def on_run_clicked(self):
-        #TODO: Clear fields
-
         # Create a new generator.
         generator = Generator()
         #first of all see what is selected from the data options
         if self.optGenerate.isChecked():
-            numVert = int(self.txtVertices.text())
-            connect = int(self.txtConnect.text())
-            minWgt = int(self.txtMin.text())
-            maxWgt = int(self.txtMax.text())
-            symmetric = self.chkSym.isChecked()
-            # Generate a new matrix with given parameters.
-            matrix = generator.generate(numVert, connect, minWgt, maxWgt, symmetric)
-            #if the Save_As text box is not empty, save for later.
-            generator.save_to_file(matrix, self.txtSaveAs.text())
+            errors = self.validate_generator_entries()
+            if len(errors) == 0:
+                numVert = int(self.txtVertices.text())
+                connect = int(self.txtConnect.text())
+                minWgt = int(self.txtMin.text())
+                maxWgt = int(self.txtMax.text())
+                if minWgt >= maxWgt:
+                    QMessageBox.question(self, 'Generator validaion', "Min edge weight must be less than max edge weight.", QMessageBox.Ok)
+                    return
+                symmetric = self.chkSym.isChecked()
+                # Generate a new matrix with given parameters.
+                matrix = generator.generate(numVert, connect, minWgt, maxWgt, symmetric)
+                #if the Save_As text box is not empty, save for later.
+                if len(self.txtSaveAs.text()) > 0:
+                    generator.save_to_file(matrix, self.txtSaveAs.text())
+            else:
+                QMessageBox.question(self, 'Generator validaion', errors, QMessageBox.Ok)
+                return
         else:
+            #check for a file path
+            if len(self.txtFileName.text()) == 0:
+                QMessageBox.question(self, 'Generator validation', "Please select a file to open.", QMessageBox.Ok)
+                return
             #Open and process the selected file
             if self.cboFormat.currentText() == "Generator":
                 matrix = generator.read_from_file(self.txtFileName.text())
@@ -117,6 +150,7 @@ class TSP(QDialog):
         self.lblDistance.setText("Best Distance: " + str(upper_bound))
         self.lblPath.setText("Best Path: " + str(best_path))
         self.lblExec.setText("Execution Time (s): " + str(round(run_time, 2)))
+        self.show_frame(self.frmResults)
 
 
 
