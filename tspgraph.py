@@ -53,6 +53,6 @@ class TSPGraphViewer:
         plt.show()
 
     generator = Generator()
-    matrix = generator.generate(100, 5, 2, 15, True)
+    matrix = generator.generate(7, 5, 2, 15, True)
 
-    draw_graph_from_adj_matrix(matrix)
+    #draw_graph_from_adj_matrix(matrix)

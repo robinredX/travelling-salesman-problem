@@ -1,4 +1,9 @@
 import sys
+import numpy as np
+import networkx as nx
+import math
+import matplotlib.pyplot as plt
+import random
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIntValidator
@@ -12,6 +17,9 @@ from Greedy.Greedy import GreedyTsp
 from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from tspgraph import TSPGraphViewer
 
 #uncomment for high resolution screen
 #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -42,6 +50,63 @@ class TSP(QDialog):
         self.txtMin.setValidator(self.onlyInt)
         self.txtMax.setValidator(self.onlyInt)
 
+        ## a figure instance to plot on
+        self.figure = plt.figure()
+        self.canvas = FigureCanvas(self.figure)
+
+        # set the layout
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.canvas)
+        self.wdGraph.setLayout(layout)
+
+    def plot2(self, matrix):
+
+        self.figure.clf()
+        # create networkx graph
+        G=nx.Graph()
+
+        row_pos = 0
+        # add edges from adj matrix
+        for row in matrix:
+            col_pos = 0
+            for col in row:
+                if (col != math.inf and col != -1):
+                    G.add_edge(row_pos + 1, col_pos + 1, label=col)
+                col_pos +=1
+            row_pos +=1
+
+        # set layout and other settings
+        graph_pos=nx.shell_layout(G)
+        node_size = 1000
+        font_size = 12
+        node_colour = 'green'
+        vertex_count = len(matrix)
+        if vertex_count > 10:
+            node_size =500
+            font_size = 8
+
+        if vertex_count >= 30:
+            graph_pos=nx.random_layout(G)
+            node_size =250
+
+        if vertex_count >=50:
+            node_size =50
+            node_colour = 'black'
+
+        # draw graph
+        nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
+        nx.draw_networkx_edges(G,graph_pos,width=1,alpha=0.5,edge_color='blue')
+        if vertex_count < 70:
+            nx.draw_networkx_labels(G, graph_pos,font_size=font_size, font_family='sans-serif')
+
+        if vertex_count <= 10:
+            nx.draw_networkx_edge_labels(G, graph_pos, edge_labels={(u, v): d["label"] for u, v, d in G.edges(data=True)},
+                                     label_pos=0.4, font_size=8)
+
+        # show graph
+        plt.axis("off")
+        self.canvas.draw()
+
     def optGenerate_clicked(self):
         self.frmGenerate.setEnabled(self.optGenerate.isChecked())
         self.frmGenerate.setHidden(False)
@@ -54,6 +119,7 @@ class TSP(QDialog):
 
     def on_btnClear_clicked(self):
         self.frmResults.setHidden(True)
+        self.figure.clf()
 
     def on_browse_open_clicked(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '\data')
@@ -121,7 +187,8 @@ class TSP(QDialog):
                 matrix = parser.parse_file(file)
 
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
-
+        #Plot the data
+        self.plot2(matrix)
         #Now we have the data, process the selected algorithm
         upper_bound = 0
         best_path = []
