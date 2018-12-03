@@ -1,4 +1,5 @@
 import math
+import time
 
 class Node:
 
@@ -94,6 +95,7 @@ class MST:
 
 
     def mst(self):
+        start_time = time.time()
         key_values = [math.inf for i in range(self.dimension)]
         mst_set = [False for i in range(self.dimension)]
         parents = [-1 for i in range(self.dimension)]
@@ -119,35 +121,46 @@ class MST:
         tour = self.dfs(tree)
         tour.append(0)
         cost = self.tour_cost(tour)
-        return tour, cost
+        end_time = time.time()
+        return cost, tour, (end_time-start_time)
+
+    def run_time_limit_iteration(self, time_limit, start_node=0):
+        start_time = time.time()
+        min_cost = float("inf")
+        opt_path=[]
+        while (time.time()-start_time)<time_limit:
+            cost, opt_path, run_time = self.mst()
+            if cost<min_cost:
+                min_cost = cost
+                opt_path = self.get_opt_path()
+
+        end_time = time.time()
+        return min_cost, opt_path, (end_time-start_time)
 
 
 # Run Example
+if __name__ == '__main__':
 
-# import time
 # import Parser
 #
 # f = open('test_files/asymmetric/ft53.atsp', 'r')
 # parser = Parser.Parser()
 # matrix = parser.parse_file(f)
 
+    inf = math.inf
+    matrix = [
+      [inf,   0,  10, 19,  123],
+      [12,  inf,  4,  4, 23],
+      [10,  3,  inf,  6,   20],
+      [2,   20, 6,  inf,   4],
+      [789, 2,  20, 4,   inf]
+    ]
 
-# inf = math.inf
-# matrix = [
-#     [inf,   0,  10, 19,  123],
-#     [12,  inf,  4,  4, 23],
-#     [10,  3,  inf,  6,   20],
-#     [2,   20, 6,  inf,   4],
-#     [789, 2,  20, 4,   inf]
-# ]
 
+    mst = MST(matrix)
+    start_time = time.time()
+    tour, cost, run_time = mst.mst()
 
-# mst = MST(matrix)
-#
-# start_time = time.time()
-#
-# tour, cost = mst.mst()
-#
-# print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
-# print(tour)
-# print(cost)
+    print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
+    print(tour)
+    print(cost)

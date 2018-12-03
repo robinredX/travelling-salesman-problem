@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Travelling Salesman Problem</string>
   </property>
+  <property name="toolTipDuration">
+   <number>1</number>
+  </property>
   <widget class="QComboBox" name="cboAlgo">
    <property name="geometry">
     <rect>
@@ -75,7 +78,7 @@
     <string>Run</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnClose">
+  <widget class="QPushButton" name="btnClear">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -85,33 +88,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Close</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblDistance">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>290</y>
-     <width>361</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Best Distance:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lblPath">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>320</y>
-     <width>351</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Best Path:</string>
+    <string>Clear</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="grpData">
@@ -198,6 +175,12 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>You can only enter numbers in this field.</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>1</number>
+    </property>
     <property name="maxLength">
      <number>4</number>
     </property>
@@ -224,6 +207,12 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>You can only enter numbers in this field.</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>1</number>
+    </property>
     <property name="maxLength">
      <number>4</number>
     </property>
@@ -237,6 +226,12 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>You can only enter numbers in this field.</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>1</number>
+    </property>
     <property name="maxLength">
      <number>4</number>
     </property>
@@ -249,6 +244,12 @@
       <width>51</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>You can only enter numbers in this field.</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>1</number>
     </property>
     <property name="maxLength">
      <number>4</number>
@@ -426,30 +427,70 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="lblExec">
+  <widget class="QFrame" name="frmResults">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>350</y>
-     <width>241</width>
-     <height>16</height>
+     <x>10</x>
+     <y>290</y>
+     <width>421</width>
+     <height>91</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Execution time:</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="lblExec">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>241</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblPath">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>351</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblDistance">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>361</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
+  <zorder>frmResults</zorder>
   <zorder>frmAlgo</zorder>
   <zorder>cboAlgo</zorder>
   <zorder>label</zorder>
   <zorder>btnRun</zorder>
-  <zorder>btnClose</zorder>
-  <zorder>lblDistance</zorder>
-  <zorder>lblPath</zorder>
+  <zorder>btnClear</zorder>
   <zorder>grpData</zorder>
   <zorder>frmGenerate</zorder>
   <zorder>frmUpload</zorder>
-  <zorder>lblExec</zorder>
  </widget>
  <resources/>
  <connections/>
