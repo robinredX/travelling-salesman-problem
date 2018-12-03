@@ -1,11 +1,12 @@
 import sys
-from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog
+from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 from PyQt5.uic import loadUi
 from branchandbound.BranchAndBoundTSP import BranchAndBound
-#from dynamic.tspdp import TspDp
+from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
 from MST.MST import MST
@@ -34,6 +35,11 @@ class TSP(QDialog):
         self.btnClose.clicked.connect(self.close)
         self.optGenerate.toggled.connect(self.optGenerate_clicked)
         self.optExisting.toggled.connect(self.optExisting_clicked)
+        self.onlyInt = QIntValidator()
+        self.txtVertices.setValidator(self.onlyInt)
+        self.txtConnect.setValidator(self.onlyInt)
+        self.txtMin.setValidator(self.onlyInt)
+        self.txtMax.setValidator(self.onlyInt)
 
     def optGenerate_clicked(self):
         self.frmGenerate.setEnabled(self.optGenerate.isChecked())
@@ -61,7 +67,6 @@ class TSP(QDialog):
         generator = Generator()
         #first of all see what is selected from the data options
         if self.optGenerate.isChecked():
-            #TODO validate user entries
             numVert = int(self.txtVertices.text())
             connect = int(self.txtConnect.text())
             minWgt = int(self.txtMin.text())
