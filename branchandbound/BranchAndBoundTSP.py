@@ -1,6 +1,7 @@
 import numpy
 import math
 import copy
+import time
 from common.node import TreeNode
 from Generator import Generator
 
@@ -129,6 +130,7 @@ class BranchAndBound:
         return working_path, working_bound, working_node
 
     def run_branch_and_bound(self, data):
+        start_time = time.time()
         self.vertex_count = len(data)
         data = numpy.array(data)
         #ensure all the zeros or negative values are set to inifinity,
@@ -172,7 +174,7 @@ class BranchAndBound:
                 working_node = self.find_node_in_list_by_node_id(working_node.parent_node_id, tree_nodes)
                 if(working_node == None):
                     break
-        return self.upper_bound, self.best_path
+        return self.upper_bound, self.best_path, time.time() - start_time
 
 #This is to run algo without UI
 

@@ -5,7 +5,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog
 from PyQt5.uic import loadUi
 from branchandbound.BranchAndBoundTSP import BranchAndBound
-from dynamic.tspdp import TspDp
+#from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
 from MST.MST import MST
@@ -55,6 +55,8 @@ class TSP(QDialog):
 
     @pyqtSlot()
     def on_run_clicked(self):
+        #TODO: Clear fields
+
         # Create a new generator.
         generator = Generator()
         #first of all see what is selected from the data options
@@ -83,44 +85,33 @@ class TSP(QDialog):
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
 
         #Now we have the data, process the selected algorithm
-
+        upper_bound = 0
+        best_path = []
+        run_time = 0
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
-            time = 0 # add timer here
-            upper_bound, best_path = algo.run_branch_and_bound(matrix)
-            self.lblDistance.setText("Best Distance: " + str(upper_bound))
-            self.lblPath.setText("Best Path: " + str(best_path))
-            self.lblExec.setText("Execution Time: " + str(time))
+            upper_bound, best_path, run_time = algo.run_branch_and_bound(matrix)
 
         elif self.cboAlgo.currentText() == "Minimum Spanning Tree":
             algo = MST(matrix)
             upper_bound, best_path, run_time = algo.mst()
-            self.lblDistance.setText("Best Distance: " + str(upper_bound))
-            self.lblPath.setText("Best Path: " + str(best_path))
-            self.lblExec.setText("Execution Time: " + str(run_time))
 
         elif self.cboAlgo.currentText() == "Greedy":
             algo = GreedyTsp(matrix)
-            upper_bound, best_path, runtime = algo.greedy_tsp()
-            self.lblDistance.setText("Best Distance: " + str(upper_bound))
-            self.lblPath.setText("Best Path: " + str(best_path))
-            self.lblExec.setText("Execution Time: " + str(runtime))
+            upper_bound, best_path, run_time = algo.greedy_tsp()
 
         elif self.cboAlgo.currentText() == "Dynamic":
             algo = TspDp(matrix)
-            upper_bound, best_path, runtime = algo.run()
-            self.lblDistance.setText("Best Distance: " + str(upper_bound))
-            self.lblPath.setText("Best Path: " + str(best_path))
-            self.lblExec.setText("Execution Time: " + str(runtime))
+            upper_bound, best_path, run_time = algo.run()
 
         elif self.cboAlgo.currentText() == "Random":
             algo = TspRandom(matrix)
-            upper_bound, best_path, runtime = algo.run()
-            self.lblDistance.setText("Best Distance: " + str(upper_bound))
-            self.lblPath.setText("Best Path: " + str(best_path))
-            self.lblExec.setText("Execution Time: " + str(runtime))
+            upper_bound, best_path, run_time = algo.run()
 
-
+        #set fields
+        self.lblDistance.setText("Best Distance: " + str(upper_bound))
+        self.lblPath.setText("Best Path: " + str(best_path))
+        self.lblExec.setText("Execution Time (s): " + str(round(run_time, 2)))
 
 
 
