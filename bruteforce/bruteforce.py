@@ -1,73 +1,57 @@
-""" 
-Brute Force Algorithm
-{Robin Khatri, MLDM M1}
-"""
-import math
 import itertools as it
+import math
 import time
 
-
-class Brute:
+class brute:
     def __init__(self, input, startnode = 0):
         """
-        Takes cost matrix as a list and starts journey from 1st node.
+        Takes input as 2D list; Outputs OptimalTour, OptimalCost and Time taken
         """
         self.input = input
         self.startnode = startnode
         
     def algo(self):
-        start_time = time.time() # Start clock
-        dataset = self.input        
-        l = len(dataset) # number of nodes
-        for i in list(range(0,1)):
+        start_time = time.time()
+        dataset = self.input
+        l= len(dataset)
+        for i in list(range(0,l)):
             for j in list(range(0,l)):
-                if dataset[i][j] == 0 :
-                    dataset[i][j] == math.inf # Replaces 0 cost with infinity so as not to select incase of assymetric travelling salesman problem
-        
+                if dataset[i][j] == 0:
+                    dataset[i][j] = math.inf # To avoid going to unconnected nodes
+                    
         perm = list(range(1,(l+1)))
         perm = list(it.permutations(perm)) # Permutations
-        distance = [0]*len(perm) # Initial distance
-        mindist = math.inf # Initial optimal distance is infinity
-        OptimalTour = [] # List to store optimal tour
+        
+        distance = 0
+        i = 0
+        mindist = math.inf
         for selection in perm:
-            # start from index 0 
-            start = 0
-            distance = 0
+            start = selection[0]-1
             i = 0
-            while i < l-1:
-                new = selection[i]-1
-                # Update distance
+            while i < (l-1):
+                new = selection[i+1] - 1
                 distance = distance + dataset[start][new]
                 start = new
-                i += 1
-                
-            # Set next node to be visited to first index of a tour
-            new = 0
-            
-            # Update distance
-            
+                i = i+1
+            new = selection[0]-1
+            start = selection[l-1]-1
             distance = distance + dataset[start][new]
-            # Update minimum distance
             if distance < mindist:
                 mindist = distance
                 OptimalTour = selection
-            """ 
-            OptimalTour Start with node startnode
-            """
-            for i in list(range(0,l)):
-                if i == 0:
-                    j == i
-                    
-            list1 = OptimalTour[0:(j-1)]
-            list2 = OptimalTour[(j-1):(l-1)]
-            OptimalTour = list1 + list2
-            end_time = time.time()
-
-        return int(mindist), OptimalTour, end_time - start_time
-        #print("Optimal Tour:", OptimalTour, ", Optimal Cost:", int(mindist), ", time taken:", (end_time-start_time))
+            distance = 0
+            
+        OptimalTour = list(OptimalTour)
         
-#if __name__ == "__main__":
-    #matrix = [[0,10,0,20,4],[5,0,9,0,2],[6,0,0,12,43],[8,8,9,0,22],[2,2,250,2,0]]
-    start_time = time.time() # Start clock
-    #result = Brute(matrix)
-    #result.algo()
+        if OptimalTour[0] != 1:
+            for i in list(range(0,l)):
+                if OptimalTour[i] == 1:
+                    j = i
+            List1 = OptimalTour[0:j]
+            List2 = OptimalTour[j:l]
+            OptimalTour = List1 + List2
+        
+        OptimalTour.append(1)
+        end_time = time.time()
+        
+        return OptimalTour, mindist, (end_time-start_time)
