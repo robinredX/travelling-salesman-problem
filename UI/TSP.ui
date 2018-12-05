@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>547</height>
+    <width>979</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,45 +16,12 @@
   <property name="toolTipDuration">
    <number>1</number>
   </property>
-  <widget class="QComboBox" name="cboAlgo">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>30</y>
-     <width>241</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>121</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>8</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Choose Algorithm:</string>
-   </property>
-  </widget>
   <widget class="QFrame" name="frmAlgo">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
-     <width>421</width>
+     <y>205</y>
+     <width>431</width>
      <height>61</height>
     </rect>
    </property>
@@ -64,12 +31,45 @@
    <property name="frameShadow">
     <enum>QFrame::Plain</enum>
    </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Choose Algorithm:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="cboAlgo">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>241</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+   </widget>
   </widget>
   <widget class="QPushButton" name="btnRun">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>260</y>
+     <x>290</x>
+     <y>273</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -81,8 +81,8 @@
   <widget class="QPushButton" name="btnClear">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>260</y>
+     <x>365</x>
+     <y>273</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -95,8 +95,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>80</y>
-     <width>421</width>
+     <y>10</y>
+     <width>431</width>
      <height>51</height>
     </rect>
    </property>
@@ -145,6 +145,71 @@
     </property>
    </widget>
   </widget>
+  <widget class="QFrame" name="frmResults">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>300</y>
+     <width>431</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="lblExec">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>241</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblPath">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>351</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblDistance">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>361</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="wdGraph" native="true">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>10</y>
+     <width>511</width>
+     <height>431</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QFrame" name="frmGenerate">
    <property name="enabled">
     <bool>true</bool>
@@ -152,9 +217,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
-     <width>421</width>
-     <height>101</height>
+     <y>70</y>
+     <width>431</width>
+     <height>100</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -347,13 +412,26 @@
     </property>
    </widget>
   </widget>
+  <widget class="QPushButton" name="btnData">
+   <property name="geometry">
+    <rect>
+     <x>365</x>
+     <y>176</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load Data</string>
+   </property>
+  </widget>
   <widget class="QFrame" name="frmUpload">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>400</y>
-     <width>421</width>
-     <height>81</height>
+     <y>390</y>
+     <width>431</width>
+     <height>101</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -427,69 +505,14 @@
     </property>
    </widget>
   </widget>
-  <widget class="QFrame" name="frmResults">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>290</y>
-     <width>421</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <widget class="QLabel" name="lblExec">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>241</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblPath">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>351</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblDistance">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>361</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-  </widget>
   <zorder>frmResults</zorder>
   <zorder>frmAlgo</zorder>
-  <zorder>cboAlgo</zorder>
-  <zorder>label</zorder>
   <zorder>btnRun</zorder>
   <zorder>btnClear</zorder>
   <zorder>grpData</zorder>
+  <zorder>wdGraph</zorder>
   <zorder>frmGenerate</zorder>
+  <zorder>btnData</zorder>
   <zorder>frmUpload</zorder>
  </widget>
  <resources/>

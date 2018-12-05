@@ -1,4 +1,9 @@
 import sys
+import numpy as np
+import networkx as nx
+import math
+import matplotlib.pyplot as plt
+import random
 from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIntValidator
@@ -12,6 +17,9 @@ from Greedy.Greedy import GreedyTsp
 from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+from tspgraph import TSPGraphViewer
 
 #uncomment for high resolution screen
 #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -22,15 +30,17 @@ class TSP(QDialog):
         loadUi("UI/TSP.ui", self)
         # List of available algorithms
         algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Random", "Greedy", "Minimum Spanning Tree", "Ant Colony", "Dynamic"]
+        self.matrix = []
         self.cboAlgo.clear()
         self.cboAlgo.addItems(algos)
         formats = ["Generator", "TSP Library"]
         self.cboFormat.addItems(formats)
-        self.frmUpload.move(10, 140)
+        self.frmUpload.move(10, 70)
         self.frmUpload.setHidden(True)
         self.frmResults.setHidden(True)
 
         self.btnRun.clicked.connect(self.on_run_clicked)
+        self.btnData.clicked.connect(self.load_data)
         self.btnBrowse_Open.clicked.connect(self.on_browse_open_clicked)
         self.btnBrowse_Save.clicked.connect(self.on_browse_save_clicked)
         self.btnClear.clicked.connect(self.on_btnClear_clicked)
@@ -41,6 +51,63 @@ class TSP(QDialog):
         self.txtConnect.setValidator(self.onlyInt)
         self.txtMin.setValidator(self.onlyInt)
         self.txtMax.setValidator(self.onlyInt)
+
+        ## a figure instance to plot on
+        self.figure = plt.figure()
+        self.canvas = FigureCanvas(self.figure)
+
+        # set the layout
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.canvas)
+        self.wdGraph.setLayout(layout)
+
+    def plot2(self, matrix):
+
+        self.canvas.figure.clf()
+        # create networkx graph
+        G=nx.Graph()
+
+        row_pos = 0
+        # add edges from adj matrix
+        for row in matrix:
+            col_pos = 0
+            for col in row:
+                if (col != math.inf and col != -1):
+                    G.add_edge(row_pos + 1, col_pos + 1, label=col)
+                col_pos +=1
+            row_pos +=1
+
+        # set layout and other settings
+        graph_pos=nx.shell_layout(G)
+        node_size = 1000
+        font_size = 12
+        node_colour = 'green'
+        vertex_count = len(matrix)
+        if vertex_count > 10:
+            node_size =500
+            font_size = 8
+
+        if vertex_count >= 30:
+            graph_pos=nx.random_layout(G)
+            node_size =250
+
+        if vertex_count >=50:
+            node_size =50
+            node_colour = 'black'
+
+        # draw graph
+        nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
+        nx.draw_networkx_edges(G,graph_pos,width=1,alpha=0.5,edge_color='blue')
+        if vertex_count < 70:
+            nx.draw_networkx_labels(G, graph_pos,font_size=font_size, font_family='sans-serif')
+
+        if vertex_count <= 10:
+            nx.draw_networkx_edge_labels(G, graph_pos, edge_labels={(u, v): d["label"] for u, v, d in G.edges(data=True)},
+                                     label_pos=0.4, font_size=8)
+
+        # show graph
+        plt.axis("off")
+        self.canvas.draw()
 
     def optGenerate_clicked(self):
         self.frmGenerate.setEnabled(self.optGenerate.isChecked())
@@ -54,6 +121,8 @@ class TSP(QDialog):
 
     def on_btnClear_clicked(self):
         self.frmResults.setHidden(True)
+        self.canvas.figure.clf()
+        self.canvas.draw()
 
     def on_browse_open_clicked(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '\data')
@@ -75,14 +144,16 @@ class TSP(QDialog):
             error_message += "Please enter a number for max edge weight. \n"
         return error_message
 
+    #hide the results frame
     def hide_frame(self, frame):
         frame.hide()
 
+    #how the results frame
     def show_frame(self, frame):
         frame.show()
 
-    @pyqtSlot()
-    def on_run_clicked(self):
+    #load the data
+    def load_data(self):
         # Create a new generator.
         generator = Generator()
         #first of all see what is selected from the data options
@@ -120,12 +191,22 @@ class TSP(QDialog):
                 parser = Parser()
                 matrix = parser.parse_file(file)
 
-        #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
+        #Plot the data
+        self.plot2(matrix)
+        return matrix
 
+
+    @pyqtSlot()
+    def on_run_clicked(self):
+        if len(self.matrix) == 0:
+            self.matrix = self.load_data()
+
+        #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Now we have the data, process the selected algorithm
         upper_bound = 0
         best_path = []
         run_time = 0
+        matrix = self.matrix
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             upper_bound, best_path, run_time = algo.run_branch_and_bound(matrix)

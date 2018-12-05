@@ -63,15 +63,15 @@ class Generator:
 # RUN EXAMPLE:
 
 # Create a new generator.
-generator = Generator()
+#generator = Generator()
 
 # Generate a new matrix with given parameters.
-matrix = generator.generate(8, 2, 2, 9999, True)
+#matrix = generator.generate(8, 2, 2, 9999, True)
 
 # Save the matrix locally.
-generator.save_to_file(matrix, 'test_files/test_matrix')
+#generator.save_to_file(matrix, 'test_files/test_matrix')
 
 # Read and print the matrix
-matrix = generator.read_from_file('test_files/test_matrix')
+#matrix = generator.read_from_file('test_files/test_matrix')
 
-generator.print_nicely(matrix)
+#generator.print_nicely(matrix)
