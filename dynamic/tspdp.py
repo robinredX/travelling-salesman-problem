@@ -98,59 +98,65 @@ class TspDp( object ):
       P=[0]*self._nb_node
       P=[[None]*nb_subset for _ in range(0,self._nb_node)]      
 
-      
+      T = {}
+      T_first = {}
       for node in range(0,self._nb_node):
-         T[node] = {}
-         T_first[node] = {}
+
          P[node] = {}
+         T[node]={}
          T[node][(1<<node)] = self._input[node][start_node]
-            
+
 
       #print(self.get_size(T_first))
       process = psutil.Process(os.getpid())
-    
-      
+
+
       # compute cost for all the sets of node by increasing size.
-      #A set of size N requires cost of sets of size N-1 
+      #A set of size N requires cost of sets of size N-1
       for k in range(2,self._nb_node):
-         #print(k) 
-        
-         #print(process.memory_info().rss)  
+
+         #print(process.memory_info().rss)
          subset_list = self.generate_subset_by_size(self._nb_node, k, start_node)
          #print("Nb set=",len(subset_list))
+
          for subset in subset_list:
             for first_node in range(0,self._nb_node):
+
                if (first_node!=start_node) and ((subset>>first_node)&1):
-                  #print("first_node="+str(first_node))          
-                  mask = subset^(1<<first_node) 
+                  #print("first_node="+str(first_node))
+                  mask = subset^(1<<first_node)
                   if mask:
                      min_cost = float("inf")
                      min_cost_node = -1
                      for next_node in range(0,self._nb_node):
                         if next_node!=start_node and next_node!=first_node and ((subset>>next_node)&1):
+                           #print("Next_node=",next_node,"  mask=",mask)
+                           #print(T)
+
                            if (T[next_node][mask]+self._input[next_node][first_node])<min_cost:
                               min_cost = T[next_node][mask]+self._input[first_node][next_node]
                               min_cost_node = next_node
 
-                     
+                     if first_node not in T_first.keys():
+                        T_first[first_node] = {}
                      T_first[first_node][subset] = min_cost
                      P[first_node][subset] = min_cost_node
+         #print("T_first=",T_first)
 
 
-            
          #print("***",self.get_size(T))
-         self.clear_dictionnary_list(T)   
+         self.clear_dictionnary_list(T)
          self.copy_dictionnary_list(T_first,T)
          self.clear_dictionnary_list(T_first)
          gc.collect()
-         #print(process.memory_info().rss) 
-         
-         
+         #print(process.memory_info().rss)
+
+
       complete_set=(1<<self._nb_node)-1
-      mask=complete_set^(1<<start_node)    
+      mask=complete_set^(1<<start_node)
       min_cost = float("inf")
-      first_node = -1      
-      
+      first_node = -1
+
 
       for node in range(0,self._nb_node):
          if node!=start_node:
@@ -158,14 +164,13 @@ class TspDp( object ):
             if min_cost > T[node][complete_set]:
                min_cost = T[node][complete_set]
                first_node = node
-               
+
       P[start_node][complete_set] = first_node
-                  
-     
+
       path=[start_node]
       first_node = start_node
       mask=complete_set
-      
+
       while mask in P[first_node].keys():
          next_node = P[first_node][mask]
          mask=mask^(1<<first_node)
@@ -173,25 +178,25 @@ class TspDp( object ):
          first_node=next_node
 
       end_time = time.time()
-      
+
       #print("Optimal Tour:", path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
       return min_cost, path, (end_time-start_time)
 
-   def clear_dictionnary_list(self,listOfDict): 
+   def clear_dictionnary_list(self,listOfDict):
       """" Delete all dictionnary keys in the list of dictionnary
       """
-      for item in listOfDict:
-         item.clear()
+      for item in listOfDict.keys():
+         listOfDict[item].clear()
+      listOfDict.clear()
+      listOfDict={}
 
-   def copy_dictionnary_list(self,sourceList,destList):
+   def copy_dictionnary_list(self,sourceDict,destDict):
       """" Copy all dictionnaries in the list of dictionnary
-      """   
-      for i in range(0,len(sourceList)):
-         destList[i] = sourceList[i].copy()
+      """
+      for key_node in sourceDict.keys():
+         destDict[key_node] = {}
+         destDict[key_node] = sourceDict[key_node].copy()
 
-
-
-   
    def get_size(self, obj, seen=None):
       """Recursively finds size of objects"""
       size = sys.getsizeof(obj)
@@ -210,22 +215,33 @@ class TspDp( object ):
          size += self.get_size(obj.__dict__, seen)
       elif hasattr(obj, '__iter__') and not isinstance(obj, (str, bytes, bytearray)):
          size += sum([self.get_size(i, seen) for i in obj])
-      return size     
-     
-      
-if __name__ == '__main__':
-   
-   #generator = Generator()
+      return size
 
-   matrix=[[9999,10,15,20],[5,999,9,10],[6,13,999,12],[8,8,9,999]]
-   #matrix = generator.read_from_file('test_files/test_matrix4')   
- 
-   #generator.print_nicely(matrix)  
+
+if __name__ == '__main__':
+
+   generator = Generator()
+
+   #matrix=[[9999,10,15,20],[5,999,9,10],[6,13,999,12],[8,8,9,999]]
+   #matrix = generator.read_from_file('test_files/test_matrix25')
+
+   #generator.print_nicely(matrix)
 
    #tslib_pb = tslib('E:/Dev/MLDMProoject/ALL_tsp/rat99.tsp.gz')
    #tslib_pb = tslib('E:/Dev/MLDMProoject/ALL_tsp/bayg29.tsp.gz')
    #matrix = tslib_pb.get_matrix()
-   #print(matrix) 
-   #print(datetime.datetime.now())  
-   tsp_pb = TspDp(matrix)
-   #print(datetime.datetime.now()) 
+   #print(matrix)
+   #print(datetime.datetime.now())
+   #tsp_pb = TspDp(matrix)
+   #print(datetime.datetime.now())
+
+   foutput=open("E:\Dev\MLDMProoject\Code\dynamic_test_result_atsp.txt",'w')
+   for k in range(3,25):
+      print("pb size=",k)
+      matrix = generator.read_from_file('test_files_lib/atsp_matrix_'+str(k))
+      tsp_pb = TspDp(matrix)
+      cost,path, runtime = tsp_pb.compute_sub_problems(0)
+      print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
+      foutput.write(str(cost) + "\t" + str(runtime) + "\t" + str(path)+"\n")
+
+   foutput.close()
