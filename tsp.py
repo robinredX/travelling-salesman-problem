@@ -30,6 +30,7 @@ class TSP(QDialog):
         loadUi("UI/TSP.ui", self)
         # List of available algorithms
         algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Random", "Greedy", "Minimum Spanning Tree", "Ant Colony", "Dynamic"]
+        self.matrix = []
         self.cboAlgo.clear()
         self.cboAlgo.addItems(algos)
         formats = ["Generator", "TSP Library"]
@@ -197,12 +198,15 @@ class TSP(QDialog):
 
     @pyqtSlot()
     def on_run_clicked(self):
-        matrix = self.load_data()
+        if len(self.matrix) == 0:
+            self.matrix = self.load_data()
+
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Now we have the data, process the selected algorithm
         upper_bound = 0
         best_path = []
         run_time = 0
+        matrix = self.matrix
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             upper_bound, best_path, run_time = algo.run_branch_and_bound(matrix)
