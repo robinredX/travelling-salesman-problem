@@ -1,19 +1,19 @@
 # antcolonyapproach.py
 
-The function antapproach accepts filename (e.g. "data.txt") as input
+The function antapproach accepts 2-D list as input.
 
 ## Installation Requirements
 
-Python 3
+Python 3 <br />
+Packages: time, math, random
 
 ### Usage
 
 ```python3
-import antcolonyapproach
-file = antcolonyapproach.antapproach("data.txt") # Replace data.txt with filename
-file.algo() # run file
-```
+import antcolonyapproach 
+Ant = antapproach(input) # Replace data.txt with filename
+Ant.algo()
+
 ### Note
 
-The algorithm selects any random node as first node of Optimal Tour since that is what required for Ant Colony Approach to find optimal solution. But I shall look into modifying this soon.
-Please remember that this code is not final yet. I need to look into the Value Error and ZeroDivisonError problem. For now, I passed these errors and the programme runs without errors and gives an output. However, it may not find very good solution because of this adjustment. I shall update it soon.
+I increased number of iterations and it now gives optimal solutions on Symmetric TSP problems (Checked on two TSP Problems). It takes around 2-3 minutes to run.
