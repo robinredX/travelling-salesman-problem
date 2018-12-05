@@ -1,3 +1,4 @@
+import copy
 import sys
 import networkx as nx
 import math
@@ -228,7 +229,7 @@ class TSP(QDialog):
         upper_bound = 0
         best_path = []
         run_time = 0
-        matrix = self.matrix
+        matrix = copy.deepcopy(self.matrix)
         if self.cboAlgo.currentText() == "Brute Force":
             brute = Brute(matrix)
             upper_bound, best_path, run_time = brute.algo()

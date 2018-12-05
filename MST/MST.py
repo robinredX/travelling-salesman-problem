@@ -140,26 +140,26 @@ class MST:
 # Run Example
 if __name__ == '__main__':
 
-# import Parser
-#
-# f = open('test_files/asymmetric/ft53.atsp', 'r')
-# parser = Parser.Parser()
-# matrix = parser.parse_file(f)
+    import Parser
 
-    inf = math.inf
-    matrix = [
-      [inf,   0,  10, 19,  123],
-      [12,  inf,  4,  4, 23],
-      [10,  3,  inf,  6,   20],
-      [2,   20, 6,  inf,   4],
-      [789, 2,  20, 4,   inf]
-    ]
+    f = open('gr24.tsp', 'r')
+    parser = Parser.Parser()
+    matrix = parser.parse_file(f)
+    parser.print_nicely(matrix)
+    # inf = math.inf
+    # matrix = [
+    #   [inf,   0,  10, 19,  123],
+    #   [12,  inf,  4,  4, 23],
+    #   [10,  3,  inf,  6,   20],
+    #   [2,   20, 6,  inf,   4],
+    #   [789, 2,  20, 4,   inf]
+    # ]
 
 
     mst = MST(matrix)
     start_time = time.time()
     tour, cost, run_time = mst.mst()
     #
-    # print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
-    # print(tour)
-    # print(cost)
+    print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
+    print(tour)
+    print(cost)
