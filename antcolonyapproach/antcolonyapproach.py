@@ -43,7 +43,7 @@ class antapproach(object):
 
         
         end_time = time.time() # End clock
-        print("Optimal Tour:", OptimalTour, ", Optimal Cost:", dist, ", time taken:", (end_time-start_time))    
+        return OptimalTour, dist, (end_time-start_time)  
         
 class combine(object):
     def __init__(self,dataset,l):
