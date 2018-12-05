@@ -74,9 +74,9 @@ class MST:
 
     def tour_cost(self, tour):
         cost = 0
-        print('tour len: ', len(tour))
+        # print('tour len: ', len(tour))
         for i in range(1, len(tour)):
-            print(self.matrix[tour[i-1]][tour[i]])
+            # print(self.matrix[tour[i-1]][tour[i]])
             cost += self.matrix[tour[i-1]][tour[i]]
 
         return cost
@@ -114,10 +114,9 @@ class MST:
                     key_values[node] = cur_row[node]
                     parents[node] = min_key_index
 
-        self.print_mst(parents)
+        # self.print_mst(parents)
 
         tree = self.construct_tree(parents)
-        print(tree)
         tour = self.dfs(tree)
         tour.append(0)
         cost = self.tour_cost(tour)
@@ -132,7 +131,7 @@ class MST:
             cost, opt_path, run_time = self.mst()
             if cost<min_cost:
                 min_cost = cost
-                opt_path = self.get_opt_path()
+                opt_path = opt_path
 
         end_time = time.time()
         return min_cost, opt_path, (end_time-start_time)
@@ -160,7 +159,7 @@ if __name__ == '__main__':
     mst = MST(matrix)
     start_time = time.time()
     tour, cost, run_time = mst.mst()
-
-    print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
-    print(tour)
-    print(cost)
+    #
+    # print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
+    # print(tour)
+    # print(cost)
