@@ -34,11 +34,12 @@ class TSP(QDialog):
         self.cboAlgo.addItems(algos)
         formats = ["Generator", "TSP Library"]
         self.cboFormat.addItems(formats)
-        self.frmUpload.move(10, 140)
+        self.frmUpload.move(10, 70)
         self.frmUpload.setHidden(True)
         self.frmResults.setHidden(True)
 
         self.btnRun.clicked.connect(self.on_run_clicked)
+        self.btnData.clicked.connect(self.load_data)
         self.btnBrowse_Open.clicked.connect(self.on_browse_open_clicked)
         self.btnBrowse_Save.clicked.connect(self.on_browse_save_clicked)
         self.btnClear.clicked.connect(self.on_btnClear_clicked)
@@ -61,7 +62,7 @@ class TSP(QDialog):
 
     def plot2(self, matrix):
 
-        self.figure.clf()
+        self.canvas.figure.clf()
         # create networkx graph
         G=nx.Graph()
 
@@ -119,7 +120,8 @@ class TSP(QDialog):
 
     def on_btnClear_clicked(self):
         self.frmResults.setHidden(True)
-        self.figure.clf()
+        self.canvas.figure.clf()
+        self.canvas.draw()
 
     def on_browse_open_clicked(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', '\data')
@@ -141,14 +143,16 @@ class TSP(QDialog):
             error_message += "Please enter a number for max edge weight. \n"
         return error_message
 
+    #hide the results frame
     def hide_frame(self, frame):
         frame.hide()
 
+    #how the results frame
     def show_frame(self, frame):
         frame.show()
 
-    @pyqtSlot()
-    def on_run_clicked(self):
+    #load the data
+    def load_data(self):
         # Create a new generator.
         generator = Generator()
         #first of all see what is selected from the data options
@@ -186,9 +190,15 @@ class TSP(QDialog):
                 parser = Parser()
                 matrix = parser.parse_file(file)
 
-        #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Plot the data
         self.plot2(matrix)
+        return matrix
+
+
+    @pyqtSlot()
+    def on_run_clicked(self):
+        matrix = self.load_data()
+        #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Now we have the data, process the selected algorithm
         upper_bound = 0
         best_path = []
