@@ -1,14 +1,16 @@
 # bruteforce.py
 
-The function bruteforce accepts filename (e.g. "data.txt") as input
+The function bruteforce accepts 2-D List as input
 
 ## Installation Requirements
 
 Python 3
+Packages required: math, time, itertools
 
 ## Usage
 
 ```python
-import bruteforce from bruteforce
-file = bruteforce.brute("data.txt") # Returns optimal tour, its cost and time taken; Replace data.txt with the filename
-file.algo()
+import brute from brute
+Brute = brute(input) # input is a 2-D list containing costs
+Brute.algo()
+"""
