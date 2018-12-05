@@ -1,26 +1,47 @@
-from __future__ import division # For floor division
-from os import path
 import time
 import math
 import random
-       
+
 class antapproach(object):
-    def __init__(self,filename):
-        self.name=filename
-    
+    def __init__(self,input, n=15, iteration=3500, a = 1, b = 1 , r = 0.9, q = 0.5, s = 2):
+        self.input=input
+        self.n = n # number of ants
+        self.iteration = iteration
+        self.a = a # parameter alpha; See definition of parameters at https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms#Convergence
+        self.b = b # Parameter beta
+        self.r = r # pheromone evaporation coefficient 
+        self.q = q # it's a constant
+        self.s = s # Update strategy
+        
     def algo(self):
         start_time = time.time() # Start clock
-        f = open(self.name, "r") # I didn't use numpy for this algorithm since I was getting errors in divisions as numpy 2d array was giving 0 for int/int.
-        dataset = [[int(num) for num in line.split(' ')] for line in f ]
+        
+        dataset = self.input
         for i in range(len(dataset)):
             for j in range(len(dataset)):
-                if dataset[i][j] == 0:
+                if dataset[i][j] == 0 or dataset[i][j]==-1:
                     dataset[i][j] = math.inf
+                    
+                    
         l = len(dataset)
         nodes = combine(dataset, l)
-        parameters = antcolony()
+        parameters = antcolony(self.n, self.iteration, self.a, self.b, self.r, self.q, self.s)
         dist, OptimalTour = parameters.ant(nodes)
         OptimalTour = [x+1 for x in OptimalTour]
+        
+        OptimalTour = list(OptimalTour)
+        
+        if OptimalTour[0] != 1:
+            for i in list(range(0,l)):
+                if OptimalTour[i] == 1:
+                    j = i
+            List1 = OptimalTour[0:j]
+            List2 = OptimalTour[j:l]
+            OptimalTour = List2 + List1
+        
+        OptimalTour.append(1)
+
+        
         end_time = time.time() # End clock
         print("Optimal Tour:", OptimalTour, ", Optimal Cost:", dist, ", time taken:", (end_time-start_time))    
         
@@ -31,14 +52,14 @@ class combine(object):
         self.pheromone = [[1/(l*l) for j in range(l)] for i in range(l)]
   
 class antcolony(object):
-    def __init__(self):
-        self.n = 7 # number of ants
-        self.iteration = 500
-        self.a = 1 # parameter alpha; See definition of parameters at https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms#Convergence
-        self.b = 3 # Parameter beta
-        self.r = 0.5 # pheromone evaporation coefficient 
-        self.q = 10 # it's a constant
-        self.s = 2 # Update strategy
+    def __init__(self,n,iteration,a,b,r,q,s):
+        self.n = n # number of ants
+        self.iteration = iteration
+        self.a = a # parameter alpha; See definition of parameters at https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms#Convergence
+        self.b = b # Parameter beta
+        self.r = r # pheromone evaporation coefficient 
+        self.q = q # it's a constant
+        self.s = s # Update strategy
     
     def pheromoneupdate(self, nodes, run):
         for i, row in enumerate(nodes.pheromone):
@@ -92,12 +113,12 @@ class selection(object):
             if i in self.next:
                 if self.nodes.dataset[self.current][i] != math.inf:
                     try:
-                        p[i] = float(self.nodes.pheromone[self.current][i]**self.colony.a * self.prob[self.current][i]**self.colony.b) /(sum)               
+                        p[i] = (self.nodes.pheromone[self.current][i]**self.colony.a * self.prob[self.current][i]**self.colony.b) /(sum)               
                     except ZeroDivisionError:
                         pass            # To avoid division by zero since sum is originally 0
         # select next node
         select = 0
-        randomvalue = 0.6 # Select a random value between 0 and 1
+        randomvalue = random.random() # Select a random value between 0 and 1
         for i, d in enumerate(p):
             randomvalue = randomvalue - d
             if randomvalue <= 0:
