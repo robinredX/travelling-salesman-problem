@@ -2,21 +2,12 @@ import math
 import random
 import numpy as np
           
-CHROMOSOME_LENGTH = 7
-DISTANCES =np.array ([ 
-                        [0,  34, 36, 37, 31, 33, 35], #1
-                        [34,  0, 29, 23, 22, 25, 24], #2
-                        [36, 29,  0, 17, 12, 18, 17], #3
-                        [37, 23, 17,  0, 32, 30, 29], #4
-                        [31, 22, 12, 32,  0, 26, 24], #5
-                        [33, 25, 18, 30, 26,  0, 19], #6
-                        [35, 24, 17, 29, 24,  19, 0]  #7
-     
-                   ])
+CHROMOSOME_LENGTH = 0
+DISTANCES = []
 
 POPULATION_SIZE = 10
-
 GENERATION_NUM = 10
+
 class Gene:
    def __init__(self, geneName = None, id = 0):
       self.geneName = geneName
@@ -32,7 +23,7 @@ class Gene:
    def __repr__(self):
       name = self.getGeneName()
       id = self.getGeneId() + 1
-      return f'{name} ({id})' 
+      return name
 
 
 class Individual:
@@ -215,32 +206,43 @@ class Universe:
 
 
 
+class Genetic:
+    def __init__(self, matrix):
+        """
+        Takes cost matrix as a list and starts journey from 1st node.
+        """
+        self.matrix = matrix
 
 
+    def main(self):
+        cities =[]
+        global DISTANCES
+        global CHROMOSOME_LENGTH
+        DISTANCES = self.matrix
+        CHROMOSOME_LENGTH = len(self.matrix)
+        self.matrix = np.array(self.matrix)
+        for i in range (0, self.matrix.shape[0]):
+            city = Gene(str(i + 1), i)
+            cities.append(city)
+        print(cities)
+        tour1 = Individual(cities)
+        initialPopulation = [tour1]
+        for i in range(1, POPULATION_SIZE):
+            newTour = Individual(cities.copy())
+            random.shuffle(newTour)
+            initialPopulation.append(newTour)
 
-def main():
-    cities =[]
-    for i in range (0, DISTANCES.shape[0]):
-        city = Gene(f"City: {i+1}", i)
-        cities.append(city)
-    print(cities)
-    tour1 = Individual(cities)
-    initialPopulation = [tour1]
-    for i in range(1, POPULATION_SIZE):
-        newTour = Individual(cities.copy())
-        random.shuffle(newTour)
-        initialPopulation.append(newTour)
+        print(initialPopulation)
 
-    print(initialPopulation)
+        pop = Population(initialPopulation, POPULATION_SIZE)
+        univ = Universe()
+        for i in range(0,GENERATION_NUM):
+            print("Pop: ,", pop.individuals)
+            pop = univ.breed(pop)
 
-    pop = Population(initialPopulation, POPULATION_SIZE)
-    univ = Universe()
-    for i in range(0,GENERATION_NUM):
-        print("Pop: ,", pop.individuals)
-        pop = univ.breed(pop)
-
-    fittest = pop.getFittest()
-    print("Fittest is : ", fittest, " , With Fitness: ", fittest.getFitness())
+        fittest = pop.getFittest()
+        return fittest.getFitness(), fittest, 0
+        #print("Fittest is : ", fittest, " , With Fitness: ", fittest.getFitness())
 
 
-main()
+#main()

@@ -12,6 +12,7 @@ from bruteforce.bruteforce import Brute
 from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
+from GeneticTSP.GeneticAlgorithm import Genetic
 from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
@@ -26,7 +27,7 @@ class TSP(QDialog):
         super(TSP, self).__init__()
         loadUi("UI/TSP.ui", self)
         # List of available algorithms
-        algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Random", "Greedy", "Minimum Spanning Tree", "Ant Colony", "Dynamic"]
+        algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Random", "Greedy", "Minimum Spanning Tree", "Genetic", "Ant Colony", "Dynamic"]
         self.matrix = []
         self.cboAlgo.clear()
         self.cboAlgo.addItems(algos)
@@ -186,7 +187,7 @@ class TSP(QDialog):
                 minWgt = int(self.txtMin.text())
                 maxWgt = int(self.txtMax.text())
                 if minWgt >= maxWgt:
-                    QMessageBox.question(self, 'Generator validaion', "Min edge weight must be less than max edge weight.", QMessageBox.Ok)
+                    QMessageBox.question(self, 'Generator validation', "Min edge weight must be less than max edge weight.", QMessageBox.Ok)
                     return
                 symmetric = self.chkSym.isChecked()
                 # Generate a new matrix with given parameters.
@@ -195,7 +196,7 @@ class TSP(QDialog):
                 if len(self.txtSaveAs.text()) > 0:
                     generator.save_to_file(matrix, self.txtSaveAs.text())
             else:
-                QMessageBox.question(self, 'Generator validaion', errors, QMessageBox.Ok)
+                QMessageBox.question(self, 'Generator validation', errors, QMessageBox.Ok)
                 return
         else:
             #check for a file path
@@ -239,6 +240,10 @@ class TSP(QDialog):
         elif self.cboAlgo.currentText() == "Minimum Spanning Tree":
             algo = MST(matrix)
             upper_bound, best_path, run_time = algo.mst()
+
+        elif self.cboAlgo.currentText() == "Genetic":
+            algo = Genetic(matrix)
+            upper_bound, best_path, run_time = algo.main()
 
         elif self.cboAlgo.currentText() == "Greedy":
             algo = GreedyTsp(matrix)
