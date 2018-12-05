@@ -6,7 +6,8 @@ import math
 import itertools as it
 import time
 
-class brute(object):
+
+class Brute:
     def __init__(self, input, startnode = 0):
         """
         Takes cost matrix as a list and starts journey from 1st node.
@@ -15,6 +16,7 @@ class brute(object):
         self.startnode = startnode
         
     def algo(self):
+        start_time = time.time() # Start clock
         dataset = self.input        
         l = len(dataset) # number of nodes
         for i in list(range(0,1)):
@@ -60,11 +62,12 @@ class brute(object):
             list2 = OptimalTour[(j-1):(l-1)]
             OptimalTour = list1 + list2
             end_time = time.time()
-            
-        print("Optimal Tour:", OptimalTour, ", Optimal Cost:", int(mindist), ", time taken:", (end_time-start_time))    
+
+        return int(mindist), OptimalTour, end_time - start_time
+        #print("Optimal Tour:", OptimalTour, ", Optimal Cost:", int(mindist), ", time taken:", (end_time-start_time))
         
-if __name__ == "__main__":
-    matrix = [[0,10,0,20,4],[5,0,9,0,2],[6,0,0,12,43],[8,8,9,0,22],[2,2,250,2,0]]
+#if __name__ == "__main__":
+    #matrix = [[0,10,0,20,4],[5,0,9,0,2],[6,0,0,12,43],[8,8,9,0,22],[2,2,250,2,0]]
     start_time = time.time() # Start clock
-    result = brute(matrix) 
-    result.algo()   
+    #result = Brute(matrix)
+    #result.algo()

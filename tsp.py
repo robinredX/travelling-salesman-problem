@@ -8,6 +8,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox
 from PyQt5.uic import loadUi
 from branchandbound.BranchAndBoundTSP import BranchAndBound
+from bruteforce.bruteforce import Brute
 from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
@@ -227,6 +228,10 @@ class TSP(QDialog):
         best_path = []
         run_time = 0
         matrix = self.matrix
+        if self.cboAlgo.currentText() == "Brute Force":
+            brute = Brute(matrix)
+            upper_bound, best_path, run_time = brute.algo()
+
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
             upper_bound, best_path, run_time = algo.run_branch_and_bound(matrix)
