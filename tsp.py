@@ -1,10 +1,7 @@
 import sys
-import numpy as np
 import networkx as nx
 import math
 import matplotlib.pyplot as plt
-import random
-from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import pyqtSlot
@@ -18,8 +15,7 @@ from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-from tspgraph import TSPGraphViewer
+
 
 #uncomment for high resolution screen
 #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -61,7 +57,7 @@ class TSP(QDialog):
         layout.addWidget(self.canvas)
         self.wdGraph.setLayout(layout)
 
-    def plot2(self, matrix):
+    def plot_initial(self, matrix):
 
         self.canvas.figure.clf()
         # create networkx graph
@@ -104,6 +100,30 @@ class TSP(QDialog):
         if vertex_count <= 10:
             nx.draw_networkx_edge_labels(G, graph_pos, edge_labels={(u, v): d["label"] for u, v, d in G.edges(data=True)},
                                      label_pos=0.4, font_size=8)
+
+        # show graph
+        plt.axis("off")
+        self.canvas.draw()
+
+    def plot_path(self, path):
+
+        self.canvas.figure.clf()
+        # create networkx graph
+        G=nx.Graph()
+
+        row_pos = 0
+
+        G.add_path(nodes=path)
+        # set layout and other settings
+        graph_pos=nx.shell_layout(G)
+        node_size = 1000
+        font_size = 12
+        node_colour = 'green'
+
+        # draw graph
+        nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
+        nx.draw_networkx_edges(G,graph_pos,width=1,alpha=0.5,edge_color='red')
+        nx.draw_networkx_labels(G, graph_pos,font_size=font_size, font_family='sans-serif')
 
         # show graph
         plt.axis("off")
@@ -192,14 +212,14 @@ class TSP(QDialog):
                 matrix = parser.parse_file(file)
 
         #Plot the data
-        self.plot2(matrix)
-        return matrix
+        self.plot_initial(matrix)
+        self.matrix = matrix
 
 
     @pyqtSlot()
     def on_run_clicked(self):
         if len(self.matrix) == 0:
-            self.matrix = self.load_data()
+            self.load_data()
 
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Now we have the data, process the selected algorithm
@@ -232,7 +252,7 @@ class TSP(QDialog):
         self.lblPath.setText("Best Path: " + str(best_path))
         self.lblExec.setText("Execution Time (s): " + str(round(run_time, 2)))
         self.show_frame(self.frmResults)
-
+        self.plot_path(best_path)
 
 
 if __name__ == '__main__':
