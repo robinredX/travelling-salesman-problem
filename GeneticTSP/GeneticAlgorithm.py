@@ -1,6 +1,7 @@
 import math
 import random
 import numpy as np
+import time
           
 CHROMOSOME_LENGTH = 0
 DISTANCES = []
@@ -215,6 +216,7 @@ class Genetic:
 
 
     def main(self):
+        start_time = time.time()
         cities =[]
         global DISTANCES
         global CHROMOSOME_LENGTH
@@ -241,7 +243,7 @@ class Genetic:
             pop = univ.breed(pop)
 
         fittest = pop.getFittest()
-        return fittest.getFitness(), fittest, 0
+        return fittest.getFitness(), fittest, time.time() - start_time
         #print("Fittest is : ", fittest, " , With Fitness: ", fittest.getFitness())
 
 

@@ -136,7 +136,6 @@ class BranchAndBound:
         #ensure all the zeros or negative values are set to inifinity,
         #zero has a special meaining for this algorithnm
         data[data <= 0] = math.inf
-        print(data)
         #set the upper bound to infinity
         self.upper_bound
         self.upper_bound = math.inf

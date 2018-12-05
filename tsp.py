@@ -18,7 +18,7 @@ from MST.MST import MST
 from Generator import Generator
 from Parser import Parser
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
+from BnBAddingRemovingEdges.BnB import AddRemoveEdges
 
 #uncomment for high resolution screen
 #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -244,6 +244,10 @@ class TSP(QDialog):
 
         elif self.cboAlgo.currentText() == "Genetic":
             algo = Genetic(matrix)
+            upper_bound, best_path, run_time = algo.main()
+
+        elif self.cboAlgo.currentText() == "Add and Remove Edges":
+            algo = AddRemoveEdges(matrix)
             upper_bound, best_path, run_time = algo.main()
 
         elif self.cboAlgo.currentText() == "Greedy":
