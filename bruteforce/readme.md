@@ -1,6 +1,7 @@
 # bruteforce.py
 
-The function bruteforce accepts 2-D List as input
+Class brute accepts 2-D List as input <br />
+Run algorithm using algo attribute
 
 ## Installation Requirements
 
