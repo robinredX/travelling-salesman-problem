@@ -251,6 +251,9 @@ class Genetic:
         #print("Fittest is : ", fittest, " , With Fitness: ", fittest.getFitness())
 
 
+'''uncomment the following block for testing'''
+
+'''
 DISTANCES =np.array ([ 
 
                 [  0, 633, 257,  91, 412, 150,  80, 134, 259, 505, 353, 324,  70, 211, 268, 246, 121],
@@ -276,3 +279,4 @@ DISTANCES =np.array ([
 ga = Genetic(DISTANCES)
 
 print(ga.main())
+'''
