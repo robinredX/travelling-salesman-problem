@@ -58,7 +58,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if 'EOF' in line:
+            if 'DISPLAY_DATA_SECTION' in line or 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
@@ -95,7 +95,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if 'EOF' in line:
+            if 'DISPLAY_DATA_SECTION' in line or 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
@@ -134,7 +134,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if 'EOF' in line:
+            if 'DISPLAY_DATA_SECTION' in line or 'EOF' in line:
                 break
 
             # Calculate and store Longitude and Latitude
@@ -190,7 +190,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if 'EOF' in line:
+            if 'DISPLAY_DATA_SECTION' in line or 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
