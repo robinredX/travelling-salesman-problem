@@ -49,7 +49,7 @@ class brute:
                     j = i
             List1 = OptimalTour[0:j]
             List2 = OptimalTour[j:l]
-            OptimalTour = List1 + List2
+            OptimalTour = List2 + List1
         
         OptimalTour.append(1)
         end_time = time.time()
