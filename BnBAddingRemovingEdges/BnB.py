@@ -29,7 +29,6 @@ class AddRemoveEdges:
         if(rows ==  0 or cols == 0):
             return matrix, lowerBound
 
-        # print(matrix)
         rowsMin = np.nanmin(matrix,axis =1)
         where_are_NaNs = np.isnan(rowsMin)
         where_are_Inf = np.isinf(rowsMin)
@@ -37,7 +36,6 @@ class AddRemoveEdges:
         rowsMin[where_are_Inf] = 0
         rowsMin = rowsMin.reshape(rows,1)
 
-        # print("rowsMin: ", rowsMin)
         matrix = matrix  - rowsMin
 
         colsMin = np.nanmin(matrix, axis = 0)
@@ -47,7 +45,6 @@ class AddRemoveEdges:
         colsMin[where_are_Inf] = 0
         colsMin = colsMin.reshape(1,cols)
 
-        # print("cols Min : ", colsMin)
 
         matrix = matrix - colsMin
 
@@ -83,17 +80,8 @@ class AddRemoveEdges:
                         splittingCandidateCol = j
                         splittingCandidateRow = i
 
-        # print("maximumLowerBound for splitting: ", maximumLowerBound)
         return splittingCandidateRow, splittingCandidateCol
 
-    # def includeEdge(self, matrix, i,j, lowerBound):
-
-    #     matrix[j,i] = INFINITY
-    #     matrix[i,:] = np.full((1,matrix.shape[1]), np.nan)
-    #     matrix[:,j] = np.full((1,matrix.shape[0]), np.nan)
-
-    #     matrix, lowerBound = self.reduceMatrix(matrix, lowerBound)
-    #     return matrix, lowerBound
 
 
     def excludeEdge(self, matrix, i, j,lowerBound):
@@ -129,6 +117,7 @@ class AddRemoveEdges:
 
         sol = solution.copy()
         edgeToPrint = str(i+1) + "," + str(j+1)
+
         sol.append(edgeToPrint)
         if len(sol) != matrix.shape[0] -1:
             subpathes=[]
@@ -139,15 +128,12 @@ class AddRemoveEdges:
                 subpath.append(edge)
                 noMore = True
                 newTraget = target
-                print("Sol: ", sol)
                 while noMore:      
                     # print("Stuck Here", matrix.shape[0])
                     # print("Stuck Here", sol)
-                    print("new target: ", newTraget)
                     # matching = [s for s in sol if str('\'',newTraget+',') in s]
                     matching = [s for s in sol if newTraget == s.split(",")[0]]
                     # matching
-                    print("matching: ", matching)
                     if len(matching) == 0:
                         noMore = False
                         break
@@ -179,7 +165,6 @@ class AddRemoveEdges:
 
         partialSolution = np.full((1, matrix.shape[0]), -1)
         partialSolution = partialSolution[0]
-        print(partialSolution)
         for edge in solution:
             source = edge.split(",")[0]
             target = edge.split(",")[1]
@@ -188,7 +173,6 @@ class AddRemoveEdges:
             source = source -1
             target = target -1
             partialSolution[source] = target
-        print("Partial Solution", partialSolution)
 
         first = 0
         last = partialSolution[0]
@@ -200,57 +184,54 @@ class AddRemoveEdges:
                 return False
             visitedNodes[last] = True
             last = partialSolution[last]
-            print(last+1)
 
-        # print(visitedNodes.tolist())
-        # print(all(visitedNodes.tolist()))
         if all(visitedNodes.tolist()):
             return True
 
         return False
 
     def branchAndBound(self, matrix, lowerBound, solution,  depth, name = "root"):
-        print("----------------------")
-        print(name)
-        print("depth: ", depth)
-        print('initial lowerBound: ', lowerBound)
-        print('current upperBound: ', self.upperBound)
-        print('\nCurrentMatrix:\n ', matrix)
+        # print("----------------------")
+        # print(name)
+        # print("depth: ", depth)
+        # print('initial lowerBound: ', lowerBound)
+        # print('current upperBound: ', self.upperBound)
+        # print('\nCurrentMatrix:\n ', matrix)
 
         if lowerBound > self.upperBound:
-            print ("lower bound is : ",lowerBound, "and higher than the found upperBound: ",self.upperBound, " prunned")
+            # print ("lower bound is : ",lowerBound, "and higher than the found upperBound: ",self.upperBound, " prunned")
             return
 
         if depth == matrix.shape[0] :
             if self.isValidSolution(matrix, solution):
-                print("found solution: ")
-                print(solution)
-                print("cost: ", lowerBound)
+                # print("found solution: ")
+                # print(solution)
+                # print("cost: ", lowerBound)
                 if lowerBound < self.upperBound:
                     self.upperBound = lowerBound
                     self.bestSol = solution.copy()
                 return matrix
             else:
                 if depth == matrix.shape[0] :
-                    print('no valid solution')
+                    # print('no valid solution')
                     return
 
 
         i,j = self.chooseSplittingEdge(matrix)
-        print("split on: ", i+1, " ", j+1)
+        # print("split on: ", i+1, " ", j+1)
 
 
         includeEdgeMat,IncludeLowerBound = self.includeEdge(np.copy(matrix), i,j, lowerBound, solution)
         edgeToPrint = str(i+1) + "," + str(j+1)
         edge = str(i) + "," + str(j)
         # print("include(",edgeToPrint," )", "\nCost: ", IncludeLowerBound," \nMatrix: \n",includeEdgeMat )
-        print("include(",edgeToPrint," )", "\nCost: ", IncludeLowerBound)
+        # print("include(",edgeToPrint," )", "\nCost: ", IncludeLowerBound)
         solution.append(edgeToPrint)
         self.branchAndBound(includeEdgeMat, IncludeLowerBound, solution, depth+1, name = "Solution with " + edgeToPrint)
         solution.pop()
 
         excludeEdgeMat,excludeLowerBound = self.excludeEdge(np.copy(matrix), i, j, lowerBound)
-        print("exclude(",i+1," ",j+1," )",  "\nCost: ", excludeLowerBound)
+        # print("exclude(",i+1," ",j+1," )",  "\nCost: ", excludeLowerBound)
 
         self.branchAndBound(excludeEdgeMat, excludeLowerBound, solution, depth+1,name = "Solution without " + edgeToPrint)
 
@@ -275,6 +256,7 @@ class AddRemoveEdges:
 
 
 ''' Uncomment the above code to test  '''
+
 '''
 DISTANCES =  [ 
 
@@ -301,4 +283,3 @@ DISTANCES =  [
 a = AddRemoveEdges(DISTANCES)
 print(a.main())
 '''
-
