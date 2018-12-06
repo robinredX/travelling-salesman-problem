@@ -163,7 +163,6 @@ class BranchAndBound:
             while working_node.number_of_children < 2:
                 if working_node.vertex_id != self.start_vertex:
                     working_node.status = status
-                    print(working_node.vertex_id)
                 working_node = self.find_node_in_list_by_node_id(working_node.parent_node_id, tree_nodes)
                 if(working_node == None):
                     break
