@@ -208,11 +208,13 @@ class Universe:
 
 
 class Genetic:
-    def __init__(self, matrix):
+    def __init__(self, matrix, population_size = 10, generation_number = 10):
         """
         Takes cost matrix as a list and starts journey from 1st node.
         """
         self.matrix = matrix
+        self.population_size = population_size
+        self.generation_number = generation_number
 
 
     def main(self):
@@ -222,6 +224,8 @@ class Genetic:
         global CHROMOSOME_LENGTH
         DISTANCES = self.matrix
         CHROMOSOME_LENGTH = len(self.matrix)
+        POPULATION_SIZE = self.population_size
+        GENERATION_NUM = self.generation_number
         self.matrix = np.array(self.matrix)
         for i in range (0, self.matrix.shape[0]):
             city = Gene(str(i + 1), i)

@@ -2,8 +2,8 @@ import time
 import math
 import random
 
-class antapproach(object):
-    def __init__(self,input, n=15, iteration=3500, a = 1, b = 1 , r = 0.9, q = 0.5, s = 2):
+class AntApproach:
+    def __init__(self, input, n=15, iteration=3500, a=1, b=1 , r=0.9, q=0.5, s=2):
         self.input=input
         self.n = n # number of ants
         self.iteration = iteration
@@ -41,9 +41,8 @@ class antapproach(object):
         
         OptimalTour.append(1)
 
-        
         end_time = time.time() # End clock
-        return OptimalTour, dist, (end_time-start_time)  
+        return dist, OptimalTour, (end_time-start_time)
         
 class combine(object):
     def __init__(self,dataset,l):

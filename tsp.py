@@ -19,6 +19,7 @@ from Generator import Generator
 from Parser import Parser
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from BnBAddingRemovingEdges.BnB import AddRemoveEdges
+from antcolonyapproach.antcolonyapproach import AntApproach
 
 #uncomment for high resolution screen
 #QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
@@ -226,44 +227,48 @@ class TSP(QDialog):
 
         #TODO: Warn here if large dataset and BnB or Brute Force (maybe others)
         #Now we have the data, process the selected algorithm
-        upper_bound = 0
+        path_cost = 0
         best_path = []
         run_time = 0
         matrix = copy.deepcopy(self.matrix)
         if self.cboAlgo.currentText() == "Brute Force":
             brute = Brute(matrix)
-            upper_bound, best_path, run_time = brute.algo()
+            path_cost, best_path, run_time = brute.algo()
 
         if self.cboAlgo.currentText() == "Branch and Bound":
             algo = BranchAndBound()
-            upper_bound, best_path, run_time = algo.run_branch_and_bound(matrix)
+            path_cost, best_path, run_time = algo.run_branch_and_bound(matrix)
 
         elif self.cboAlgo.currentText() == "Minimum Spanning Tree":
             algo = MST(matrix)
-            upper_bound, best_path, run_time = algo.mst()
+            path_cost, best_path, run_time = algo.mst()
 
         elif self.cboAlgo.currentText() == "Genetic":
             algo = Genetic(matrix)
-            upper_bound, best_path, run_time = algo.main()
+            path_cost, best_path, run_time = algo.main()
 
         elif self.cboAlgo.currentText() == "Add and Remove Edges":
             algo = AddRemoveEdges(matrix)
-            upper_bound, best_path, run_time = algo.main()
+            path_cost, best_path, run_time = algo.main()
 
         elif self.cboAlgo.currentText() == "Greedy":
             algo = GreedyTsp(matrix)
-            upper_bound, best_path, run_time = algo.greedy_tsp()
+            path_cost, best_path, run_time = algo.greedy_tsp()
 
         elif self.cboAlgo.currentText() == "Dynamic":
             algo = TspDp(matrix)
-            upper_bound, best_path, run_time = algo.run()
+            path_cost, best_path, run_time = algo.run()
 
         elif self.cboAlgo.currentText() == "Random":
             algo = TspRandom(matrix)
-            upper_bound, best_path, run_time = algo.run()
+            path_cost, best_path, run_time = algo.run()
+
+        elif self.cboAlgo.currentText() == "Ant Colony":
+            ant_colony = AntApproach(matrix)
+            path_cost, best_path, run_time = ant_colony.algo()
 
         #set fields
-        self.lblDistance.setText("Best Distance: " + str(upper_bound))
+        self.lblDistance.setText("Best Distance: " + str(path_cost))
         self.lblPath.setText("Best Path: " + str(best_path))
         self.lblExec.setText("Execution Time (s): " + str(round(run_time, 2)))
         self.show_frame(self.frmResults)

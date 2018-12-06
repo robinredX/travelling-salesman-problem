@@ -137,7 +137,6 @@ class BranchAndBound:
         #zero has a special meaining for this algorithnm
         data[data <= 0] = math.inf
         #set the upper bound to infinity
-        self.upper_bound
         self.upper_bound = math.inf
         #perform the initial reduction and get the lower bound
         starting_reduced_matrix, lower_bound = self.calculate_reduction(data, 0, 0)
@@ -150,20 +149,15 @@ class BranchAndBound:
 
             #do a deep dive to the first leaf
             working_path, working_bound, working_node = self.deep_dive_from_node(working_node.vertex_id, working_node, tree_nodes)
-            print(working_path)
 
             #if we have a loop set the upper bound else keep looking for a loop
             if working_path[0] == working_path[-1]:
-                print("Tour")
                 status = "searched"
                 #set upper bound to the result of the dive if lower
                 if working_bound < self.upper_bound:
                     self.upper_bound = working_bound
                     self.best_path = working_path
-                print("Upper bound: " , self.upper_bound)
-                print("Best path found:", self.best_path)
             else:
-                print("No Tour ", working_node.status)
                 status = "pruned"
 
             while working_node.number_of_children < 2:

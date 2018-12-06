@@ -2,7 +2,7 @@ import itertools as it
 import math
 import time
 
-class brute:
+class Brute:
     def __init__(self, input, startnode = 0):
         """
         Takes input as 2D list; Outputs OptimalTour, OptimalCost and Time taken
