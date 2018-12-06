@@ -13,3 +13,4 @@ bruteforce/__pycache__/bruteforce.cpython-37.pyc
 branchandbound/__pycache__/BranchAndBoundTSP.cpython-37.pyc
 __pycache__/Parser.cpython-37.pyc
 __pycache__/Generator.cpython-37.pyc
+*.pyc

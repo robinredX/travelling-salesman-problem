@@ -29,7 +29,10 @@ class GreedyTsp( object ):
             total_cost += visit[1]
 
             row = self.matrix[visit[0]]
-            end_time = time.time()
+
+        total_cost += self.matrix[tour[-1]][0] if self.matrix[tour[-1]][0] < math.inf else 0
+        tour.append(0)
+        end_time = time.time()
         return total_cost, tour, (end_time-start_time)
 
 
@@ -68,7 +71,7 @@ if __name__ == '__main__':
      ]
 
 
-    g = Greedy(matrix)
+    g = GreedyTsp(matrix)
     start_time = time.time()
     cost, tour, runtime = g.greedy_tsp()
 
