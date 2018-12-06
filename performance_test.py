@@ -1,16 +1,16 @@
-import gzip
 import math
 import sys
 import copy
 
 from branchandbound.BranchAndBoundTSP import BranchAndBound
-from bruteforce.bruteforce import brute
+from bruteforce.bruteforce import Brute
 from dynamic.tspdp import TspDp
 from randomTSP.tsprandom import TspRandom
 from Greedy.Greedy import GreedyTsp
 from GeneticTSP.GeneticAlgorithm import Genetic
 from MST.MST import MST
 from BnBAddingRemovingEdges.BnB import AddRemoveEdges
+from antcolonyapproach.antcolonyapproach import AntApproach
 from Generator import Generator
 from Parser import Parser
 
@@ -198,8 +198,8 @@ if __name__ == '__main__':
     matrix = parser.parse_file(tsp_file)
     #print(matrix)
     #parser.print_nicely(matrix)
-    algo_list=["Brute Force","Branch and Bound","Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Dynamic","Random"]
-    algo_approx=["Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Random"]
+    algo_list=["Brute Force","Branch and Bound","Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Dynamic","Random","Ant Colony"]
+    algo_approx=["Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Random","Ant Colony"]
     algo_opt=["Brute Force","Branch and Bound","Add and Remove Edges","Dynamic"]
 
     for algo_sel in algo_approx:
@@ -235,5 +235,9 @@ if __name__ == '__main__':
         elif algo_sel == "Random":
             algo = TspRandom(cmatrix)
             upper_bound, best_path, run_time = algo.run()
+
+        elif algo_sel == "":
+            algo = AntApproach(matrix)
+            upper_bound, best_path, run_time = algo.algo()
 
         print(algo_sel,upper_bound, best_path, run_time )
