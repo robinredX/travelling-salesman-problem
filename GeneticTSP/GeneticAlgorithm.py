@@ -222,6 +222,8 @@ class Genetic:
         cities =[]
         global DISTANCES
         global CHROMOSOME_LENGTH
+        global POPULATION_SIZE
+        global GENERATION_NUM
         DISTANCES = self.matrix
         CHROMOSOME_LENGTH = len(self.matrix)
         POPULATION_SIZE = self.population_size

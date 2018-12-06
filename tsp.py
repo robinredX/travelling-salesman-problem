@@ -3,7 +3,7 @@ import sys
 import networkx as nx
 import math
 import matplotlib.pyplot as plt
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QMessageBox

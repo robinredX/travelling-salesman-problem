@@ -54,4 +54,4 @@ class Brute:
         OptimalTour.append(1)
         end_time = time.time()
         
-        return OptimalTour, mindist, (end_time-start_time)
+        return mindist, OptimalTour, (end_time-start_time)
