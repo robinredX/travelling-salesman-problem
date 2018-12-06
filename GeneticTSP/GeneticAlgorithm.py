@@ -14,6 +14,12 @@ class Gene:
       self.geneName = geneName
       self.geneId = id
 
+   def __getitem__(self, index):
+    return self.geneId
+
+   # def __setitem__(self, value):
+   #  self.geneId = value
+
    def getGeneName(self):
       return self.geneName
  
@@ -40,11 +46,23 @@ class Individual:
         return len(self.chromosomeGenes)
 
     def __repr__(self):
-        # geneString=""
-        # for i in range(0, len(self.chromosomeGenes)):
-        #     geneString += str(self.chromosomeGenes[i]) + "->"
-        self.chromosomeGenes.append(self.chromosomeGenes[0])
-        return str(self.chromosomeGenes)
+        firstCityIndex =0
+        # firstHalf = []
+        # secondHalf = []
+        for i in range(0, len(self.chromosomeGenes)):
+            # print(type(self.chromosomeGenes[i]))
+            if (self.chromosomeGenes[i].geneId == 0):
+                firstCityIndex = i 
+                break
+        firstHalf = self.chromosomeGenes[0:firstCityIndex]
+        secondHalf = self.chromosomeGenes[firstCityIndex:]
+        # print("first: ", firstHalf)
+        # print("second", secondHalf)
+        finalList = []
+        finalList.extend(secondHalf)
+        finalList.extend(firstHalf)
+        # print("Final List:", finalList)
+        return str(finalList)
 
     def __getitem__(self, index):
       return self.chromosomeGenes[index]
@@ -222,8 +240,6 @@ class Genetic:
         cities =[]
         global DISTANCES
         global CHROMOSOME_LENGTH
-        global POPULATION_SIZE
-        global GENERATION_NUM
         DISTANCES = self.matrix
         CHROMOSOME_LENGTH = len(self.matrix)
         POPULATION_SIZE = self.population_size
@@ -249,7 +265,10 @@ class Genetic:
             pop = univ.breed(pop)
 
         fittest = pop.getFittest()
-        return fittest.getFitness(), fittest, time.time() - start_time
+        # print(fittest.chromosomeGenes.index(0))
+        elapsedTime = time.time() - start_time
+
+        return fittest.getFitness(), fittest, elapsedTime
         #print("Fittest is : ", fittest, " , With Fitness: ", fittest.getFitness())
 
 
@@ -277,6 +296,7 @@ DISTANCES =np.array ([
                 [121, 518, 142, 84, 297,  35,  29,  36, 236, 390, 238, 301,  55,  96, 153, 336 ,  0 ]
      
                 ])
+
 
 ga = Genetic(DISTANCES)
 
