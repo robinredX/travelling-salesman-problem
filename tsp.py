@@ -65,7 +65,7 @@ class TSP(QDialog):
 
         self.canvas.figure.clf()
         # create networkx graph
-        G=nx.Graph()
+        graph = nx.Graph()
 
         row_pos = 0
         # add edges from adj matrix
@@ -73,12 +73,12 @@ class TSP(QDialog):
             col_pos = 0
             for col in row:
                 if (col != math.inf and col != -1):
-                    G.add_edge(row_pos + 1, col_pos + 1, label=col)
+                    graph.add_edge(row_pos + 1, col_pos + 1, label=col)
                 col_pos +=1
             row_pos +=1
 
         # set layout and other settings
-        graph_pos=nx.shell_layout(G)
+        graph_pos=nx.shell_layout(graph)
         node_size = 1000
         font_size = 12
         node_colour = 'green'
@@ -87,8 +87,8 @@ class TSP(QDialog):
             node_size =500
             font_size = 8
 
-        if vertex_count >= 30:
-            graph_pos=nx.random_layout(G)
+        if vertex_count > 20:
+            graph_pos=nx.random_layout(graph)
             node_size =250
 
         if vertex_count >=50:
@@ -96,13 +96,13 @@ class TSP(QDialog):
             node_colour = 'black'
 
         # draw graph
-        nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
-        nx.draw_networkx_edges(G,graph_pos,width=1,alpha=0.5,edge_color='blue')
+        nx.draw_networkx_nodes(graph,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
+        nx.draw_networkx_edges(graph,graph_pos,width=1,alpha=0.5,edge_color='blue')
         if vertex_count < 70:
-            nx.draw_networkx_labels(G, graph_pos,font_size=font_size, font_family='sans-serif')
+            nx.draw_networkx_labels(graph, graph_pos,font_size=font_size, font_family='sans-serif')
 
         if vertex_count <= 10:
-            nx.draw_networkx_edge_labels(G, graph_pos, edge_labels={(u, v): d["label"] for u, v, d in G.edges(data=True)},
+            nx.draw_networkx_edge_labels(graph, graph_pos, edge_labels={(u, v): d["label"] for u, v, d in graph.edges(data=True)},
                                      label_pos=0.4, font_size=8)
 
         # show graph
@@ -113,21 +113,34 @@ class TSP(QDialog):
 
         self.canvas.figure.clf()
         # create networkx graph
-        G=nx.Graph()
+        graph=nx.Graph()
 
         row_pos = 0
 
-        G.add_path(nodes=path)
+        graph.add_path(nodes=path)
         # set layout and other settings
-        graph_pos=nx.shell_layout(G)
+        graph_pos=nx.shell_layout(graph)
+
         node_size = 1000
         font_size = 12
         node_colour = 'green'
+        vertex_count = len(path)
+        if vertex_count > 10:
+            node_size =500
+            font_size = 8
+
+        if vertex_count > 20:
+            graph_pos=nx.random_layout(graph)
+            node_size =250
+
+        if vertex_count >=50:
+            node_size =50
+            node_colour = 'black'
 
         # draw graph
-        nx.draw_networkx_nodes(G,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
-        nx.draw_networkx_edges(G,graph_pos,width=1,alpha=0.5,edge_color='red')
-        nx.draw_networkx_labels(G, graph_pos,font_size=font_size, font_family='sans-serif')
+        nx.draw_networkx_nodes(graph,graph_pos,node_size=node_size, alpha=0.5, node_color=node_colour)
+        nx.draw_networkx_edges(graph,graph_pos,width=1,alpha=0.5,edge_color='red')
+        nx.draw_networkx_labels(graph, graph_pos,font_size=font_size, font_family='sans-serif')
 
         # show graph
         plt.axis("off")
@@ -216,7 +229,9 @@ class TSP(QDialog):
                 matrix = parser.parse_file(file)
 
         #Plot the data
-        self.plot_initial(matrix)
+        if not self.chkHideGraph.isChecked():
+            self.plot_initial(matrix)
+
         self.matrix = matrix
 
 
@@ -272,7 +287,8 @@ class TSP(QDialog):
         self.lblPath.setText("Best Path: " + str(best_path))
         self.lblExec.setText("Execution Time (s): " + str(round(run_time, 2)))
         self.show_frame(self.frmResults)
-        self.plot_path(best_path)
+        if not self.chkHideGraph.isChecked():
+            self.plot_path(best_path)
 
 
 if __name__ == '__main__':

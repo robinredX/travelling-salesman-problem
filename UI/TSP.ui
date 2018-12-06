@@ -511,6 +511,19 @@
     </property>
    </widget>
   </widget>
+  <widget class="QCheckBox" name="chkHideGraph">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>180</y>
+     <width>121</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Do not show graph</string>
+   </property>
+  </widget>
   <zorder>frmResults</zorder>
   <zorder>frmAlgo</zorder>
   <zorder>btnRun</zorder>
@@ -520,6 +533,7 @@
   <zorder>frmGenerate</zorder>
   <zorder>btnData</zorder>
   <zorder>frmUpload</zorder>
+  <zorder>chkHideGraph</zorder>
  </widget>
  <resources/>
  <connections/>
