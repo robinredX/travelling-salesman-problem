@@ -245,7 +245,7 @@ class AddRemoveEdges:
 
         reducedMat,lowerBound = self.reduceMatrix(x,lowerBound)
 
-        print(lowerBound)
+        # print(lowerBound)
         self.branchAndBound(reducedMat, lowerBound,[], 0)
         return self.upperBound, self.edges_to_node(self.bestSol), time.time() - start_time
 
@@ -256,7 +256,6 @@ class AddRemoveEdges:
 
 
 ''' Uncomment the above code to test  '''
-
 '''
 DISTANCES =  [ 
 
