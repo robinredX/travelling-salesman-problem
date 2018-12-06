@@ -58,7 +58,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if line.startswith('EOF'):
+            if 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
@@ -95,7 +95,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if line.startswith('EOF'):
+            if 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
@@ -134,7 +134,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if line.startswith('EOF'):
+            if 'EOF' in line:
                 break
 
             # Calculate and store Longitude and Latitude
@@ -178,7 +178,7 @@ class Parser:
                 q3 = math.cos(row_latitude + cell_latitude)
                 distance = RRR * math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0
 
-                matrix_row.append(distance)
+                matrix_row.append(int(distance))
 
             matrix.append(matrix_row)
 
@@ -190,7 +190,7 @@ class Parser:
         coord_data = []
 
         for line in file:
-            if line.startswith('EOF'):
+            if 'EOF' in line:
                 break
             values = list(filter(None, line.split(' ')))
             values[0] = int(values[0])
@@ -380,14 +380,14 @@ class Parser:
 
 # RUN EXAMPLE:
 
-## Open the problem file (Either .tsp or .atsp)
-# file = open('test_files/dsj1000.tsp', 'r')
-
-## Create a new generator.
+# # Open the problem file (Either .tsp or .atsp)
+# file = open('C:/data/ulysses16.tsp', 'r')
+#
+# # Create a new generator.
 # parser = Parser()
-
-## Parse the file into a weights matrix.
+#
+# # Parse the file into a weights matrix.
 # matrix = parser.parse_file(file)
-
-## Print the matrix in an easy to read format.
+#
+# # Print the matrix in an easy to read format.
 # parser.print_nicely(matrix)
