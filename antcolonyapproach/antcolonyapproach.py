@@ -3,7 +3,7 @@ import math
 import random
 
 class AntApproach:
-    def __init__(self, input, n=15, iteration=3500, a=1, b=1 , r=0.9, q=0.5, s=2):
+    def __init__(self, input, n=15, iteration=5000, a=1, b=1 , r=0.9, q=0.5, s=2):
         self.input=input
         self.n = n # number of ants
         self.iteration = iteration
@@ -97,7 +97,8 @@ class selection(object):
         # probability to visit a node
         self.prob = [[0 if i==j else 1/float(nodes.dataset[i][j]) for j in range(nodes.l)] for i in range(nodes.l)]
         # Select first node between 0 and (l-1) randomly
-        first = random.randint(0,(nodes.l-1)) 
+        random.seed(1)
+        first = random.randint(0,(nodes.l-1))
         # first = 0 # It did not work by changing first city to 0. I shall later update this.
         self.tour.append(first) # Add start to the tour
         self.current = first # Current node

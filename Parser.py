@@ -178,7 +178,7 @@ class Parser:
                 q3 = math.cos(row_latitude + cell_latitude)
                 distance = RRR * math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0
 
-                matrix_row.append(int(distance))
+                matrix_row.append(distance)
 
             matrix.append(matrix_row)
 
