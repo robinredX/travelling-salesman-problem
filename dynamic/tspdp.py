@@ -28,23 +28,19 @@ class TspDp( object ):
            ----------
            input: 2D list
            start_node : which node to start the TSP problem
-
         """
         self._input = input
         self._start_node = start_node
         self._nb_node = len(input[0])
         self._nb_subset = 1<<self._nb_node
         self._all_set = (1<<self._nb_node) - 1
-        self._indent=""
-        self.iter=0
         self.convert_no_link()
-        #print("Nb node:",self._nb_node)
-        #print("Nb subset:",self._nb_subset)
 
     def run(self):
         return self.compute_sub_problems(self._start_node)
 
     def convert_no_link(self):
+        """Change value for non connected nodes from -1 to INF"""
         for i in range(self._nb_node):
             for j in range(self._nb_node):
                 if self._input[i][j] == -1:
@@ -52,6 +48,7 @@ class TspDp( object ):
 
 
     def print_node_subset(self, subset):
+        """print the list of node in the subset"""
         node_list=[]
         k=0
         while subset:
@@ -62,8 +59,8 @@ class TspDp( object ):
         print(node_list)
 
 
-    def generate_subset_by_size(self,nb_node,subset_size, start_node):
-        """ Generate subset of subset_size nodes among nb_node nodes. Wihtou include start node.
+    def generate_subset_by_size(self, nb_node, subset_size, start_node):
+        """ Generate subset of subset_size nodes among nb_node nodes. Without include start node.
         """
         N=[]
         S=[]
@@ -71,9 +68,6 @@ class TspDp( object ):
         for i in range(nb_node):
             N.append(i)
         N.remove(start_node)
-        #print(N)
-
-
         for subset in (itertools.combinations(N, subset_size)):
             #print(subset)
             value = 0
@@ -101,10 +95,9 @@ class TspDp( object ):
         T = {}
         T_first = {}
         for node in range(0,self._nb_node):
-
             P[node] = {}
-            T[node]={}
-            T[node][(1<<node)] = self._input[node][start_node]
+            T[node] = {}
+            T[node][(1 << node)] = self._input[node][start_node]
 
 
         #print(self.get_size(T_first))
@@ -148,7 +141,6 @@ class TspDp( object ):
             gc.collect()
             #print(process.memory_info().rss)
 
-
         complete_set=(1<<self._nb_node)-1
         mask=complete_set^(1<<start_node)
         min_cost = float("inf")
@@ -163,7 +155,7 @@ class TspDp( object ):
 
         P[start_node][complete_set] = first_node
 
-        path=[start_node]
+        path=[start_node+1]
         first_node = start_node
         mask=complete_set
 
@@ -175,17 +167,16 @@ class TspDp( object ):
 
         path.append(self._start_node+1)
         end_time = time.time()
-
         #print("Optimal Tour:", path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
         return min_cost, path, (end_time-start_time)
 
     def clear_dictionnary_list(self,listOfDict):
-        """" Delete all dictionnary keys in the list of dictionnary
+        """" Delete all dictionary keys in the list of dictionary
         """
         for item in listOfDict.keys():
             listOfDict[item].clear()
         listOfDict.clear()
-        listOfDict={}
+        listOfDict = {}
 
     def copy_dictionnary_list(self,sourceDict,destDict):
         """" Copy all dictionnaries in the list of dictionnary
@@ -202,8 +193,6 @@ class TspDp( object ):
         obj_id = id(obj)
         if obj_id in seen:
             return 0
-        # Important mark as seen *before* entering recursion to gracefully handle
-        # self-referential objects
         seen.add(obj_id)
         if isinstance(obj, dict):
             size += sum([self.get_size(v, seen) for v in obj.values()])
@@ -245,17 +234,23 @@ if __name__ == '__main__':
 
     root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    foutput=open("E:\Dev\MLDMProoject\Code\dynamic_test_result_stsp_sparsity.txt",'w')
-    for k in range(3,24):
+    foutput = open("E:\Dev\MLDMProoject\Code\dynamic_test_result_atsp_sparsity3.txt",'w')
+    for k in range(18,20):
         print ("Nb Node=",k)
         for sparsity in range(2,k+2):
-            print(sparsity)
-            matrix = generator.read_from_file(root+'test_files_lib/stsp_matrix_'+str(k)+'_'+str(sparsity))
+            matrix = generator.read_from_file(root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
             generator.print_nicely(matrix)
             tsp_pb = TspDp(matrix)
-            cost, path, runtime = tsp_pb.compute_sub_problems(0)
-            print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
-            foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(runtime) + "\t" + str(path)+"\n")
+            print(sparsity)
+            cumul_time = 0
+            nb_it=1
+            start_time = time.time()
+            for it in range(0,nb_it):
+                cost, path, runtime = tsp_pb.compute_sub_problems(0)
+                #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
+            end_time = time.time()
+            cumul_time = (end_time-start_time)/nb_it
+            foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(cumul_time) + "\t" + str(path)+"\n")
     foutput.close()
 
 

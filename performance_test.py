@@ -190,9 +190,11 @@ LIST_OF_ASYMETRIC_PROBLEM=[
 
 if __name__ == '__main__':
     print("Start test")
-   
+
+    list_stsp=[21,53,142,144]
     #performance for approximative algo
-    path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[1]
+    path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[21]
+    print(path)
     tsp_file=open(path,'r')
     parser = Parser()
     matrix = parser.parse_file(tsp_file)
@@ -201,43 +203,60 @@ if __name__ == '__main__':
     algo_list=["Brute Force","Branch and Bound","Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Dynamic","Random","Ant Colony"]
     algo_approx=["Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Random","Ant Colony"]
     algo_opt=["Brute Force","Branch and Bound","Add and Remove Edges","Dynamic"]
+    algo_list=["Greedy","Random","Ant Colony","Genetic","Minimum Spanning Tree"]
+    root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    for algo_sel in algo_approx:
-        cmatrix = copy.deepcopy(matrix)
-        if algo_sel == "Brute Force":
-            brute = brute(cmatrix)
-            upper_bound, best_path, run_time = brute.algo()
+    foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp1.txt",'a')
 
-        if algo_sel == "Branch and Bound":
-            algo = BranchAndBound()
-            upper_bound, best_path, run_time = algo.run_branch_and_bound(cmatrix)
+    for i in range(0,len(LIST_OF_SYMETRIC_PROBLEM)):
+        if '.opt.' in LIST_OF_SYMETRIC_PROBLEM[i]:
+            continue
+        path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[i]
+        print(path)
+        tsp_file=open(path,'r')
+        parser = Parser()
+        matrix = parser.parse_file(tsp_file)
 
-        elif algo_sel == "Minimum Spanning Tree":
-            algo = MST(matrix)
-            upper_bound, best_path, run_time = algo.mst()
+        for algo_sel in algo_list:
+            print(algo_sel)
+            cmatrix = copy.deepcopy(matrix)
+            if algo_sel == "Brute Force":
+                brute = Brute(cmatrix)
+                upper_bound, best_path, run_time = brute.algo()
 
-        elif algo_sel == "Genetic":
-            algo = Genetic(cmatrix)
-            upper_bound, best_path, run_time = algo.main()
+            if algo_sel == "Branch and Bound":
+                algo = BranchAndBound()
+                upper_bound, best_path, run_time = algo.run_branch_and_bound(cmatrix)
 
-        elif algo_sel == "Add and Remove Edges":
-            algo = AddRemoveEdges(cmatrix)
-            upper_bound, best_path, run_time = algo.main()
+            elif algo_sel == "Minimum Spanning Tree":
+                algo = MST(cmatrix)
+                upper_bound, best_path, run_time = algo.mst()
 
-        elif algo_sel == "Greedy":
-            algo = GreedyTsp(cmatrix)
-            upper_bound, best_path, run_time = algo.greedy_tsp()
+            elif algo_sel == "Genetic":
+                algo = Genetic(cmatrix,50,100)
+                upper_bound, best_path, run_time = algo.main()
 
-        elif algo_sel == "Dynamic":
-            algo = TspDp(cmatrix)
-            upper_bound, best_path, run_time = algo.run()
+            elif algo_sel == "Add and Remove Edges":
+                algo = AddRemoveEdges(cmatrix)
+                upper_bound, best_path, run_time = algo.main()
 
-        elif algo_sel == "Random":
-            algo = TspRandom(cmatrix)
-            upper_bound, best_path, run_time = algo.run()
+            elif algo_sel == "Greedy":
+                algo = GreedyTsp(cmatrix)
+                upper_bound, best_path, run_time = algo.greedy_tsp()
 
-        elif algo_sel == "":
-            algo = AntApproach(matrix)
-            upper_bound, best_path, run_time = algo.algo()
+            elif algo_sel == "Dynamic":
+                algo = TspDp(cmatrix)
+                upper_bound, best_path, run_time = algo.run()
 
-        print(algo_sel,upper_bound, best_path, run_time )
+            elif algo_sel == "Random":
+                algo = TspRandom(cmatrix)
+                upper_bound, best_path, run_time = algo.run()
+
+            elif algo_sel == "Ant Colony":
+                algo = AntApproach(cmatrix,iteration=1000)
+                upper_bound, best_path, run_time = algo.algo()
+
+            #print(algo_sel,upper_bound, best_path, run_time )
+            foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp1.txt",'a')
+            foutput.write(LIST_OF_SYMETRIC_PROBLEM[i] + "\t" + algo_sel + "\t" + str(upper_bound) + "\t" + str(best_path) + "\t" + str(run_time))
+            foutput.close()
