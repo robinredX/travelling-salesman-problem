@@ -84,7 +84,7 @@ class TspRandom( object ):
             nb_node = 0
             Sprime = []
             for node in S:
-                if node != node_src and self._input[node_src][node]!=-1:
+                if node != node_src and self._input[node_src][node] != -1:
                     total_cost = total_cost + self._input[node_src][node]
                     nb_node = nb_node+1
                     Sprime.append(node)
@@ -194,28 +194,30 @@ if __name__ == '__main__':
 
     root='E:\\Dev\\MLDMProoject\\Code\\'
     root2='E:\Dev\GitHub\\Algo2\\tsp_project\\data\\'
-    #foutput = open("E:\Dev\MLDMProoject\Code\random_test_result_atsp_sparsity.txt",'a')
+    foutput = open(root+"random_test_result_stsp_sparsity.txt",'w')
     for k in range(3,26):
         print("Nb Node=",k)
         for sparsity in range(2,k+2):
             print("Sparcity=",sparsity)
             matrix = generator.read_from_file(root2+'stsp_matrix_'+str(k)+'_'+str(sparsity))
             generator.print_nicely(matrix)
-            # tsp_pb = TspDp(matrix)
-            # print(sparsity)
-            # cumul_time = 0
-            # nb_it=1
-            # start_time = time.time()
-            # for it in range(0,nb_it):
-                # cost, path, runtime = tsp_pb.compute_sub_problems(0)
-                # #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
-            # end_time = time.time()
-            # cumul_time = (end_time-start_time)/nb_it
-            # foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(cumul_time) + "\t" + str(path)+"\n")
-    # foutput.close()
+            tsp_pb = TspRandom(matrix)
+            print(sparsity)
+            cumul_time = 0
+            nb_it=100
+            start_time = time.time()
+            min_cost = math.inf
+            opt_path = []
+            for it in range(0,nb_it):
+                cost, path, runtime = tsp_pb.compute_sub_problems(0)
+                if cost<min_cost:
+                    min_cost = cost
+                    opt_path = path
+                #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
+            end_time = time.time()
+            cumul_time = (end_time-start_time)/nb_it
+            foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(min_cost) + "\t" + str(cumul_time) + "\t" + str(opt_path)+"\n")
+    foutput.close()
 
 
 
-    # min_cost, opt_path, duration = tsp_pb.run_time_limit_iteration(10,0)
-    # end_time = time.time()
-    # print("Tour:", opt_path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
