@@ -203,7 +203,7 @@ if __name__ == '__main__':
 
     foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp2.txt",'a')
 
-    for i in range(29,len(LIST_OF_SYMETRIC_PROBLEM)):
+    for i in range(42,len(LIST_OF_SYMETRIC_PROBLEM)):
         if '.opt.' in LIST_OF_SYMETRIC_PROBLEM[i]:
             continue
         path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[i]

@@ -223,35 +223,35 @@ if __name__ == '__main__':
 
     # Generate a new matrix with given parameters.
     # for k in range(3,26):
-    # print ("Nb Node=",k)
-    # for sparsity in range(2,k+2):
-    # print("****sparsity=",sparsity,"****")
-
-    # matrix = generator.generate(k, sparsity, 1, 1000, False)
-    # generator.print_nicely(matrix)
-    # # Save the matrix locally.
-    # generator.save_to_file(matrix, 'test_files_lib/stsp_matrix_'+str(k)+'_'+str(sparsity))
-
-    root='E:\\Dev\\MLDMProoject\\Code\\'
-
-    foutput = open("E:\Dev\MLDMProoject\Code\dynamic_test_result_atsp_sparsity3.txt",'w')
-    for k in range(18,20):
-        print ("Nb Node=",k)
-        for sparsity in range(2,k+2):
-            matrix = generator.read_from_file(root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
-            generator.print_nicely(matrix)
-            tsp_pb = TspDp(matrix)
-            print(sparsity)
-            cumul_time = 0
-            nb_it=1
-            start_time = time.time()
-            for it in range(0,nb_it):
-                cost, path, runtime = tsp_pb.compute_sub_problems(0)
-                #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
-            end_time = time.time()
-            cumul_time = (end_time-start_time)/nb_it
-            foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(cumul_time) + "\t" + str(path)+"\n")
-    foutput.close()
+    #     print ("Nb Node=",k)
+    #     for sparsity in range(2,k+2):
+    #         print("****sparsity=",sparsity,"****")
+    #
+    #         matrix = generator.generate(k, sparsity, 1, 1000, False)
+    #         generator.print_nicely(matrix)
+    #          # # Save the matrix locally.
+    #         generator.save_to_file(matrix, 'E:\Dev\MLDMProoject\Code\test_files_lib\'+''test_files_lib\stsp_matrix_'+str(k)+'_'+str(sparsity))
+    #         generator.print_nicely(matrix)
+    # root='E:\\Dev\\MLDMProoject\\Code\\'
+    #
+    # foutput = open("E:\Dev\MLDMProoject\Code\dynamic_test_result_atsp_sparsity3.txt",'w')
+    # for k in range(18,20):
+    #     print ("Nb Node=",k)
+    #     for sparsity in range(2,k+2):
+    #         matrix = generator.read_from_file(root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
+    #         generator.print_nicely(matrix)
+    #         tsp_pb = TspDp(matrix)
+    #         print(sparsity)
+    #         cumul_time = 0
+    #         nb_it=1
+    #         start_time = time.time()
+    #         for it in range(0,nb_it):
+    #             cost, path, runtime = tsp_pb.compute_sub_problems(0)
+    #             #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
+    #         end_time = time.time()
+    #         cumul_time = (end_time-start_time)/nb_it
+    #         foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(cumul_time) + "\t" + str(path)+"\n")
+    # foutput.close()
 
 
 

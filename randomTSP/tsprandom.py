@@ -193,19 +193,14 @@ if __name__ == '__main__':
     # opt_path = tsp_pb.get_opt_path()
 
     root='E:\\Dev\\MLDMProoject\\Code\\'
-
+    root2='E:\Dev\GitHub\\Algo2\\tsp_project\\data\\'
     #foutput = open("E:\Dev\MLDMProoject\Code\random_test_result_atsp_sparsity.txt",'a')
-    for k in range(3,20):
+    for k in range(3,26):
         print("Nb Node=",k)
         for sparsity in range(2,k+2):
             print("Sparcity=",sparsity)
-            matrix = generator.read_from_file(root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
-            #for i in range(0,len(matrix)):
-            #   matrix[i][i] = math.inf
-            #generator.save_to_file(matrix, root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
-            print(matrix)
-
-            # generator.print_nicely(matrix)
+            matrix = generator.read_from_file(root2+'stsp_matrix_'+str(k)+'_'+str(sparsity))
+            generator.print_nicely(matrix)
             # tsp_pb = TspDp(matrix)
             # print(sparsity)
             # cumul_time = 0
