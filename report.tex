@@ -7,6 +7,14 @@
 \usepackage{float,flafter}
 \usepackage{hyperref}
 \usepackage{inputenc}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{subfiles}
 
 \begin{document}
 \begin{center}
@@ -16,7 +24,7 @@
 {\bf {\Huge TSP Report}}
 \vspace{.2cm}
 \end{center}
-{Mohammed Poul Doust,  Mohammed Zaki Nassar,  Robin Khatri,  Louise Harding,  Laetita Couge}  \\
+{Mohammed Poul Doust,  Mohammed Zaki Nassar,  Robin Khatri,  Louise Harding,  Laetitia Couge}  \\
 \hrule
 
 \section{Introduction}
@@ -63,6 +71,12 @@
 \subsection{Comments}
 \pagebreak
 %finish algo section
+
+\section{Randomized algorithm}
+\subfile{randomTSP/algo_random}
+
+\section{Dynamic Programming algorithm}
+\subfile{dynamic/algo_dp}
 
 \section{Branch and Bound}
 
