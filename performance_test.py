@@ -21,16 +21,11 @@ LIST_OF_SYMETRIC_PROBLEM=[
    "a280.tsp",
    "ali535.tsp",
    "att48.opt.tour",
-   "att48.opt.tour",
    "att48.tsp",
    "att532.tsp",
    "bayg29.opt.tour",
    "bayg29.tsp",
-   "bayg29.tsp",
    "bays29.opt.tour",
-   "bays29.opt.tour",
-   "bays29.tsp",
-   "berlin52.opt.tour",
    "berlin52.opt.tour",
    "berlin52.tsp",
    "bier127.tsp",
@@ -59,11 +54,11 @@ LIST_OF_SYMETRIC_PROBLEM=[
    "eil51.tsp",
    "eil76.opt.tour",
    "eil76.tsp",
-   "fl1400.tsp",
-   "fl1577.tsp",
-   "fl3795.tsp",
+   #"fl1400.tsp",
+   #"fl1577.tsp",
+   #"fl3795.tsp",
    "fl417.tsp",
-   "fnl4461.tsp",
+   #"fnl4461.tsp",
    "fri26.opt.tour",
    "fri26.tsp",
    "gil262.tsp",
@@ -110,8 +105,8 @@ LIST_OF_SYMETRIC_PROBLEM=[
    "pcb442.opt.tour",
    "pcb442.tsp",
    "pla33810.tsp",
-   "pla7397.tsp",
-   "pla85900.tsp",
+   #"pla7397.tsp",
+   #"pla85900.tsp",
    "pr1002.opt.tour",
    "pr1002.tsp",
    "pr107.tsp",
@@ -135,12 +130,12 @@ LIST_OF_SYMETRIC_PROBLEM=[
    "rd100.opt.tour",
    "rd100.tsp",
    "rd400.tsp",
-   "rl11849.tsp",
-   "rl1304.tsp",
-   "rl1323.tsp",
-   "rl1889.tsp",
-   "rl5915.tsp",
-   "rl5934.tsp",
+   #"rl11849.tsp",
+   #"rl1304.tsp",
+   #"rl1323.tsp",
+   #"rl1889.tsp",
+   #"rl5915.tsp",
+   #"rl5934.tsp",
    "si1032.tsp",
    "si175.tsp",
    "si535.tsp",
@@ -194,7 +189,7 @@ if __name__ == '__main__':
     list_stsp=[21,53,142,144]
     #performance for approximative algo
     path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[21]
-    print(path)
+    #print(path)
     tsp_file=open(path,'r')
     parser = Parser()
     matrix = parser.parse_file(tsp_file)
@@ -203,12 +198,12 @@ if __name__ == '__main__':
     algo_list=["Brute Force","Branch and Bound","Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Dynamic","Random","Ant Colony"]
     algo_approx=["Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Random","Ant Colony"]
     algo_opt=["Brute Force","Branch and Bound","Add and Remove Edges","Dynamic"]
-    algo_list=["Greedy","Random","Ant Colony","Genetic","Minimum Spanning Tree"]
+    algo_list=["Genetic"]
     root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp1.txt",'a')
+    foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp2.txt",'a')
 
-    for i in range(0,len(LIST_OF_SYMETRIC_PROBLEM)):
+    for i in range(29,len(LIST_OF_SYMETRIC_PROBLEM)):
         if '.opt.' in LIST_OF_SYMETRIC_PROBLEM[i]:
             continue
         path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[i]
@@ -253,10 +248,10 @@ if __name__ == '__main__':
                 upper_bound, best_path, run_time = algo.run()
 
             elif algo_sel == "Ant Colony":
-                algo = AntApproach(cmatrix,iteration=1000)
+                algo = AntApproach(cmatrix,iteration=500)
                 upper_bound, best_path, run_time = algo.algo()
 
             #print(algo_sel,upper_bound, best_path, run_time )
             foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp1.txt",'a')
-            foutput.write(LIST_OF_SYMETRIC_PROBLEM[i] + "\t" + algo_sel + "\t" + str(upper_bound) + "\t" + str(best_path) + "\t" + str(run_time))
+            foutput.write(LIST_OF_SYMETRIC_PROBLEM[i] + "\t" + algo_sel + "\t" + str(upper_bound) + "\t" + str(best_path) + "\t" + str(run_time)+"\n")
             foutput.close()

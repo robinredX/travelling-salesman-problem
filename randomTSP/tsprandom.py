@@ -18,11 +18,9 @@ from Generator import Generator
 class TspRandom( object ):
 
     def __init__( self, input, start_node=0 ):
-        print("Random")
         self._input = input
         self._start_node = start_node
         self._nb_node = len(input)
-        print(input)
         self._nb_subset = 1<<self._nb_node
         self._all_set = (1<<self._nb_node) - 1
 
@@ -105,11 +103,7 @@ class TspRandom( object ):
                     node_inc.append(key)
                     #print("%s: %s" % (key, value))
                 proba_cost[node_inc[-1]]=1.0
-
-                #print(proba_cost)
-
                 rand = random.uniform(0, 1)
-                #print(rand)
                 next_node = self.get_next_node(rand, proba_cost, node_inc, 0, len(node_inc))
                 path_cost = path_cost + self._input[node_src][next_node]
                 node_src = next_node
@@ -120,7 +114,6 @@ class TspRandom( object ):
                     node_src = next_node
                 else:
                     path_cost=float("inf")
-                    print("Oupssss")
                     break
             #print("Chosen node ",next_node)
             if path_cost != float("inf"):
@@ -199,7 +192,35 @@ if __name__ == '__main__':
     # min_cost = cost
     # opt_path = tsp_pb.get_opt_path()
 
+    root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    min_cost, opt_path, duration = tsp_pb.run_time_limit_iteration(10,0)
-    end_time = time.time()
-    print("Tour:", opt_path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
+    #foutput = open("E:\Dev\MLDMProoject\Code\random_test_result_atsp_sparsity.txt",'a')
+    for k in range(3,20):
+        print("Nb Node=",k)
+        for sparsity in range(2,k+2):
+            print("Sparcity=",sparsity)
+            matrix = generator.read_from_file(root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
+            #for i in range(0,len(matrix)):
+            #   matrix[i][i] = math.inf
+            #generator.save_to_file(matrix, root+'test_files_lib/atsp_matrix_'+str(k)+'_'+str(sparsity))
+            print(matrix)
+
+            # generator.print_nicely(matrix)
+            # tsp_pb = TspDp(matrix)
+            # print(sparsity)
+            # cumul_time = 0
+            # nb_it=1
+            # start_time = time.time()
+            # for it in range(0,nb_it):
+                # cost, path, runtime = tsp_pb.compute_sub_problems(0)
+                # #print(str(cost) + "\t\t" + str(runtime) + "\t" + str(path))
+            # end_time = time.time()
+            # cumul_time = (end_time-start_time)/nb_it
+            # foutput.write(str(k)+"\t"+ str(sparsity)+"\t"+str(cost) + "\t" + str(cumul_time) + "\t" + str(path)+"\n")
+    # foutput.close()
+
+
+
+    # min_cost, opt_path, duration = tsp_pb.run_time_limit_iteration(10,0)
+    # end_time = time.time()
+    # print("Tour:", opt_path, ", Optimal Cost:", int(min_cost), ", time taken:", (end_time-start_time))
