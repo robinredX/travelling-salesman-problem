@@ -233,7 +233,7 @@ if __name__ == '__main__':
     algo_list=["Dynamic"]
     root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    for i in range(35,len(TIME_STSP)):
+    for i in range(40,len(TIME_STSP)):
         if '.opt.' in LIST_OF_SYMETRIC_PROBLEM[i]:
             continue
         path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[i]

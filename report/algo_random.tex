@@ -25,8 +25,8 @@ The division by (n-1) allows normalization so that $\sum_{k} P_{k}=1$,
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=11cm]{../Images/random_algo.jpg}
-\caption{Example of node selection \label{overflow}}
+\includegraphics[height=7cm]{random_algo.jpg}
+\caption{Randomized algorithm \label{overflow}}
 \end{figure}
 
 \begin{subsection}{Pseudo code}\hfill
@@ -70,6 +70,7 @@ The division by (n-1) allows normalization so that $\sum_{k} P_{k}=1$,
 \end{algorithm}
 \end{minipage}}
 \end{center}
+
 \end{subsection}
 
 \begin{subsection}{Complexity}
@@ -79,30 +80,26 @@ For each source node, we compute a probability table of at most n elements. The 
 \end{subsection}
 
 \begin{subsection}{Performances}
-
+The algorithm is tested on a set of problems generated randomly with different vertex numbers and different sparsity levels.
+Figure ~\ref{fig:randomgraphsize} shows the evolution of the algorithm running time with the number of cities. We can observe that the curves for symetric and asymetric problems follow the theorical complexity of $O(n^2 log n)$. \\
+Figure ~\ref{fig:randomsparsity} shows the evolution of the running time with respect to the sparsity level. The running time increases when the connectivity increases (therefore when the sparsity decreases) as we have to compute the probabilities on more vertices. When the sparsity is high there is hardly any choice to make.
+The implementation makes no difference symetric and asymetric problems. So the similarity of results between both types of problems was expected.
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
-\includegraphics[height=5cm,valign=t]{../Images/perf_random_graphsize.jpg}
-\caption{Example of node selection \label{fig:randomgraphsize}}
+\includegraphics[height=5cm,valign=t]{perf_random_graphsize.jpg}
+\caption{Impact of the number of vertices \label{fig:randomgraphsize}}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
-\includegraphics[height=5cm,valign=t]{../Images/perf_random_sparsity.jpg}
-\caption{Example of node selection \label{fig:randomsparsity}}
+\includegraphics[height=5cm,valign=t]{perf_random_sparsity.jpg}
+\caption{Impact of the sparsity \label{fig:randomsparsity}}
 \end{subfigure}%
-\caption{Example of node selection \label{fig:randomperf}}
+\caption{Performance study \label{fig:randomperf}}
 \end{figure}
 
-The algorithm is tested on a set of problems generated randomly with different city numbers and different sparsity.
-The algorithm is tested on a set of problems generated randomly with different city numbers and different sparsity.
-Figure ~\ref{fig:randomgraphsize} shows the evolution of the algorithm running time with the number of cities. We can observe that the curves for symetric and asymetric problems follow the theoritical complexity of $O(n^2 log n)$. \\
-Figure ~\ref{fig:randomsparsity}shows the evolution of the algorithm running time with the number of cities. We can observe that the curves for symetric and asymetric problems fo.
+The algorithm is tested on a set of problems from the TSLIB. Results are shown in another section. The random algorithm is really reaching the optimal solution even after running several times the same problem.
 
-
-
-The algorithm is tested on a set of problems from the TSLIB.
-The alg
 
 \end{subsection}
 \end{document}
