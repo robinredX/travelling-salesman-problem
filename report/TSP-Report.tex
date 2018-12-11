@@ -16,8 +16,8 @@
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
 \usepackage{blindtext}
-\usepackage[utf8]{inputenc}
-\usepackage{algorithm}	
+\usepackage[utf8]{inputenc}	
+%\usepackage{algorithm}	
 \usepackage{algorithmic}	
 \usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
@@ -28,6 +28,11 @@
 \usepackage{caption}	
 \usepackage{subcaption}	
 \usepackage{subfiles}
+\usepackage{amsmath,amssymb,amsfonts,textcomp}
+\usepackage{inputenc}
+\usepackage{algorithm2e}
+\usepackage{xcolor}
+\usepackage[flushleft]{threeparttable}
 \begin{document}
 \newcommand\tab[1][1.2cm]{\hspace*{#1}}
 
@@ -289,7 +294,7 @@ Since TSPLIB contains repository of TSPs which vary in their sparsity, range of 
 
 \noindent
 Graph below shows the evolution of computational time with increasing size of TSP problem:
-\begin{center} \includegraphics[scale=0.2]{ant1.png} \end{center}
+\begin{center} \includegraphics[scale=0.2]{ant.png} \end{center}
 \noindent
 This can be improved using further optimisation methods \emph{e.g} nearest neighbour search and 3-OPT methods. These optimizations are suitable for TSPs of large sizes. 
 
@@ -351,7 +356,155 @@ We keep repeating steps 5,6,7 until we have a full new population (enhanced one)
 \includegraphics[scale=0.25]{genetic3.png}
 \end{center}
 
-\bibliographystyle{ieeetr}
-\bibliography{TSP-Report}
+\section{Greedy Algorithm}
+	The greedy algorithm proceeds by applying a local optimal choice at each node. This strategy can sometimes provide a global optimal but it's not always the case. In most cases it provides an approximation of the optimal solution to the problem.
+	
+\subsection{Details of implementation}
+
+	\begin{center}
+	\colorbox[gray]{0.95}{
+	\begin{minipage}{0.65\textwidth}
+	\begin{algorithm}[H]
+		\KwData{m x m Adjacency matrix}
+		\KwResult{Tour of length (m+1) and total cost of the tour }
+		\bigskip
+		$\textit{tour}$ $\leftarrow$ [0] \\
+		$\textit{totatl\_cost}$ $\leftarrow$ 0 \\
+		
+		\While{not all nodes visited}{
+			$\textit{current\_node}$ $\leftarrow$ last element in $\textit{tour}$\\
+			
+			$\textit{next\_node}$ $\leftarrow$ node with min weight (list of adjacent nodes)
+			
+			append $\textit{next\_node}$ to the end of $\textit{tour}$\\
+			
+			$\textit{total\_cost}$ += distance($\textit{current\_node}$, $\textit{next\_node}$)
+		}
+	
+		append 0 to the end of $\textit{tour}$\\
+		
+		$\textit{total\_cost}$ += distance( $\textit{next\_node}$,  \textit{first\_node})
+		
+		return $\textit{tour}$ , $\textit{total\_cost}$\\
+		\bigskip
+		\caption{Greedy algorithm for the TSP}
+	\end{algorithm}
+	\end{minipage}}
+	\end{center}
+
+\subsection{Results}
+\begin{table}[!h]
+	The algorithm was run on the complete set of TSP-LIB problems (both symmetric and asymmetric). Following is a sample of these results to showcase strong and weak points of this algorithm.
+	\bigskip
+	
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		Problem Name & No of vertexes  & Execution Time(s) & Min Path Cost &  Library  \\
+		\hline\hline
+		att48.tsp & 48 & 12861 & $<$1 ms & Symmetric TSP\\
+		\hline
+		a280.tsp & 280 & 3213 & 8.808 ms & Symmetric TSP\\
+		\hline
+		fl1577.tsp & 1577 & 29178 & 328.72 ms & Symmetric TSP\\
+		\hline
+		fnl4461.tsp & 4461 & 223855 & 3525.013 ms & Symmetric TSP\\
+		\hline
+		rl11849.tsp & 11849 & 1118490 & 52218.616 ms & Symmetric TSP\\
+		\hline\hline
+		ftv33.atsp & 34 & 1683 & $<$1 ms & Asymmetric TSP\\
+		\hline
+		ftv170.atsp & 171 & 3923 & 6.13 ms & Asymmetric TSP\\
+		\hline
+		rbg443.atsp & 443 & 6183 & 42.4 ms & Asymmetric TSP\\
+		\hline
+		\hline
+	\end{tabular}
+	\begin{tablenotes}
+		\small
+		\item A set of .csv files are included in our github repository with the full set of results.
+	\end{tablenotes}
+	\caption{Summary of greedy results on the TSP-LIB}
+	\label{greedy_table}
+\end{table}
+
+\subsection{Discussion}
+From the implementation of the algorithm we can see it has a complexity of $O(n)$. This makes the algorithm efficient in approximating even the biggest problem in a very reasonable time. And this can be seen in the results section, as even the \textit{rl11849.tsp} problem with 11849 vertexes took less than a minute to run.\\
+However, the weak side of this algorithm is that it provides only an approximation rather than the optimal solution. This makes it suitable for problem with large \textit{n} values, where the optimal solution is not necessarily required and an approximation would be enough.
+
+
+
+\section{MST Algorithm}
+The Minimum Spanning Tree (MST) approach in the TSP problem starts by generating an MST for the problem's graph (which is defined by a tree that connects all the vertexes in a graph with the least possible overall weight of edges). Then a Depth First Search (DFS) is applied to acquire the tour path for the TSP.
+
+\subsection{Details of implementation}
+
+\begin{center}
+	\colorbox[gray]{0.95}{
+		\begin{minipage}{0.75\textwidth}
+			\begin{algorithm}[H]
+				\KwData{m x m Adjacency matrix}
+				\KwResult{Tour of length (m+1) and total cost of the tour }
+				\bigskip
+				$\textit{T}$ $\leftarrow$ $\phi$ \\
+				$\textit{U}$ $\leftarrow$ [0] \\
+				
+				\While{U $\neq$ V}{
+					let (u, v) be the lowest cost edge such that u $\in$ U\ and$\>$ v $\in$ V - U
+					
+					T = T $\cup$$\>$ \{(u, v)\}
+					
+					U = U $\cup$$\>$ \{v\}\\
+				}
+			
+				tour = DFS (T, u)
+				
+				
+				return $\textit{tour}$ , $\textit{total\_cost}$\\
+				\bigskip
+				\caption{MST algorithm for the TSP}
+			\end{algorithm}
+	\end{minipage}}
+\end{center}
+
+\subsection{Results}
+\begin{table}[!h]
+	The algorithm was run on the complete set of TSP-LIB problems (both symmetric and asymmetric). Following is a sample of these results to showcase strong and weak points of this algorithm.
+	\bigskip
+	
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		Problem Name & No of vertexes  & Execution Time(s) & Min Path Cost &  Library  \\
+		\hline\hline
+		att48.tsp & 48 & 13926 & $<$1 ms & Symmetric TSP\\
+		\hline
+		a280.tsp & 280 & 3436 & 26.90 ms & Symmetric TSP\\
+		\hline
+		fl1577.tsp & 1577 & 29411 & 1012.26 ms & Symmetric TSP\\
+		\hline
+		fnl4461.tsp & 4461 & 248612 & 7920.18 ms & Symmetric TSP\\
+		\hline
+		rl11849.tsp & 11849 & 1384790 & 76464.248 ms & Symmetric TSP\\
+		\hline\hline
+		ftv33.atsp & 34 & 1712 & 1.02 ms & Asymmetric TSP\\
+		\hline
+		ftv170.atsp & 171 & 5032 & 9.95 ms & Asymmetric TSP\\
+		\hline
+		rbg443.atsp & 443 & 7561 & 73.76 ms & Asymmetric TSP\\
+		\hline
+		\hline
+	\end{tabular}
+	\begin{tablenotes}
+		\small
+		\item A set of .csv files are included in our github repository with the full set of results.
+	\end{tablenotes}
+	\caption{Summary of greedy results on the TSP-LIB}
+	\label{greedy_table}
+\end{table}
+
+\subsection{Discussion}
+The MST algorithm consists of two main parts; creating the minimum spanning tree and then searching the tree in a depth first manner, by analyzing the implementation: extracting the edge with the lowest cost is $O(log(V))$. This means creating the MST's complexity is $O(Vlog(V))$. That makes the total complexity for the algorithm $O(Vlog(V) + V)$.\\
+As for the strong and weak points of the algorithm we can draw a lot of similarities to the greedy algorithm. It's very efficient in approximating huge problems as shown in the results table. But also it only approximates a solution and doesn't usually provide an optimal one.
 
 \end{document}  

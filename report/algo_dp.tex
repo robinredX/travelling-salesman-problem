@@ -20,26 +20,30 @@ If $S'=\{0\}$, $$C(S',0)=0$$.
 
 \paragraph{Pseudo code}\hfill
 
-\begin{algorithm}
-\caption{Dynamic Programming Algorithm}
-\begin{algorithmic} 
-\STATE Initialization
-\FOR {j := 2 to n do}
-\STATE $C(\{j\},j)=0$
-\ENDFOR
+\begin{center}
+	\colorbox[gray]{0.95}{
+	\begin{minipage}{0.65\textwidth}
+			\begin{algorithm}[H]
+			\caption{Dynamic Programming Algorithm}
+			\begin{algorithmic} 
+			\STATE Initialization
+			\FOR {j := 2 to n do}
+			\STATE $C(\{j\},j)=0$
+			\ENDFOR
 
-\FOR {$subsetsize$ := 2 to n-1}
-   \FOR {all $ S' \subseteq \{2,...,n \}$ with $|S'|=subsetsize$}
-      \FOR {all j in S'}
-         \STATE $C(S',j)=min_{k \in S'-\{j\}}\{C(S'-\{j\},k)+d_{kj}\}$
-      \ENDFOR
-   \ENDFOR
-\ENDFOR
-\STATE $mincost := min_{1<j \leq n}\{C(\{2,...,n\},j)+d_{j0}\}$
-\STATE return $mincost$
-\end{algorithmic}
-\end{algorithm}
-
+			\FOR {$subsetsize$ := 2 to n-1}
+			   \FOR {all $ S' \subseteq \{2,...,n \}$ with $|S'|=subsetsize$}
+				  \FOR {all j in S'}
+					 \STATE $C(S',j)=min_{k \in S'-\{j\}}\{C(S'-\{j\},k)+d_{kj}\}$
+				  \ENDFOR
+			   \ENDFOR
+			\ENDFOR
+			\STATE $mincost := min_{1<j \leq n}\{C(\{2,...,n\},j)+d_{j0}\}$
+			\STATE return $mincost$
+			\end{algorithmic}
+			\end{algorithm}
+	 \end{minipage}}
+\end{center}
 
 \paragraph{Implementation}\hfill \break
 We use a bit field to code the subset of nodes selected in the set \{1,...n\}.
