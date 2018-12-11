@@ -80,6 +80,7 @@ For each source node, we compute a probability table of at most n elements. The 
 \end{subsection}
 
 \begin{subsection}{Performances}
+The algorithm provides an estimate of the cost. By running it multiple times we can attempt to get best result.
 The algorithm is tested on a set of problems generated randomly with different vertex numbers and different sparsity levels.
 Figure ~\ref{fig:randomgraphsize} shows the evolution of the algorithm running time with the number of cities. We can observe that the curves for symetric and asymetric problems follow the theorical complexity of $O(n^2 log n)$. \\
 Figure ~\ref{fig:randomsparsity} shows the evolution of the running time with respect to the sparsity level. The running time increases when the connectivity increases (therefore when the sparsity decreases) as we have to compute the probabilities on more vertices. When the sparsity is high there is hardly any choice to make.
@@ -88,17 +89,17 @@ The implementation makes no difference symetric and asymetric problems. So the s
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.5\textwidth}
-\includegraphics[height=5cm,valign=t]{perf_random_graphsize.jpg}
+\includegraphics[height=4.8cm,valign=t]{perf_random_graphsize.jpg}
 \caption{Impact of the number of vertices \label{fig:randomgraphsize}}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
-\includegraphics[height=5cm,valign=t]{perf_random_sparsity.jpg}
+\includegraphics[height=4.8cm,valign=t]{perf_random_sparsity.jpg}
 \caption{Impact of the sparsity \label{fig:randomsparsity}}
 \end{subfigure}%
 \caption{Performance study \label{fig:randomperf}}
 \end{figure}
 
-The algorithm is tested on a set of problems from the TSLIB. Results are shown in another section. The random algorithm is really reaching the optimal solution even after running several times the same problem.
+The algorithm is tested on a set of problems from the TSLIB. Results are shown in section 11. The random algorithm is really reaching the optimal solution even after running several times the same problem.
 
 
 \end{subsection}

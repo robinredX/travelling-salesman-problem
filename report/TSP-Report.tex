@@ -520,11 +520,11 @@ As for the strong and weak points of the algorithm we can draw a lot of similari
 
 
 
-\section{Algorithms comparison}
+\section{Algorithm comparison}
 
-The table \ref{table:allalgo_table1} and \ref{table:allalgo_table2} compare the cost obtain by different algorithms on a subset of TSLIB problems. Genetic algorithm is run  with a population of 50 and 100 iterations. The running time indicated in the one to run genetic algorithm. This running time is used to run the random algorithm multiple times for the same time length. The best result obtain during the timelapse is kept.
-Minimum spanning tree and greedy algorithm are run only once as they are giving always the answer on the same problem.
-Minimum Spanning Tree and Greedy algorythm give generally much better solution in a very short time compare to genetic and random algorithms. There is no gain to spend a long time in computation for this last algorithms. 
+The table \ref{table:allalgo_table1} and \ref{table:allalgo_table2} compare the cost obtain by different algorithms on a subset of TSLIB problems. Genetic algorithm is run  with a population of 50 and 100 iterations. The running time indicated in the one to run genetic algorithm. This running time is used to run the random algorithm multiple times for the same time length. The best result obtained during the timelapse is kept.
+Minimum spanning tree and greedy algorithm are run only once as they are giving always the same answer to the same problem.
+Minimum Spanning Tree and Greedy algorythm give generally much better solution in a very short time compare to genetic and random algorithms. There is no gain to spend a long time in computation for these two last algorithms. 
 
 
 
@@ -560,14 +560,16 @@ Minimum Spanning Tree and Greedy algorythm give generally much better solution i
 		eil51.tsp & 426 & 49.74 & 1294 & 1241 & 497 & 606 \\
 		eil76.tsp & 538 & 65.71 & 1951 & 2017 & 662 & 718 \\
 		fl417.tsp & 11861 & 369.73 & 55330 & 449459 & 14974 & 15909 \\
-		gil262.tsp & 937 & 218.83 & 24219 & 23608 & 3003 & 3267 \\
-		gr120.tsp & 2378 & 89.69 & 43022 & 42321 & 9054 & 21918 \\
-		gr137.tsp & 6942 & 109.54 & 97113 & 532106 & 93912 & 94463 \\
-		gr17.tsp & 69853 & 18.85 & 3204 & 2734 & 2187 & 2352 \\
-		gr202.tsp & 2085 & 159.59 & 58150 & 236056 & 49336 & 52615 \\
-		gr21.tsp & 40160 & 27.24 & 5112 & 4537 & 3333 & 3738 \\
-		gr229.tsp & 2707 & 185.55 & 179819 & 1194796 & 162430 & 179335 \\
-		gr24.tsp & 134602 & 34.14 & 2344 & 2310 & 1553 & 1641 \\
+		gil262.tsp & 2378 & 218.83 & 24219 & 23608 & 3003 & 3267 \\
+		gr120.tsp & 6942 & 89.69 & 43022 & 42321 & 9054 & 21918 \\
+		gr137.tsp & 69853 & 109.54 & 97113 & 532106 & 93912 & 94463 \\
+		gr17.tsp & 2085 & 18.85 & 3204 & 2734 & 2187 & 2352 \\
+		gr202.tsp & 40160 & 159.59 & 58150 & 236056 & 49336 & 52615 \\
+		gr21.tsp & 2707 & 27.24 & 5112 & 4537 & 3333 & 3738 \\
+		gr229.tsp & 134602 & 185.55 & 179819 & 1194796 & 162430 & 179335 \\
+		gr24.tsp & 1272 & 34.14 & 2344 & 2310 & 1553 & 1641 \\
+		gr431.tsp & 171414 & 536.22 & 233064 & 2256596 & 210069 & 228526 \\
+		gr48.tsp & 5046 & 68.73 & 16789 & 14688 & 6098 & 7187 \\
     \hline
 	\end{tabular}
 	\caption{Summary of different algorithm results on the TSP-LIB (1)}
@@ -583,23 +585,25 @@ Minimum Spanning Tree and Greedy algorythm give generally much better solution i
 		\hline
 		Problem & Optimal cost & Running time & Cost & Cost & Cost & Cost \\
 		\hline	
-		gr431.tsp & 1272 & 536.22 & 233064 & 2256596 & 210069 & 228526 \\
-		gr48.tsp & 171414 & 68.73 & 16789 & 14688 & 6098 & 7187 \\
-		gr666.tsp & 5046 & 1042.8 & 423710 & 4737855 & 366962 & 405180 \\
-		gr96.tsp & 294358 & 68.42 & 81007 & 299199 & 70916 & 75225 \\
-		hk48.tsp & 55209 & 40.96 & 35573 & 36129 & 13181 & 14905 \\
-		kroA100.tsp & 11461 & 78.79 & 141346 & 136513 & 27772 & 30472 \\
-		kroA150.tsp & 21282 & 114.27 & 222497 & 217638 & 34064 & 38698 \\
-		kroA200.tsp & 26524 & 155.9 & 288529 & 296077 & 35715 & 40152 \\
-		kroB100.tsp & 29368 & 84.52 & 138264 & 135249 & 29136 & 28942 \\
-		kroB150.tsp & 22141 & 118.78 & 220984 & 207967 & 32767 & 35226 \\
-		kroB200.tsp & 26130 & 161.68 & 294858 & 278930 & 36509 & 40531 \\
-		kroC100.tsp & 29437 & 90.34 & 141375 & 133346 & 26281 & 27583 \\
-		kroD100.tsp & 20749 & 94.48 & 136588 & 131044 & 26906 & 28553 \\
-		kroE100.tsp & 21294 & 97.39 & 143197 & 139277 & 27419 & 30918 \\
-		lin105.tsp & 22068 & 102.99 & 36446 & 99612 & 20341 & 21138 \\
-		lin318.tsp & 14379 & 281.37 & 119771 & 537499 & 53959 & 60883 \\
-		linhp318.tsp & 42029 & 282.53 & 119771 & 534520 & 53959 & 60883 \\
+		gr666.tsp & 294358 & 1042.8 & 423710 & 4737855 & 366962 & 405180 \\
+		gr96.tsp & 55209 & 68.42 & 81007 & 299199 & 70916 & 75225 \\
+		hk48.tsp & 11461 & 40.96 & 35573 & 36129 & 13181 & 14905 \\
+		kroA100.tsp & 21282 & 78.79 & 141346 & 136513 & 27772 & 30472 \\
+		kroA150.tsp & 26524 & 114.27 & 222497 & 217638 & 34064 & 38698 \\
+		kroA200.tsp & 29368 & 155.9 & 288529 & 296077 & 35715 & 40152 \\
+		kroB100.tsp & 22141 & 84.52 & 138264 & 135249 & 29136 & 28942 \\
+		kroB150.tsp & 26130 & 118.78 & 220984 & 207967 & 32767 & 35226 \\
+		kroB200.tsp & 29437 & 161.68 & 294858 & 278930 & 36509 & 40531 \\
+		kroC100.tsp & 20749 & 90.34 & 141375 & 133346 & 26281 & 27583 \\
+		kroD100.tsp & 21294 & 94.48 & 136588 & 131044 & 26906 & 28553 \\
+		kroE100.tsp & 22068 & 97.39 & 143197 & 139277 & 27419 & 30918 \\
+		lin105.tsp & 14379 & 102.99 & 36446 & 99612 & 20341 & 21138 \\
+		lin318.tsp & 42029 & 281.37 & 119771 & 537499 & 53959 & 60883 \\
+		linhp318.tsp & 41345 & 282.53 & 119771 & 534520 & 53959 & 60883 \\
+		nrw1379.tsp & 56638 & 1438.35 & 712338 & 1365405 & 69106 & 75915 \\
+		p654.tsp & 34643 & 596.44 & 107695 & 1870004 & 43394 & 49595 \\
+		pa561.tsp & 2763 & 463.69 & 4869 & 34223 & 3422 & 3868 \\
+		pcb1173.tsp & 56892 & 1207.7 & 123671 & 1322815 & 71010 & 81510 \\
 	    \hline
 	\end{tabular}
 	\caption{Summary of different algorithm results on the TSP-LIB (2)}

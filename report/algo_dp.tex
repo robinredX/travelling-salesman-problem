@@ -6,14 +6,16 @@
 \begin{document}
 The dynamic programming implementation is based on the Bellman-Held-Karp algorithm  proposed in 1962 independently by Bellman \cite{Bellman1962} and by Held and Karp.
 \newline{}
-Dynamic programming express a solution for a problem through the solution of smaller problem.
+Dynamic programming expresses a solution for a problem through the solution of smaller problems.
 \newline{}
 Let's consider a set of node $S=\{0,1,......,n\}$. We want to compute the minimum cost for a path starting at node 0 and visiting all nodes exactly once.
 
 
 \begin{subsection}{Implementation}
 \paragraph{Optimal solution}\hfill \break
-Let's consider a set S' $\subseteq$ S and $C(S',j)$ the minimum cost for a path between node 0 and node j containing all nodes from S'. Then the cost $C(S',j)$ can be decomposed in the sum of the minimum cost of the path from node 0 to k including all nodes from $S'-\{j\}$, and the distance $d_{kj}$.
+Let's consider a set S' $\subseteq$ S and $C(S',j)$ the minimum cost for a path between node 0 and node j containing all nodes from S'.
+ Then the cost $C(S',j)$ can be decomposed in the sum of the cost 
+of the path from node 0 to k including all nodes from $S'-\{j\}$, and the distance $d_{kj}$. The node k that gives the minimum sum is kept.
 
 $$C(S',j)=min_{k \in S'-\{j\}, k \ne j}\{C(S',k)+d_{kj}\}$$
 
@@ -73,10 +75,10 @@ which is $O(2^n\sqrt n)$.\cite{wikidp}
 \end{subsection}
 
 \begin{subsection}{Performances}
-
-The DP algorithm is run on a set of problems, symetric and asymetric, generated randomly with distance between 1 and 1000. 
-The algorithm is first run with different graph sizes. Figure ~\ref{fig:dpgraphsize} shows that running time for both types of problem follow the theorical time complexity curve.
-The performances are also measured with different sparsity levels. Figure ~\ref{fig:dpgraphsize} shows that the running time does not varies whith the sparsity. It is still necessary to examine all combinations of subsets.
+The Dynamic Programming algorithm gives an optimal solution.
+It is run on a set of problems, symetric and asymetric, generated randomly with distance between 1 and 1000. 
+The algorithm is first run with different graph sizes. Figure ~\ref{fig:dpgraphsize} shows that running time for both types of problem follows the theorical time complexity curve.
+The performances are also measured with different sparsity levels. Figure ~\ref{fig:dpgraphsize} shows that the running time does not vary with the sparsity. It is still necessary to examine all combinations of subsets.
 
 
 \begin{figure}[H]
