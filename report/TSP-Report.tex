@@ -101,17 +101,31 @@ Improvements on Bruteforce Algorithm are provided with Branch and Bound Algorith
 \subsection{Introduction}
 A branch-and-bound algorithm consists of a systematically looking for the shortest path by searching a state space tree : the approach tries to minimise the initial depth first search by selecting the lest cost path option at each decision point (node) in the tree. Once this first cost (upper bound) is found the cost at each node is evalated in future searches of the tree and if it exceeds the value, the tree is pruned and the lower branches are not searched.
 
+\subsection{Approach}
+The approach used for this algorithm was the one presented in class. Starting with an adjecency matrix, subtract the minimum edge weight for all values in the same row and then do the same for the columns, the sum of the values subtracted equals the lower bound for this tsp problem. After the initial matrix reduction, using a state space tree, map the possible edges from the starting node (root) and choose the one with the least weight. With this node, using the vertex it corresponds to, set the represented row values in the matrix to infinity, and the matrix values that represents the reverse of this edge (eg if going for 1 to 2, we set 2 to 1) to infinity. Repeat this process until the first leaf is reached. This provides the first upper bound. 
+Continue this process by backtracking up and down the tree, each time checking for the upper bound. If the upper bound is smaller, update the upper bound. If it is larger, then prune the branch.
+
 \subsection{Complexity}
 \noindent
 The complexity of this algorithm is at worst $\mathcal{O}(n!)$, which is the same as Brute Force, because this happens in the case where no pruning of the braches occurs. In practice, however, it will be better than this as the entire space will not need to be searched.
 
 \subsection{Testing}
-Due to the complexity Brand and Bound takes too long to run against the TSP library, so we tested it against a variety of generated tsp problems. We tested the code on both symmetric and asymmetric problems, with differing levels of sparcity. As expected the number of vertices dramatically increased the time, up until about 13 vertices fully connected to each other taking greater than 1 hour. The sparcity of the connections between vertices effected the time taken due to less connections results in a smaller search area. There were mixed results with symmetric vs asymetric with neither showing to be consistently easier to process than the other, most likely the pruning between the different problems resulted in less clear results.
+Due to the complexity Brand and Bound takes too long to run against the TSP library, so we tested it against a variety of generated tsp problems. We tested the code on both symmetric and asymmetric problems, with differing levels of sparcity. As expected the number of vertices dramatically increased the time, up until about 13 vertices fully connected to each other taking greater than 1 hour. \newline 
+The sparcity of the connections between vertices affected the time taken due to less connections results in a smaller search area. There were mixed results with symmetric vs asymetric with neither showing to be consistently easier to process than the other, most likely the pruning between the different problems resulted in less clear results. We also tested it against Brute force and it did in reality produce faster results.
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.33\textwidth}
+\includegraphics[height=5cm,valign=t]{fixed_connectivity.png}
+\caption{Example of increase in vertex count}
+\end{subfigure}%
+\hfill
+\begin{subfigure}{.33\textwidth}
+\includegraphics[height=5cm,valign=t]{fixed_vertices.png}
+\caption{Example of increase in connectivity}
+\end{subfigure}%
+\end{figure}
 
-
-
-\newpage
 \section{Branch and Bound with Adding and Removing Edges}
 \subsection{Introduction}
 One of the strategies used for searching the solution space is Branch and Bound which keeps dividing the space into branches. one for solutions containing a given edge and the other for those excluding the given edge. forming a binary tree as follows:
@@ -128,7 +142,6 @@ The main parts of these algorithm are:
 
 \includegraphics[width = \textwidth]{bnb-flow.jpg}
 
-\newpage
 \subsection{Bounding Function (Reduction)}
 The solution is bounded by normalizing the solution matrix. this is done by reducing the rows first and the columns after.
 by reducing the Rows/Columns we mean normalizing them. we subtract the minimum element from each row from each element at that row. and the same for columns. at the end we will have a matrix with at least one zero in each column and each row.
@@ -149,15 +162,12 @@ To exclude edge (ie, I-> J), we start by setting the cost of the edge I->J to IN
 \begin{center}
 \includegraphics[scale=0.22]{branchandbound.png}
 \end{center}
-\newpage
-
 
 \section{Randomized algorithm}	
 \subfile{algo_random}	
  \section{Dynamic Programming algorithm}	
 \subfile{algo_dp}	
 
-\newpage
 \section{Ant Colony Algorithm}
 
 \subsection{Introduction}
@@ -301,7 +311,6 @@ This can be improved using further optimisation methods \emph{e.g} nearest neigh
 \subsection{Complexity Analysis of Ant Colony System}
 Complexity of ant colony system (ACS) method is quite high, especially for problems with hundereds of cities. The reason being essentially two loops in every pheromone update. And so the complexity is $\Omega(n^2)$. Computational Complexity of Ant Colony has been studied by Sudholt et. al. (2012) \cite{Sudholt2012}. One idea of an improvment can be selecting a certain number of neighbouring cities which are yet to be visited in every transition, and thus reducing the time complexity as not all cities have to be searched in every update. \cite{neumann2009computational}. Other optimization methods such as MAX-MIN Ant System provide for a faster implementation of ant colony optimization. In MMAS, maximum and minimum pheromone amounts ($\tau_max$, $\tau_min$) are added. Only global best or iteration best tour deposited pheromones. All edges are initialized to $\tau_min$ and reinitialized to $\tau_max$ when nearing stagnation.\cite{Sttzle1998}
 
-\newpage
 \section{Genetic Algorithm}
 \subsection{Introduction}
 We present in this report the main description for the attached source code to solve Travelling salesman Problem. \newline \newline
@@ -506,5 +515,9 @@ The Minimum Spanning Tree (MST) approach in the TSP problem starts by generating
 \subsection{Discussion}
 The MST algorithm consists of two main parts; creating the minimum spanning tree and then searching the tree in a depth first manner, by analyzing the implementation: extracting the edge with the lowest cost is $O(log(V))$. This means creating the MST's complexity is $O(Vlog(V))$. That makes the total complexity for the algorithm $O(Vlog(V) + V)$.\\
 As for the strong and weak points of the algorithm we can draw a lot of similarities to the greedy algorithm. It's very efficient in approximating huge problems as shown in the results table. But also it only approximates a solution and doesn't usually provide an optimal one.
+
+\bibliographystyle{ieeetr}
+
+\bibliography{TSP_Report}
 
 \end{document}  
