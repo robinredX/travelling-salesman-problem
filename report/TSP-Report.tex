@@ -517,6 +517,109 @@ The Minimum Spanning Tree (MST) approach in the TSP problem starts by generating
 The MST algorithm consists of two main parts; creating the minimum spanning tree and then searching the tree in a depth first manner, by analyzing the implementation: extracting the edge with the lowest cost is $O(log(V))$. This means creating the MST's complexity is $O(Vlog(V))$. That makes the total complexity for the algorithm $O(Vlog(V) + V)$.\\
 As for the strong and weak points of the algorithm we can draw a lot of similarities to the greedy algorithm. It's very efficient in approximating huge problems as shown in the results table. But also it only approximates a solution and doesn't usually provide an optimal one.
 
+
+
+\section{Algorithms comparison}
+
+The table \ref{table:allalgo_table1} and \ref{table:allalgo_table2} compare the cost obtain by different algorithms on a subset of TSLIB problems. Genetic algorithm is run  with a population of 50 and 100 iterations. The running time indicated in the one to run genetic algorithm. This running time is used to run the random algorithm multiple times for the same time length. The best result obtain during the timelapse is kept.
+Minimum spanning tree and greedy algorithm are run only once as they are giving always the answer on the same problem.
+Minimum Spanning Tree and Greedy algorythm give generally much better solution in a very short time compare to genetic and random algorithms. There is no gain to spend a long time in computation for this last algorithms. 
+
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		 &  &  & \bf Genetic & \bf Random & \bf Greedy & \bf MST \\
+		\hline
+		\hline
+		\bf Problem & \bf Optimal cost & \bf Running time & \bf Cost & \bf Cost & \bf Cost & \bf Cost \\
+		\hline
+		a280.tsp & 2579 & 222.45 & 2786 & 30924 & 3213 & 3436 \\
+		ali535.tsp & 202339 & 459.18 & 3288655 & 3313010 & 253127 & 278768 \\
+		att48.tsp & 10628 & 40.52 & 37239 & 34639 & 12861 & 13926 \\
+		att532.tsp & 27686 & 469.41 & 309636 & 469502 & 35516 & 37002 \\
+		bayg29.tsp & 1610 & 23.23 & 3151 & 3014 & 2157 & 213353 \\
+		berlin52.tsp & 7542 & 42.91 & 22186 & 22661 & 8962 & 10386 \\
+		bier127.tsp & 118282 & 104.66 & 393942 & 528837 & 135713 & 155437 \\
+		brazil58.tsp & 25395 & 56.32 & 96274 & 93003 & 30774 & 30336 \\
+		brg180.tsp & 1950 & 128.3 & 118785 & 739560 & 69550 & 127796 \\
+		burma14.tsp & 3323 & 14.74 & 4171 & 3901 & 4048 & 4003 \\
+		ch130.tsp & 6110 & 97.14 & 40529 & 38982 & 7314 & 8224 \\
+		ch150.tsp & 6528 & 115.19 & 47142 & 47234 & 8266 & 8949 \\
+		d1291.tsp & 50801 & 1311.24 & 150993 & 1651123 & 60308 & 74418 \\
+		d198.tsp & 15780 & 148.55 & 22496 & 160717 & 19198 & 19352 \\
+		d2103.tsp & 80450 & 2263.33 & 141238 & 3160717 & 86742 & 124260 \\
+		d493.tsp & 35002 & 382.81 & 113466 & 415514 & 43400 & 45048 \\
+		d657.tsp & 48912 & 573.31 & 232019 & 783623 & 59979 & 65665 \\
+		dantzig42.tsp & 699 & 30.31 & 699 & 2184 & 956 & 916 \\
+		dsj1000.tsp & 18659688 & 1032.64 & 523892306 & 529162145 & 24631468 & 25526517 \\
+		eil101.tsp & 629 & 81.26 & 2031 & 2777 & 796 & 845 \\
+		eil51.tsp & 426 & 49.74 & 1294 & 1241 & 497 & 606 \\
+		eil76.tsp & 538 & 65.71 & 1951 & 2017 & 662 & 718 \\
+		fl417.tsp & 11861 & 369.73 & 55330 & 449459 & 14974 & 15909 \\
+		gil262.tsp & 937 & 218.83 & 24219 & 23608 & 3003 & 3267 \\
+		gr120.tsp & 2378 & 89.69 & 43022 & 42321 & 9054 & 21918 \\
+		gr137.tsp & 6942 & 109.54 & 97113 & 532106 & 93912 & 94463 \\
+		gr17.tsp & 69853 & 18.85 & 3204 & 2734 & 2187 & 2352 \\
+		gr202.tsp & 2085 & 159.59 & 58150 & 236056 & 49336 & 52615 \\
+		gr21.tsp & 40160 & 27.24 & 5112 & 4537 & 3333 & 3738 \\
+		gr229.tsp & 2707 & 185.55 & 179819 & 1194796 & 162430 & 179335 \\
+		gr24.tsp & 134602 & 34.14 & 2344 & 2310 & 1553 & 1641 \\
+    \hline
+	\end{tabular}
+	\caption{Summary of different algorithm results on the TSP-LIB (1)}
+	\label{table:allalgo_table1}
+\end{table}
+		
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		 &  &  & Genetic & Random & Greedy  & MST \\
+		\hline
+		\hline
+		Problem & Optimal cost & Running time & Cost & Cost & Cost & Cost \\
+		\hline	
+		gr431.tsp & 1272 & 536.22 & 233064 & 2256596 & 210069 & 228526 \\
+		gr48.tsp & 171414 & 68.73 & 16789 & 14688 & 6098 & 7187 \\
+		gr666.tsp & 5046 & 1042.8 & 423710 & 4737855 & 366962 & 405180 \\
+		gr96.tsp & 294358 & 68.42 & 81007 & 299199 & 70916 & 75225 \\
+		hk48.tsp & 55209 & 40.96 & 35573 & 36129 & 13181 & 14905 \\
+		kroA100.tsp & 11461 & 78.79 & 141346 & 136513 & 27772 & 30472 \\
+		kroA150.tsp & 21282 & 114.27 & 222497 & 217638 & 34064 & 38698 \\
+		kroA200.tsp & 26524 & 155.9 & 288529 & 296077 & 35715 & 40152 \\
+		kroB100.tsp & 29368 & 84.52 & 138264 & 135249 & 29136 & 28942 \\
+		kroB150.tsp & 22141 & 118.78 & 220984 & 207967 & 32767 & 35226 \\
+		kroB200.tsp & 26130 & 161.68 & 294858 & 278930 & 36509 & 40531 \\
+		kroC100.tsp & 29437 & 90.34 & 141375 & 133346 & 26281 & 27583 \\
+		kroD100.tsp & 20749 & 94.48 & 136588 & 131044 & 26906 & 28553 \\
+		kroE100.tsp & 21294 & 97.39 & 143197 & 139277 & 27419 & 30918 \\
+		lin105.tsp & 22068 & 102.99 & 36446 & 99612 & 20341 & 21138 \\
+		lin318.tsp & 14379 & 281.37 & 119771 & 537499 & 53959 & 60883 \\
+		linhp318.tsp & 42029 & 282.53 & 119771 & 534520 & 53959 & 60883 \\
+	    \hline
+	\end{tabular}
+	\caption{Summary of different algorithm results on the TSP-LIB (2)}
+	\label{table:allalgo_table2}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{User Interface}
 \subsection{Notes}
 We developed a simple UI that allows for data to be generated dynamically as you test your algorithm or to load an existing file, either previously generated or from the TSP library. 
