@@ -174,7 +174,7 @@ To exclude edge (ie, I-> J), we start by setting the cost of the edge I->J to IN
 
 \subsection{Introduction}
 
-Ant Colony Algorithm is a probabilistic algorithm that takes inspiration from the behavior of ants to Travelling Salesman Problems. The first algorithm that took inspiration from ants was described in 1992 by Marco Dorigo in his PhD thesis \cite{Dorigothesis}. Later, there has been various optimization techniques building upon this research. In 2004, book titled Ant Colony Optimzation was published. We took inspiration from this book for our implementation of Ant Colony Algorithm.
+Ant Colony Algorithm is a probabilistic algorithm that takes inspiration from the behavior of ants to arrive at approximate solutions to Travelling Salesman Problems. The first algorithm that took inspiration from ants was described in 1992 by Marco Dorigo in his PhD thesis \cite{Dorigothesis}. Later, there has been various optimization techniques building upon this research. In 2004, book titled Ant Colony Optimzation was published \cite{dorigo_2004}. We took inspiration from this book for our implementation of Ant Colony Algorithm. 
 
 \subsection{Behavior of Ants}
 
@@ -182,7 +182,7 @@ Ant Colony Algorithm is a probabilistic algorithm that takes inspiration from th
 \includegraphics[scale=0.5]{antfood.jpg}
 \end{center}
 
-Ants live together in colonies and they form a highly structured societies. Ants do not have a developed visual skills and some of the species of ants are blind. They, however, make use of pheromones which they leave behind while naviagting. This is a form of indirect communication with other ants in the colony. Due to high concentration of pheromones on a path, ants are influenced to take the path previously travelled by the former ants. This behavior leads to the convergence of establishing a path, \emph{i.e.} after a certain time, all the ants which are travelling together follow the same path (and find the food!)
+Ants live together in colonies and they form highly structured societies. Ants do not have developed visual skills and some of the species of ants are blind. They, however, make use of pheromones which they leave behind while naviagting. A pheromone is a secreted or excreted chemical factor that triggers a social response in members of the same species. In case of ants, this is a form of indirect communication with other ants in the colony. Due to high concentration of pheromones on a path, ants are influenced to take the path previously travelled by the former ants. This behavior leads to the convergence of establishing a path, \emph{i.e.} after a certain time, all the ants which are travelling together follow the same path (and find the food!)
  
 \subsection{Theory}
 
@@ -270,7 +270,7 @@ We chose $\alpha$ to be 1 and $\beta$ to be 10. We have not experimented with ot
 \\
 In our experiments, number of ants were chosen to be in a range of [10,50], and number of iterations we chose to were in a range of (100-200).\\
 \\
-Since TSPLIB contains repository of TSPs which vary in their sparsity and range of elements in cost matrix, therefore as a benchmark of the algorithm, we tested the algorithm on TSPLIB problems. For this purpose, we considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and solutions are presented below:
+Since TSPLIB contains repository of TSPs which vary in their sparsity and range of elements in cost matrix, therefore as a benchmark of the algorithm, we tested the algorithm on TSPLIB problems. For this purpose, we considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and a sample of those solutions are presented below:
 
 \begin{table}[h!]
   \begin{center}
@@ -311,7 +311,7 @@ Graph below shows the evolution of computational time with increasing size of TS
 This can be improved using further optimisation methods \emph{e.g} nearest neighbour search and 3-OPT methods. These optimizations are suitable for TSPs of large sizes. 
 
 \subsection{Complexity Analysis of Ant Colony System}
-Complexity of ant colony system (ACS) method is quite high, especially for problems with hundereds of cities. The reason being essentially two loops in every pheromone update. And so the complexity is $\Omega(n^2)$. Computational Complexity of Ant Colony has been studied by Sudholt et. al. (2012) \cite{Sudholt2012}. One idea of an improvment can be selecting a certain number of neighbouring cities which are yet to be visited in every transition, and thus reducing the time complexity as not all cities have to be searched in every update. \cite{neumann2009computational}. Other optimization methods such as MAX-MIN Ant System provide for a faster implementation of ant colony optimization. In MMAS, maximum and minimum pheromone amounts ($\tau_max$, $\tau_min$) are added. Only global best or iteration best tour deposited pheromones. All edges are initialized to $\tau_min$ and reinitialized to $\tau_max$ when nearing stagnation.\cite{Sttzle1998}
+Complexity of ant colony system (ACS) method is quite high, especially for problems with hundereds of cities. The reason being essentially two loops in every pheromone update. And so the complexity is $\Omega(n^2)$. Computational Complexity of Ant Colony has been studied by Sudholt et. al. (2012) \cite{Sudholt2012}. One idea of an improvment can be selecting a certain number of neighbouring cities which are yet to be visited in every transition, and thus reducing the time complexity as not all cities have to be searched in every update. \cite{neumann2009computational}. Other optimization methods such as MAX-MIN Ant System provide for a faster implementation of ant colony optimization. \cite{Sttzle1998}
 
 \section{Genetic Algorithm}
 \subsection{Introduction}
@@ -612,7 +612,7 @@ Minimum Spanning Tree and Greedy algorythm give generally much better solution i
 \subsection{Notes}
 We developed a simple UI that allows for data to be generated dynamically as you test your algorithm or to load an existing file, either previously generated or from the TSP library. 
 We implemented a simple graphing panel, that allows the user to see the problem before and after the algorithm has run. The graph is best used with small problems, and can display up to 60 vertex problems before it loses its value.
-The UI assisted is to verify the optiomal path for small tsp problems for the algorithms that were not able to be verified from the TSP library.
+The UI assisted us to verify the optiomal path for small tsp problems for the algorithms that were not able to be verified from the TSP library.
 
 \begin{center}
 UI with 8 vertex graph loaded from a file.
