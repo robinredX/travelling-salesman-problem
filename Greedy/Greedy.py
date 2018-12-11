@@ -33,6 +33,7 @@ class GreedyTsp( object ):
         total_cost += self.matrix[tour[-1]][0] if self.matrix[tour[-1]][0] < math.inf else 0
         tour.append(0)
         end_time = time.time()
+        tour = [node + 1 for node in tour]
         return total_cost, tour, (end_time-start_time)
 
 

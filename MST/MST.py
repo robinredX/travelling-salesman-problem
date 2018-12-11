@@ -121,6 +121,7 @@ class MST:
         tour.append(0)
         cost = self.tour_cost(tour)
         end_time = time.time()
+        tour = [node + 1 for node in tour]
         return cost, tour, (end_time-start_time)
 
     def run_time_limit_iteration(self, time_limit, start_node=0):
