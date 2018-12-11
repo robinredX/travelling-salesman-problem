@@ -1,0 +1,57 @@
+\documentclass[../report.tex]{subfiles}
+%\usepackage[left=2cm, right=2cm, top=2.5cm]{geometry}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+
+\begin{document}
+The dynamic programming implementation is based on the Bellman-Held-Karp algorithm  proposed in 1962 independently by Bellman[1] and by Held and Karp.
+\newline{}
+Dynamic programming express a solution for a problem through the solution of smaller problem.
+\newline{}
+Let's consider a set of node $S=\{0,1,......,n\}$. We want to compute the minimum cost for a path starting at node 0 and visiting all nodes exactly once.
+\newline{}
+\paragraph{Optimal solution}\hfill \break
+Let's consider a set S' $\subseteq$ S and $C(S',j)$ the minimum cost for a path between node 0 and node j containing all nodes from S'. Then the cost $C(S',j)$ can be decomposed in the sum of the minimum cost of the path from node 0 to k including all nodes from $S'-\{j\}$, and the distance $d_{kj}$.
+
+$$C(S',j)=min_{k \in S'-\{j\}, k \ne j}\{C(S',k)+d_{kj}\}$$
+
+\paragraph{Base case}\hfill \break
+If $S'=\{0\}$, $$C(S',0)=0$$.
+
+\paragraph{Pseudo code}\hfill
+
+\begin{algorithm}
+\caption{Dynamic Programming Algorithm}
+\begin{algorithmic} 
+\STATE Initialization
+\FOR {j := 2 to n do}
+\STATE $C(\{j\},j)=0$
+\ENDFOR
+
+\FOR {$subsetsize$ := 2 to n-1}
+   \FOR {all $ S' \subseteq \{2,...,n \}$ with $|S'|=subsetsize$}
+      \FOR {all j in S'}
+         \STATE $C(S',j)=min_{k \in S'-\{j\}}\{C(S'-\{j\},k)+d_{kj}\}$
+      \ENDFOR
+   \ENDFOR
+\ENDFOR
+\STATE $mincost := min_{1<j \leq n}\{C(\{2,...,n\},j)+d_{j0}\}$
+\STATE return $mincost$
+\end{algorithmic}
+\end{algorithm}
+
+
+\paragraph{Implementation}\hfill \break
+We use a bit field to code the subset of nodes selected in the set \{1,...n\}.
+Each node j is code by the value $2^j$ when selected and 0 when not selected. 
+
+\paragraph{Complexity}\hfill \break
+   We need to build all the subsets of \{1,...,n\} i.e. $2^n$ subsets. For all nodes j of each subset (at most n nodes) and for all nodes k distinct from node j(at most n-1 nodes), we compute the cost of the sub paths terminated by node k for the subset deprived of node j.
+Thus the time complexity is $2^n n^2$.
+\newline{} In term of space complexity, if we use a bit field to code all subsets for each node $j \subseteq \{0,...,n\}$, the required space is $2^n (n+1)$.
+\newline{} Nevertheless, we can note that to compute the cost for the subsets of size s, we only need the cost of the subsets of size (s-1). Thus the space complexity can be reduced to 
+
+
+\end{document}
+
+
