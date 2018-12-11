@@ -107,7 +107,7 @@ Continue this process by backtracking up and down the tree, each time checking f
 
 \subsection{Complexity}
 \noindent
-The complexity of this algorithm is at worst $\mathcal{O}(n!)$, which is the same as Brute Force, because this happens in the case where no pruning of the braches occurs. In practice, however, it will be better than this as the entire space will not need to be searched.
+The complexity of this algorithm is at worst $\mathcal{O}(n!)$, which is the same as Brute Force, because this happens in the case where no pruning of the braches occurs. In practice, however, it will be better than this as the entire space will not need to be searched. This approach will alway provide the optimal solution to the problem.
 
 \subsection{Testing}
 Due to the complexity Brand and Bound takes too long to run against the TSP library, so we tested it against a variety of generated tsp problems. We tested the code on both symmetric and asymmetric problems, with differing levels of sparcity. As expected the number of vertices dramatically increased the time, up until about 13 vertices fully connected to each other taking greater than 1 hour. \newline 
@@ -125,6 +125,7 @@ The sparcity of the connections between vertices affected the time taken due to 
 \caption{Example of increase in connectivity}
 \end{subfigure}%
 \end{figure}
+
 
 \section{Branch and Bound with Adding and Removing Edges}
 \subsection{Introduction}
@@ -516,8 +517,29 @@ The Minimum Spanning Tree (MST) approach in the TSP problem starts by generating
 The MST algorithm consists of two main parts; creating the minimum spanning tree and then searching the tree in a depth first manner, by analyzing the implementation: extracting the edge with the lowest cost is $O(log(V))$. This means creating the MST's complexity is $O(Vlog(V))$. That makes the total complexity for the algorithm $O(Vlog(V) + V)$.\\
 As for the strong and weak points of the algorithm we can draw a lot of similarities to the greedy algorithm. It's very efficient in approximating huge problems as shown in the results table. But also it only approximates a solution and doesn't usually provide an optimal one.
 
-\bibliographystyle{ieeetr}
+\section{User Interface}
+\subsection{Notes}
+We developed a simple UI that allows for data to be generated dynamically as you test your algorithm or to load an existing file, either previously generated or from the TSP library. 
+We implemented a simple graphing panel, that allows the user to see the problem before and after the algorithm has run. The graph is best used with small problems, and can display up to 60 vertex problems before it loses its value.
+The UI assisted is to verify the optiomal path for small tsp problems for the algorithms that were not able to be verified from the TSP library.
 
+\begin{center}
+UI with 8 vertex graph loaded from a file.
+\includegraphics[scale=0.60]{ui2.png}
+\end{center}
+
+\begin{center}
+UI with 8 vertex graph after the execution of an algorithm.
+\includegraphics[scale=0.60]{ui1.png}
+\end{center}
+
+\begin{center}
+UI with 52 vertex graph after the execution of an algorithm.
+\includegraphics[scale=0.60]{ui3.png}
+\end{center}
+
+
+\bibliographystyle{ieeetr}
 \bibliography{TSP_Report}
 
 \end{document}  
