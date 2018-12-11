@@ -1,8 +1,7 @@
-
-\documentclass[14pt, english]{article}
+\documentclass[11pt, english]{article}
 
 \title{{\bf Travelling Salesman Problem (TSP)}}
-\author{Louise Ruth Harding \\ Robin Khatri \\ Laetitia Couge\\ Mohammed Paul Doust \\ Mohammed Nassar}
+\author{Louise Harding \\ Robin Khatri \\ Laetitia Couge\\ Mohammed Paul Doust \\ Mohammed Nassar}
 
 \date{\today}
 
@@ -66,11 +65,11 @@ If in a travelling salesman problem, cost or distance of travelling from city $i
 
 \subsection{Sparsity of TSP}
 
-\noindent
+
 A graph with only a few edges is referred to as a sparse graph. In our testing with different exact and approximate algorithms, we have tested on problems of varying sparsity levels.
 
 \newpage
-\section{Brute Force Algoritm}
+\section{Brute Force Algorithm}
 \subsection{Introduction}
 Bruteforce algorithm runs through all possible solutions and selects the best one. It is not an optimal algorithm to use for TSP with a large number of nodes.
 
@@ -79,7 +78,7 @@ Bruteforce algorithm runs through all possible solutions and selects the best on
 We tested the code on both symmetric and asymmetric problems. Since it provides exacts solutions, the solutions were optimal.\\
 
 \noindent
-The complexity of the algorithm is $\mathcal{O}(n!)$. We tested it on tsp's upto 10 cities, as the complexity increased rapidly after that.
+The complexity of the algorithm is $\mathcal{O}(n!)$. We tested it on tsp's up to 10 cities, as the complexity increased rapidly after that.
 
 \begin{center}
 \includegraphics[scale=0.3]{bruteforce.png}
@@ -91,10 +90,26 @@ In case of Symmetric TSPs, the computational time can be reduced by computing di
 \noindent
 Improvements on Bruteforce Algorithm are provided with Branch and Bound Algorithms presented in the next section.
 
+
 \newpage
-\section{Branch and Bound With Adding and Removing Edges}
+\section{Branch and Bound - Matrix Reduction method}
 \subsection{Introduction}
-One of the strategies used for searching the solution space is Branch and Bound keep dividing the space into branches. one for solutions containing a given edge and the other for those excluding the given edge. forming a binary tree as follows:
+A branch-and-bound algorithm consists of a systematically looking for the shortest path by searching a state space tree : the approach tries to minimise the initial depth first search by selecting the lest cost path option at each decision point (node) in the tree. Once this first cost (upper bound) is found the cost at each node is evalated in future searches of the tree and if it exceeds the value, the tree is pruned and the lower branches are not searched.
+
+\subsection{Complexity}
+\noindent
+The complexity of this algorithm is at worst $\mathcal{O}(n!)$, which is the same as Brute Force, because this happens in the case where no pruning of the braches occurs. In practice, however, it will be better than this as the entire space will not need to be searched.
+
+\subsection{Testing}
+Due to the complexity Brand and Bound takes too long to run against the TSP library, so we tested it against a variety of generated tsp problems. We tested the code on both symmetric and asymmetric problems, with differing levels of sparcity. As expected the number of vertices dramatically increased the time, up until about 13 vertices fully connected to each other taking greater than 1 hour. The sparcity of the connections between vertices effected the time taken due to less connections results in a smaller search area. There were mixed results with symmetric vs asymetric with neither showing to be consistently easier to process than the other, most likely the pruning between the different problems resulted in less clear results.
+
+
+
+
+\newpage
+\section{Branch and Bound with Adding and Removing Edges}
+\subsection{Introduction}
+One of the strategies used for searching the solution space is Branch and Bound which keeps dividing the space into branches. one for solutions containing a given edge and the other for those excluding the given edge. forming a binary tree as follows:
 \newline \newline
 \includegraphics[width=\textwidth] {solution-tree.jpg}
 \newline \newline
@@ -127,7 +142,7 @@ To exclude edge (ie, I-> J), we start by setting the cost of the edge I->J to IN
 \subsection{Complexity}
 
 \begin{center}
-\includegraphics[scale=0.3]{branchandbound.png}
+\includegraphics[scale=0.22]{branchandbound.png}
 \end{center}
 \newpage
 
@@ -325,15 +340,15 @@ We keep repeating steps 5,6,7 until we have a full new population (enhanced one)
 \subsection{Complexity}
 
 \begin{center}
-\includegraphics[scale=0.2]{genetic1.png}
+\includegraphics[scale=0.25]{genetic1.png}
 \end{center}
 
 \begin{center}
-\includegraphics[scale=0.2]{genetic2.png}
+\includegraphics[scale=0.25]{genetic2.png}
 \end{center}
 
 \begin{center}
-\includegraphics[scale=0.2]{genetic3.png}
+\includegraphics[scale=0.25]{genetic3.png}
 \end{center}
 
 \bibliographystyle{ieeetr}
