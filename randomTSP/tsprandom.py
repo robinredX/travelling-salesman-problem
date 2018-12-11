@@ -16,7 +16,8 @@ import random
 from Generator import Generator
 
 class TspRandom( object ):
-
+    """ Provide random path for TSP
+    """
     def __init__( self, input, start_node=0 ):
         self._input = input
         self._start_node = start_node
@@ -41,11 +42,7 @@ class TspRandom( object ):
     def get_next_node(self, search_val, prob, node_order, start, end):
 
         mid_val = int((start+end)/2)
-        #print("Mid=",mid_val)
-        #print("Start",start)
-        #print("End",end)
-        #print(prob[node_order[mid_val]])
-        ret_value=-1
+        ret_value =- 1
 
         if (end-start) == 1:
             if (search_val<=prob[node_order[start]]):
@@ -64,7 +61,8 @@ class TspRandom( object ):
 
 
     def compute_sub_problems(self, start_node):
-
+        """ Compute the random path starting with source_node
+        """
         start_time = time.time()
         S=[]
         for i in range(self._nb_node):
@@ -101,8 +99,8 @@ class TspRandom( object ):
                     proba_cost[key] = proba_cost[key] + cumul_proba
                     cumul_proba = proba_cost[key]
                     node_inc.append(key)
-                    #print("%s: %s" % (key, value))
-                proba_cost[node_inc[-1]]=1.0
+                    
+                proba_cost[node_inc[-1]] = 1.0
                 rand = random.uniform(0, 1)
                 next_node = self.get_next_node(rand, proba_cost, node_inc, 0, len(node_inc))
                 path_cost = path_cost + self._input[node_src][next_node]
@@ -115,11 +113,10 @@ class TspRandom( object ):
                 else:
                     path_cost=float("inf")
                     break
-            #print("Chosen node ",next_node)
             if path_cost != float("inf"):
                 path.append(node_src)
                 S.remove(node_src)
-                #print(path)
+
 
         if path_cost != float("inf"):
             path_cost = path_cost + self._input[path[-1]][S[0]]
