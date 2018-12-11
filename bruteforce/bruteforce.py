@@ -16,7 +16,7 @@ class Brute:
         l= len(dataset)
         for i in list(range(0,l)):
             for j in list(range(0,l)):
-                if dataset[i][j] == 0:
+                if dataset[i][j] == 0 or dataset[i][j]==-1:
                     dataset[i][j] = math.inf # To avoid going to unconnected nodes
                     
         perm = list(range(1,(l+1)))
