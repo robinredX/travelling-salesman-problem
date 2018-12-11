@@ -11,8 +11,8 @@ Packages: time, math, random
 
 ```python3
 import antcolonyapproach 
-Ant = antapproach(input) # input is a 2-D list
-Ant.algo()
+Ant = AntApproach(input) # input is a 2-D list
+Ant.Algo()
 
 ### Note
 
