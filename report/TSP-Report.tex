@@ -46,7 +46,7 @@
 
 \section{Introduction}
 
-Consider a salesman who has to visit a set of cities and return to the city he started from provided he visitseach city only once.\\
+Consider a salesman who has to visit a set of cities and return to the city he started from, provided he visits each city only once.\\
 \\
 \noindent
 The problem is to minimize the total cost or distance of the route. This is known as the Travelling Salesman Problem.\\
@@ -268,7 +268,7 @@ We chose $\alpha$ to be 1 and $\beta$ to be 10. We have not experimented with ot
 \\
 In our experiments, number of ants were chosen to be in a range of [10,50], and number of iterations we chose to were in a range of (100-200).\\
 \\
-Since TSPLIB contains repository of TSPs which vary in their sparsity, range of elements in cost matrix, as a benchmark of the algorithm, we tested the algorithm on TSPLIB problems. For this purpose, we considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and solutions are presented below:
+Since TSPLIB contains repository of TSPs which vary in their sparsity and range of elements in cost matrix, therefore as a benchmark of the algorithm, we tested the algorithm on TSPLIB problems. For this purpose, we considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and solutions are presented below:
 
 \begin{table}[h!]
   \begin{center}
@@ -304,7 +304,7 @@ Since TSPLIB contains repository of TSPs which vary in their sparsity, range of 
 
 \noindent
 Graph below shows the evolution of computational time with increasing size of TSP problem:
-\begin{center} \includegraphics[scale=0.2]{ant.png} \end{center}
+\begin{center} \includegraphics[scale=0.2]{ant1.png} \end{center}
 \noindent
 This can be improved using further optimisation methods \emph{e.g} nearest neighbour search and 3-OPT methods. These optimizations are suitable for TSPs of large sizes. 
 
