@@ -1,5 +1,4 @@
 # bruteforce.py
-
 Class brute accepts 2-D List as input <br />
 Run algorithm using algo attribute
 
@@ -11,7 +10,7 @@ Packages required: math, time, itertools
 ## Usage
 
 ```python
-import brute from bruteforce
-Brute = brute(input) # input is a 2-D list containing costs
+import Brute from bruteforce
+Brute = Brute(input) # input is a 2-D list containing costs
 Brute.algo()
 """
