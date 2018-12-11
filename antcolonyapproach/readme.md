@@ -13,7 +13,3 @@ Packages: time, math, random
 import antcolonyapproach 
 Ant = AntApproach(input) # input is a 2-D list
 Ant.Algo()
-
-### Note
-
-I increased number of iterations and it now gives optimal solutions on Symmetric TSP problems (Checked on two TSP Problems). It takes around 2-3 minutes to run.
