@@ -12,23 +12,14 @@
 \usepackage{geometry}
 \usepackage{titling}
 \usepackage{hyperref}
-\usepackage{graphicx}
-\usepackage{float,flafter}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
-\usepackage{algorithm}
-\usepackage{algorithmic}
-\usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
 \setlength{\droptitle}{-4em}     % Eliminate the default vertical space
 \addtolength{\droptitle}{-4pt}   % Only a guess. Use this for adjustment
-\usepackage[export]{adjustbox}
 \usepackage{amsmath}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{subfiles}
 \begin{document}
 \newcommand\tab[1][1.2cm]{\hspace*{#1}}
 
@@ -65,6 +56,10 @@ If in a travelling salesman problem, cost or distance of travelling from city $i
 
 
 \subsection{Sparsity of TSP}
+
+\noindent
+A graph with only a few edges is referred to as a sparse graph. In our testing with different exact and approximate algorithms, we have tested on problems of varying sparsity levels.
+
 \newpage
 \section{Brute Force Algoritm}
 \subsection{Introduction}
@@ -126,18 +121,11 @@ To exclude edge (ie, I-> J), we start by setting the cost of the edge I->J to IN
 \includegraphics[scale=0.3]{branchandbound.png}
 \end{center}
 \newpage
-
-\section{Randomized algorithm}
-\subfile{algo_random}
-
-\section{Dynamic Programming algorithm}
-\subfile{algo_dp}
-
 \section{Ant Colony Algorithm}
 
 \subsection{Introduction}
 
-Ant Colony Algorithm is a probabilistic algorithm that takes inspiration from the behavior of ants to Travelling Salesman Problems. The first algorithm that took inspiration from ants was described in 1992 by Marco Dorigo in his PhD thesis. Later, there has been various optimization techniques building upon this research. In 2004, book titled Ant Colony Optimzation was published. We took inspiration from this book for our implementation of Ant Colony Algorithm.
+Ant Colony Algorithm is a probabilistic algorithm that takes inspiration from the behavior of ants to Travelling Salesman Problems. The first algorithm that took inspiration from ants was described in 1992 by Marco Dorigo in his PhD thesis \cite{Dorigothesis}. Later, there has been various optimization techniques building upon this research. In 2004, book titled Ant Colony Optimzation was published. We took inspiration from this book for our implementation of Ant Colony Algorithm.
 
 \subsection{Behavior of Ants}
 
@@ -172,7 +160,7 @@ Where, $\tau_{ij}$ is the amount of pheromone deposited for transition from city
 \tab $\alpha$ and $\beta$ are parameters that respectively control the influence of $\tau_{ij}$ and $\eta _{xy}$.\\
 
 \noindent
-Many special cases of Ant Colony Optimzation has been proposed. In this project, we have considered Ant Colony System (ACS). Other popular approaches are Ant System (Earliest Ant Colony Algorithm) and MAX-MIN Ant System (MMAS). These Optimization methods differ in their approach of updating pheromones and calculating transition probabilities $p_{ij}$. \\
+Many special cases of Ant Colony Optimzation has been proposed. In this project, we have considered Ant Colony System (ACS) \cite{Dorigo1997}. Other popular approaches are Ant System (Earliest Ant Colony Algorithm)\cite{Dorigo06antcolony} and MAX-MIN Ant System (MMAS)\cite{Sttzle1998}. These Optimization methods differ in their approach of updating pheromones and calculating transition probabilities $p_{ij}$. \\
 \\
 \noindent
 {\bf Ant System (AS)}:\\
@@ -198,7 +186,7 @@ Where $L_{k}$ is the cost of ant k's tour, and Q is a constant.\\
 In ACS,\\
 The local pheromone update is done by each ant k after every transition $i \rightarrow j$. Each ant applies this update to the last edge it transversed.
 \begin{center} {$\tau_{ij} = (1-\phi).\tau_{ij} + \phi.\tau_{0}$} \end{center}
-Where $\tau_{0}$ is the initial value of the phreromone (Usually kept small) and $\phi$ is the pheromone decay coefficient. After a complete travel, the local updates are deleted.\\
+Where $\tau_{0}$ is the initial value of the phreromone (Usually kept small) and $\phi$ is the pheromone decay coefficient. After a complete travel, the local updates are deleted.\cite{Dorigo1997}\\
 
 \noindent
 Secondly, after all ants have completed the paths, the global update of pheromone is done only taking into account the best tour so far. In this case, 
@@ -229,11 +217,11 @@ $L_{Best}$ is the total length of the best path so far, and Q is a constant.\\
 \end{enumerate}
 
 \subsection{Results on TSPLIB Problems}
-We chose $\alpha$ to be 1 and $\beta$ to be 10. We have no experimented with other values of these parameters, however, there is literature suggesting choice of these hueristics but solutions were close to optimal. Choice of number of ants depend on the number of cities in our problem. In general we considered number of ants to be close to the number of cities. \\ 
+We chose $\alpha$ to be 1 and $\beta$ to be 10. We have not experimented with other values of these parameters, however, there is literature suggesting choice of these hueristics but solutions were close to optimal. Choice of number of ants depend on the number of cities in our problem. In general we considered number of ants to be close to the number of cities. \\ 
 \\
-In our experiments, number of ants were chosen to be in a range of [10,50], and number of iterations we chose to run our algorthim for was in a range of (100-500).\\
+In our experiments, number of ants were chosen to be in a range of [10,50], and number of iterations we chose to were in a range of (100-200).\\
 \\
-We considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and solutions are presented below:
+Since TSPLIB contains repository of TSPs which vary in their sparsity, range of elements in cost matrix, as a benchmark of the algorithm, we tested the algorithm on TSPLIB problems. For this purpose, we considered both Symmetric and Assymetric TSP Problems from TSPLIB database, and solutions are presented below:
 
 \begin{table}[h!]
   \begin{center}
@@ -242,42 +230,39 @@ We considered both Symmetric and Assymetric TSP Problems from TSPLIB database, a
     \begin{tabular}{c|c|c|c|c|c}
       \textbf{Dataset} & \textbf{No. of cities} & \textbf{No. of ants} & \textbf{Iterations} & \textbf{Solution found}  &\textbf{Opt. solution}\\ % 
       \hline
-      {burma14.tsp} & 14 & 30 & 500 & 3336 & 3323 \\ % <--
-      {ulysses16.tsp} & 16 & 15 & 800 & 6859 & 6859 \\ 
-	 {att48.tsp} & 48 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {berlin52.tsp} & 52 & 20 & 100 & 7894 & 7542 \\ % <--
-	 {ch150.tsp} & 150 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {gr124.tsp} & 124 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {d657.tsp} & 48 & 50 & 500 & 10725 & 48912 \\ % <--
-	 {st70.tsp} & 70 & 10 & 100 & 670 & 705 \\ % <-- 
-	 {gr17.tsp} & 17 & 15 & 500 & 2164 & 2085 \\ % <--
-	 {gr24.tsp} & 24 & 20 & 500 & 1345 & 1272 \\ % <--
-	 {gr48.tsp} & 48 & 50 & 500 & 5280 & 5046 \\ % <--
-	 {gr96.tsp} & 96 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {rat195.tsp} & 195 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {br17.atsp} & 17 & 50 & 500 & 10725 & 39 \\ % <--
-	 {ft70.atsp} & 70 & 50 & 500 & 10725 & 38673 \\ % <--
-	 {ftv47.atsp} & 47 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {ftv64.atsp} & 64 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {ftv33.atsp} & 33 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {ftv38.atsp} & 38 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {kro134p.atsp} & 134 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {ry48p.atsp} & 48 & 50 & 500 & 10725 & 10628 \\ % <--
-	 {rbg323.atsp} & 323 & 50 & 500 & 10725 & 10628 \\ % <--
+      {burma14.tsp} & 14 & 10 & 100 & 3381 & 3323 \\ % <--
+      {ulysses16.tsp} & 16 & 10 & 100 & 6987 & 6859 \\ 
+	 {att48.tsp} & 48 & 40 & 200 & 10725 & 11153 \\ % <--
+	 {berlin52.tsp} & 52 & 40 & 200 & 7664 & 7542 \\ % <--
+	 {ch150.tsp} & 150 & 50 & 200 & 6761 & 6528 \\ % <--
+	 {st70.tsp} & 70 & 40 & 100 & 698 & 675 \\ % <-- 
+	 {gr17.tsp} & 17 & 15 & 100 & 2149 & 2085 \\ % <--
+	 {gr24.tsp} & 24 & 20 & 100 & 1278 & 1272 \\ % <--
+	 {gr48.tsp} & 48 & 40 & 200 & 5280 & 5046 \\ % <--
+	 {eil101.tsp} & 101 & 50 & 200 & 661 & 629 \\ % <--
+	 {gr96.tsp} & 96 & 40 & 200 & 56752 & 55209 \\ % <--
+	 {rat195.tsp} & 195 & 40 & 100 & 2454 & 2323 \\ % <--
+	 {ft70.atsp} & 70 & 50 & 100 & 40729 & 38673 \\ % <--
+	 {ftv47.atsp} & 47 & 30 & 100 & 1842 & 1776 \\ % <--
+	 {ftv64.atsp} & 64 & 50 & 200 & 1839 & 1839 \\ % <--
+	 {ftv33.atsp} & 33 & 30 & 100 & 1321 & 1286 \\ % <--
+	 {ftv38.atsp} & 38 & 30 & 100 & 1699 & 1530 \\ % <--
+	 {kro124p.atsp} & 134 & 50 & 100 & 40709 &  36230 \\ % <--
+	 {ry48p.atsp} & 48 & 30 & 100 & 15636 & 14422 \\ % <--
 	 
     \end{tabular}
   \end{center}
 \end{table}
 \newpage
-\noindent
-{\bf Selection of parameters}:\\
-\\
-\noindent
-Complexity of ant colony system (ACS) method is quite high, especially for problems with hundereds of cities. The reason being essentially two loops in every pheromone update. This can be improved using further optimisation methods \emph{e.g} nearest neighbour search and 3-OPT methods. These optimizations are suitable for TSPs of large sizes.\\
-\\
-\noindent
-Graph below shows the evolution of computational time with increasing size and sparsity of TSP.
 
+\noindent
+Graph below shows the evolution of computational time with increasing size of TSP problem:
+\begin{center} \includegraphics[scale=0.2]{ant1.png} \end{center}
+\noindent
+This can be improved using further optimisation methods \emph{e.g} nearest neighbour search and 3-OPT methods. These optimizations are suitable for TSPs of large sizes. 
+
+\subsection{Complexity Analysis of Ant Colony System}
+Complexity of ant colony system (ACS) method is quite high, especially for problems with hundereds of cities. The reason being essentially two loops in every pheromone update. And so the complexity is $\Omega(n^2)$. Computational Complexity of Ant Colony has been studied by Sudholt et. al. (2012) \cite{Sudholt2012}. One idea of an improvment can be selecting a certain number of neighbouring cities which are yet to be visited in every transition, and thus reducing the time complexity as not all cities have to be searched in every update. \cite{neumann2009computational}. Other optimization methods such as MAX-MIN Ant System provide for a faster implementation of ant colony optimization. In MMAS, maximum and minimum pheromone amounts ($\tau_max$, $\tau_min$) are added. Only global best or iteration best tour deposited pheromones. All edges are initialized to $\tau_min$ and reinitialized to $\tau_max$ when nearing stagnation.\cite{Sttzle1998}
 
 \newpage
 \section{Genetic Algorithm}
@@ -323,15 +308,18 @@ We keep repeating steps 5,6,7 until we have a full new population (enhanced one)
 \subsection{Complexity}
 
 \begin{center}
-\includegraphics[scale=0.3]{genetic1.png}
+\includegraphics[scale=0.2]{genetic1.png}
 \end{center}
 
 \begin{center}
-\includegraphics[scale=0.3]{genetic2.png}
+\includegraphics[scale=0.2]{genetic2.png}
 \end{center}
 
 \begin{center}
-\includegraphics[scale=0.3]{genetic3.png}
+\includegraphics[scale=0.2]{genetic3.png}
 \end{center}
+
+\bibliographystyle{ieeetr}
+\bibliography{TSP-report}
 
 \end{document}  
