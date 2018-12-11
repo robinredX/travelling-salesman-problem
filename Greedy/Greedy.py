@@ -53,28 +53,30 @@ class GreedyTsp( object ):
 
 if __name__ == '__main__':
     # Run Example
-
+    import csv
     import Parser
+    from os import listdir
+    from os.path import isfile, join
 
-    # f = open('test_files/asymmetric/ft53.atsp', 'r')
-    # parser = Parser.Parser()
-    # matrix = parser.parse_file(f)
+    parser = Parser.Parser()
+    with open('greedy_results_symmetric.csv', mode='w') as results_file:
+        results_writer = csv.writer(results_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        results_writer.writerow(['Problem Name', ' Dimensions', ' Solution Cost', ' Run Time (Milliseconds)'])
+        directory = 'tsp_symmetric'
 
+        tsp_files = [f for f in listdir(directory) if isfile(join(directory, f))]
 
-    inf = math.inf
-    matrix = [
-         [inf,   0,  10, 19,  123],
-         [12,  inf,  4,  123, 23],
-         [10,  3,  inf,  6,   20],
-         [2,   20, 6,  inf,   4],
-         [789, 2,  20, 4,   inf]
-     ]
+        for file in tsp_files:
+            f = open(directory + '/' + file, 'r')
 
+            print(file)
+            try:
+                matrix = parser.parse_file(f)
 
-    g = GreedyTsp(matrix)
-    start_time = time.time()
-    cost, tour, runtime = g.greedy_tsp()
-
-    print("--- %s milliseconds ---" % ((time.time() - start_time)*1000))
-    print(tour)
-    print(cost)
+                g = GreedyTsp(matrix)
+                start_time = time.time()
+                cost, tour, runtime = g.greedy_tsp()
+                runtime = runtime * 1000
+                results_writer.writerow([file, ' ' + str(len(matrix)), ' ' + str(cost), ' ' + str(runtime)])
+            except:
+                results_writer.writerow([file, ' ' + 'Error Parsing'])
