@@ -12,14 +12,23 @@
 \usepackage{geometry}
 \usepackage{titling}
 \usepackage{hyperref}
+\usepackage{graphicx}	
+\usepackage{float,flafter}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
 \usepackage{blindtext}
 \usepackage[utf8]{inputenc}
+\usepackage{algorithm}	
+\usepackage{algorithmic}	
+\usepackage[absolute,overlay]{textpos}
 \usepackage{graphicx}
 \setlength{\droptitle}{-4em}     % Eliminate the default vertical space
 \addtolength{\droptitle}{-4pt}   % Only a guess. Use this for adjustment
+\usepackage[export]{adjustbox}
 \usepackage{amsmath}
+\usepackage{caption}	
+\usepackage{subcaption}	
+\usepackage{subfiles}
 \begin{document}
 \newcommand\tab[1][1.2cm]{\hspace*{#1}}
 
@@ -120,6 +129,14 @@ To exclude edge (ie, I-> J), we start by setting the cost of the edge I->J to IN
 \begin{center}
 \includegraphics[scale=0.3]{branchandbound.png}
 \end{center}
+\newpage
+
+
+\section{Randomized algorithm}	
+\subfile{algo_random}	
+ \section{Dynamic Programming algorithm}	
+\subfile{algo_dp}	
+
 \newpage
 \section{Ant Colony Algorithm}
 
@@ -320,6 +337,6 @@ We keep repeating steps 5,6,7 until we have a full new population (enhanced one)
 \end{center}
 
 \bibliographystyle{ieeetr}
-\bibliography{TSP-report}
+\bibliography{TSP-Report}
 
 \end{document}  
