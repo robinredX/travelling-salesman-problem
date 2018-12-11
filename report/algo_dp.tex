@@ -4,7 +4,7 @@
 %\usepackage{algorithmic}
 
 \begin{document}
-The dynamic programming implementation is based on the Bellman-Held-Karp algorithm  proposed in 1962 independently by Bellman[1] and by Held and Karp.
+The dynamic programming implementation is based on the Bellman-Held-Karp algorithm  proposed in 1962 independently by Bellman \cite{Bellman1962} and by Held and Karp.
 \newline{}
 Dynamic programming express a solution for a problem through the solution of smaller problem.
 \newline{}
@@ -69,7 +69,7 @@ Thus the time complexity is $2^n n^2$.
 \newline{} In term of space complexity, if we use a bit field to code all subsets for each node $j \subseteq \{0,...,n\}$, the required space is $2^n (n+1)$.
 \newline{} Nevertheless, we can note that to compute the cost for the subsets of size s, we only need the cost of the subsets of size (s-1). Thus the space complexity can be reduced to:
 $$  max_{1<s<n}((s-1) \binom{n}{s-1} + s\binom{n}{s})$$
-which is $O(2^n\sqrt n)$ .
+which is $O(2^n\sqrt n)$.\cite{wikidp}
 \end{subsection}
 
 \begin{subsection}{Performances}
@@ -100,7 +100,7 @@ The performances are also measured with different sparsity levels. Figure ~\ref{
 
 Memory usage is a limitation to running the dynamic programming algorithm. Only the smallest problems of TSLIB could be tested. The optimal solution is obtained each time as seen on Table \ref{table:dpt1}.
 
-\begin{table}[!h]
+\begin{table}[H]
 \centering
 \footnotesize
 \begin{tabular}{||c||c|c|c|l||}
