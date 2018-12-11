@@ -218,7 +218,7 @@ TIME_STSP=[
 if __name__ == '__main__':
     print("Start test")
 
-    list_stsp=[21,53,142,144]
+    list_small_stsp=["burma14.tsp","gr17.tsp","ulysses16.tsp","gr21.tsp","ulysses22.tsp","gr24.tsp"]
     #performance for approximative algo
     path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[21]
     #print(path)
@@ -230,12 +230,10 @@ if __name__ == '__main__':
     algo_list=["Brute Force","Branch and Bound","Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Dynamic","Random","Ant Colony"]
     algo_approx=["Minimum Spanning Tree","Genetic","Add and Remove Edges","Greedy","Random","Ant Colony"]
     algo_opt=["Brute Force","Branch and Bound","Add and Remove Edges","Dynamic"]
-    algo_list=["Greedy","Random","Minimum Spanning Tree"]
+    algo_list=["Dynamic"]
     root='E:\\Dev\\MLDMProoject\\Code\\'
 
-    foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp2.txt",'a')
-
-    for i in range(0,len(TIME_STSP)):
+    for i in range(35,len(TIME_STSP)):
         if '.opt.' in LIST_OF_SYMETRIC_PROBLEM[i]:
             continue
         path = ROOT_PATH_ATSP + LIST_OF_SYMETRIC_PROBLEM[i]
@@ -248,7 +246,6 @@ if __name__ == '__main__':
         min_cost = math.inf
         opt_path=[]
         start_time = time.time()
-
         while(time.time()-start_time<TIME_STSP[i]):
             algo = GreedyTsp(cmatrix)
             upper_bound, best_path, run_time = algo.greedy_tsp()
@@ -291,6 +288,15 @@ if __name__ == '__main__':
         foutput.write(LIST_OF_SYMETRIC_PROBLEM[i] + "\t" + "Minimum Spanning Tree" + "\t" + str(min_cost) + "\t" + str(opt_path) + "\t" + str(end_time-start_time)+"\n")
         foutput.close()
 
+    # for pb in list_small_stsp:
+    #     path = ROOT_PATH_ATSP + pb
+    #     print(path)
+    #     tsp_file=open(path,'r')
+    #     parser = Parser()
+    #     matrix = parser.parse_file(tsp_file)
+
+
+
 
         # for algo_sel in algo_list:
         #     print(algo_sel)
@@ -330,8 +336,8 @@ if __name__ == '__main__':
         #     elif algo_sel == "Ant Colony":
         #         algo = AntApproach(cmatrix,iteration=500)
         #         upper_bound, best_path, run_time = algo.algo()
-
-            #print(algo_sel,upper_bound, best_path, run_time )
-            # foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp3.txt",'a')
-            # foutput.write(LIST_OF_SYMETRIC_PROBLEM[i] + "\t" + algo_sel + "\t" + str(upper_bound) + "\t" + str(best_path) + "\t" + str(run_time)+"\n")
-            # foutput.close()
+        #
+        #     print(algo_sel,upper_bound, best_path, run_time )
+        #     foutput = open("E:\Dev\MLDMProoject\Code\All_algo_tsp2.txt",'a')
+        #     foutput.write(pb + "\t" + algo_sel + "\t" + str(upper_bound) + "\t" + str(best_path) + "\t" + str(run_time)+"\n")
+        #     foutput.close()
