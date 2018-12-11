@@ -1,3 +1,7 @@
+### Louise Harding
+### MLDM M1
+### Advanced algorithm TSP project
+
 import copy
 import sys
 import networkx as nx

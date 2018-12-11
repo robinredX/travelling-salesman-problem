@@ -1,3 +1,6 @@
+### Louise Harding
+### MLDM M1
+### Advanced algorithm TSP project
 import numpy
 import math
 import copy
