@@ -160,8 +160,15 @@ class AddRemoveEdges:
 
 
     def isValidSolution (self, matrix, solution):
-        if len(solution) < matrix.shape[0]:
-            return False
+        if len(solution) == matrix.shape[0]:
+            return True
+
+        return False
+
+        # if len(solution) < matrix.shape[0]:
+        #     return False
+
+        # return True
 
         partialSolution = np.full((1, matrix.shape[0]), -1)
         partialSolution = partialSolution[0]
@@ -202,7 +209,8 @@ class AddRemoveEdges:
             # print ("lower bound is : ",lowerBound, "and higher than the found upperBound: ",self.upperBound, " prunned")
             return
 
-        if depth == matrix.shape[0] :
+        # if depth == matrix.shape[0] :
+        if len(solution) == matrix.shape[0] :
             if self.isValidSolution(matrix, solution):
                 # print("found solution: ")
                 # print(solution)
@@ -219,6 +227,8 @@ class AddRemoveEdges:
 
         i,j = self.chooseSplittingEdge(matrix)
         # print("split on: ", i+1, " ", j+1)
+        if  i ==-1 and j==-1 :
+            return
 
 
         includeEdgeMat,IncludeLowerBound = self.includeEdge(np.copy(matrix), i,j, lowerBound, solution)
@@ -238,6 +248,7 @@ class AddRemoveEdges:
     def main(self):
         start_time = time.time()
         x = np.array(self.matrix)
+        # print(self.matrix)
         #ensure all the zeros or negative values are set to inifinity,
         #zero has a special meaining for this algorithnm
         x[x <= 0] = np.inf
@@ -245,7 +256,7 @@ class AddRemoveEdges:
 
         reducedMat,lowerBound = self.reduceMatrix(x,lowerBound)
 
-        # print(lowerBound)
+        print(lowerBound)
         self.branchAndBound(reducedMat, lowerBound,[], 0)
         return self.upperBound, self.edges_to_node(self.bestSol), time.time() - start_time
 
@@ -256,29 +267,59 @@ class AddRemoveEdges:
 
 
 ''' Uncomment the above code to test  '''
-'''
-DISTANCES =  [ 
 
-                [  INFINITY, 633, 257,  91, 412, 150,  80, 134, 259, 505, 353, 324,  70, 211, 268, 246, 121],
-                [633,   INFINITY, 390, 661, 227, 488, 572, 530, 555, 289, 282, 638, 567, 466, 420, 745, 518],
-                [257, 390,   INFINITY, 228, 169, 112, 196, 154, 372, 262, 110, 437, 191,  74,  53, 472, 142,],
-                [ 91, 661, 228,   INFINITY, 383, 120,  77, 105, 175, 476, 324, 240,  27, 182, 239, 237,  84],
-                [412, 227, 169, 383,   INFINITY, 267, 351, 309, 338, 196,  61, 421, 346, 243, 199, 528, 297],
-                [150, 488, 112, 120, 267,   INFINITY,  63,  34, 264, 360, 208, 329,  83, 105, 123, 364,  35],
-                [ 80, 572, 196,  77, 351,  63,   INFINITY,  29, 232, 444, 292, 297,  47, 150, 207, 332,  29],
-                [134, 530, 154, 105, 309,  34,  29,   INFINITY, 249, 402, 250, 314,  68, 108, 165, 349,  36],
-                [259, 555, 372, 175, 338, 264, 232, 249,   INFINITY, 495, 352,  95, 189, 326, 383, 202, 236],
-                [505, 289, 262, 476, 196, 360, 444, 402, 495,   INFINITY, 154, 578, 439, 336, 240, 685, 390],
-                [353, 282, 110, 324,  61, 208, 292, 250, 352, 154,   INFINITY, 435, 287, 184, 140, 542, 238],
-                [324, 638, 437, 240, 421, 329, 297, 314,  95, 578, 435,   INFINITY, 254, 391, 448, 157, 301],
-                [ 70, 567, 191,  27, 346,  83,  47,  68, 189, 439, 287, 254,   INFINITY, 145, 202, 289,  55],
-                [211, 466,  74, 182, 243, 105, 150, 108, 326, 336, 184, 391, 145,   INFINITY,  57, 426,  96],
-                [268, 420,  53, 239, 199, 123, 207, 165, 383, 240, 140, 448, 202,  57,   INFINITY, 483, 153],
-                [246, 745, 472, 237, 528, 364, 332, 349, 202, 685, 542, 157, 289, 426, 483,   INFINITY, 336],
-                [121, 518, 142, 84, 297,  35,  29,  36, 236, 390, 238, 301,  55,  96, 153, 336 ,  INFINITY ]
+# DISTANCES =  [ 
+
+#                 [  INFINITY, 633, 257,  91, 412, 150,  80, 134, 259, 505, 353, 324,  70, 211, 268, 246, 121],
+#                 [633,   INFINITY, 390, 661, 227, 488, 572, 530, 555, 289, 282, 638, 567, 466, 420, 745, 518],
+#                 [257, 390,   INFINITY, 228, 169, 112, 196, 154, 372, 262, 110, 437, 191,  74,  53, 472, 142,],
+#                 [ 91, 661, 228,   INFINITY, 383, 120,  77, 105, 175, 476, 324, 240,  27, 182, 239, 237,  84],
+#                 [412, 227, 169, 383,   INFINITY, 267, 351, 309, 338, 196,  61, 421, 346, 243, 199, 528, 297],
+#                 [150, 488, 112, 120, 267,   INFINITY,  63,  34, 264, 360, 208, 329,  83, 105, 123, 364,  35],
+#                 [ 80, 572, 196,  77, 351,  63,   INFINITY,  29, 232, 444, 292, 297,  47, 150, 207, 332,  29],
+#                 [134, 530, 154, 105, 309,  34,  29,   INFINITY, 249, 402, 250, 314,  68, 108, 165, 349,  36],
+#                 [259, 555, 372, 175, 338, 264, 232, 249,   INFINITY, 495, 352,  95, 189, 326, 383, 202, 236],
+#                 [505, 289, 262, 476, 196, 360, 444, 402, 495,   INFINITY, 154, 578, 439, 336, 240, 685, 390],
+#                 [353, 282, 110, 324,  61, 208, 292, 250, 352, 154,   INFINITY, 435, 287, 184, 140, 542, 238],
+#                 [324, 638, 437, 240, 421, 329, 297, 314,  95, 578, 435,   INFINITY, 254, 391, 448, 157, 301],
+#                 [ 70, 567, 191,  27, 346,  83,  47,  68, 189, 439, 287, 254,   INFINITY, 145, 202, 289,  55],
+#                 [211, 466,  74, 182, 243, 105, 150, 108, 326, 336, 184, 391, 145,   INFINITY,  57, 426,  96],
+#                 [268, 420,  53, 239, 199, 123, 207, 165, 383, 240, 140, 448, 202,  57,   INFINITY, 483, 153],
+#                 [246, 745, 472, 237, 528, 364, 332, 349, 202, 685, 542, 157, 289, 426, 483,   INFINITY, 336],
+#                 [121, 518, 142, 84, 297,  35,  29,  36, 236, 390, 238, 301,  55,  96, 153, 336 ,  INFINITY ]
      
-                ]
+#                 ]
 
-a = AddRemoveEdges(DISTANCES)
-print(a.main())
-'''
+# DISTANCES = [
+#                  [INFINITY, 8, 14, -1, -1, -1, -1, -1, 7, 12, 6, -1, -1, 7, 11, 7],
+#                  [8, INFINITY, 14, -1, 10, 9, 5, 11, 13, 13, 10, 11, 13, 6, -1, 8],
+#                  [14, 14, INFINITY, 5, 12, -1, -1, 10, 8, -1, 9, 8, 14, 13, 14, 5],
+#                  [-1, -1, 5, INFINITY, 10, 13, 11, 6, 9, 8, 14, 5, 12, 7, 13, 7],
+#                  [-1, 10, 12, 10, INFINITY, 6, 13, 13, -1, -1, 9, -1, 7, 13, 6, 12], 
+#                  [-1, 9, -1, 13, 6, INFINITY, 11, 11, -1, 11, 9, 5, 9, 8, 7, 12],
+#                  [-1, 5, -1, 11, 13, 11, INFINITY, 9, 6, 6, 12, 13, 5, 8, -1, 5], 
+#                  [-1, 11, 10, 6, 13, 11, 9, INFINITY, 13, -1, 9, 10, 6, 9, -1, 9], 
+#                  [7, 13, 8, 9, -1, -1, 6, 13, INFINITY, 13, 11, 5, 14, 11, 6, 11], 
+#                  [12, 13, -1, 8, -1, 11, 6, -1, 13, INFINITY, 12, 7, 5, 7, 7, 12], 
+#                  [6, 10, 9, 14, 9, 9, 12, 9, 11, 12, INFINITY, 11, 5, 9, 6, 14], 
+#                  [-1, 11, 8, 5, -1, 5, 13, 10, 5, 7, 11, INFINITY, 8, 6, 10, 14], 
+#                  [-1, 13, 14, 12, 7, 9, 5, 6, 14, 5, 5, 8, INFINITY, 10, 10, 13],
+#                  [7, 6, 13, 7, 13, 8, 8, 9, 11, 7, 9, 6, 10, INFINITY, 13, 7],
+#                  [11, -1, 14, 13, 6, 7, -1, -1, 6, 7, 6, 10, 10, 13, INFINITY, 8],
+#                  [7, 8, 5, 7, 12, 12, 5, 9, 11, 12, 14, 14, 13, 7, 8, INFINITY]
+#                  ]
+
+
+# DISTANCES = [
+#               [INFINITY, 92, 832, 269, 57, 283], 
+#               [92, INFINITY, 683, 664, 775, 250], 
+#               [832, 683, INFINITY, 818, 140, 574], 
+#               [269, 664, 818, INFINITY, 835, 316], 
+#               [57, 775, 140, 835, INFINITY, 331],
+#               [283, 250, 574, 316, 331, INFINITY]
+#              ]
+
+
+# a = AddRemoveEdges(DISTANCES)
+# print(a.main())
+
