@@ -33,7 +33,7 @@ class TSP(QDialog):
         super(TSP, self).__init__()
         loadUi("UI/TSP.ui", self)
         # List of available algorithms
-        algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Random", "Greedy", "Minimum Spanning Tree", "Genetic", "Ant Colony", "Dynamic"]
+        algos = ["Brute Force", "Branch and Bound", "Add and Remove Edges", "Genetic", "Random", "Dynamic", "Greedy", "Minimum Spanning Tree", "Ant Colony", ]
         self.matrix = []
         self.cboAlgo.clear()
         self.cboAlgo.addItems(algos)
@@ -223,14 +223,18 @@ class TSP(QDialog):
                 QMessageBox.question(self, 'Generator validation', "Please select a file to open.", QMessageBox.Ok)
                 return
             #Open and process the selected file
-            if self.cboFormat.currentText() == "Generator":
-                matrix = generator.read_from_file(self.txtFileName.text())
-            else:
-                # Open the problem file (Either .tsp or .atsp)
-                file = open(self.txtFileName.text(), 'r')
-                # Create a new TSP library parser and parse the file
-                parser = Parser()
-                matrix = parser.parse_file(file)
+            try:
+                if self.cboFormat.currentText() == "Generator":
+                    matrix = generator.read_from_file(self.txtFileName.text())
+                else:
+                    # Open the problem file (Either .tsp or .atsp)
+                    file = open(self.txtFileName.text(), 'r')
+                    # Create a new TSP library parser and parse the file
+                    parser = Parser()
+                    matrix = parser.parse_file(file)
+            except:
+                QMessageBox.question(self, 'File validation', "File not in required format. Please check the file type.", QMessageBox.Ok)
+                return
 
         #Plot the data
         if not self.chkHideGraph.isChecked():
@@ -284,7 +288,7 @@ class TSP(QDialog):
 
         elif self.cboAlgo.currentText() == "Ant Colony":
             ant_colony = AntApproach(matrix)
-            path_cost, best_path, run_time = ant_colony.algo()
+            path_cost, best_path, run_time = ant_colony.Algo()
 
         #set fields
         self.lblDistance.setText("Best Distance: " + str(path_cost))
